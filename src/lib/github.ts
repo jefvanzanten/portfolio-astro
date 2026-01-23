@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { GitHubRepo, GitHubCommit, CommitDisplay } from "../types/github";
+import type { GitHubRepo, GitHubCommit, CommitDisplay, GitHubEvent } from "../types/github";
 
 const GITHUB_API = "https://api.github.com";
 
@@ -172,4 +172,102 @@ export async function fetchLatestCommits(
   writeCache(commitsWithStats);
 
   return commitsWithStats;
+}
+
+interface PushEventPayload {
+  head: string;
+  before: string;
+  ref: string;
+  commits?: Array<{
+    sha: string;
+    message: string;
+  }>;
+}
+
+/**
+ * Fetch latest commits via the Events API (hybrid approach)
+ * 1. Get PushEvents to find repos with recent activity
+ * 2. Fetch commit details for each push's head SHA
+ * More efficient than fetching all repos when you have many repos
+ */
+export async function fetchLatestCommitsViaEvents(
+  username: string,
+  totalLimit: number = 10,
+  token?: string
+): Promise<CommitDisplay[]> {
+  // Check cache first
+  const cached = readCache();
+  if (cached) {
+    return cached;
+  }
+
+  const headers = getHeaders(token);
+  const url = `${GITHUB_API}/users/${username}/events/public?per_page=30`;
+
+  const response = await fetch(url, { headers });
+
+  if (!response.ok) {
+    console.error(`GitHub Events API error: ${response.status}`);
+    return [];
+  }
+
+  const events: GitHubEvent[] = await response.json();
+
+  // Get unique push events (dedupe by head SHA to avoid duplicate commits)
+  const seenShas = new Set<string>();
+  const pushEventsToFetch: Array<{ repoFullName: string; headSha: string; createdAt: string; actor: GitHubEvent["actor"] }> = [];
+
+  for (const event of events) {
+    if (event.type !== "PushEvent") continue;
+
+    const payload = event.payload as PushEventPayload;
+    if (!payload.head || seenShas.has(payload.head)) continue;
+
+    seenShas.add(payload.head);
+    pushEventsToFetch.push({
+      repoFullName: event.repo.name,
+      headSha: payload.head,
+      createdAt: event.created_at,
+      actor: event.actor,
+    });
+
+    // Only fetch enough to get our limit
+    if (pushEventsToFetch.length >= totalLimit) break;
+  }
+
+  // Fetch commit details for each head SHA
+  const commits: CommitDisplay[] = [];
+
+  for (const pushEvent of pushEventsToFetch) {
+    const [owner, repo] = pushEvent.repoFullName.split("/");
+    const commitUrl = `${GITHUB_API}/repos/${owner}/${repo}/commits/${pushEvent.headSha}`;
+
+    const commitResponse = await fetch(commitUrl, { headers });
+    if (!commitResponse.ok) continue;
+
+    const commitData = await commitResponse.json();
+
+    commits.push({
+      sha: commitData.sha,
+      shortSha: commitData.sha.substring(0, 7),
+      message: commitData.commit.message,
+      title: commitData.commit.message.split("\n")[0].substring(0, 72),
+      author: commitData.author?.login ?? commitData.commit.author.name,
+      date: commitData.commit.author.date,
+      url: commitData.html_url,
+      avatarUrl: commitData.author?.avatar_url ?? pushEvent.actor.avatar_url,
+      repo: repo,
+      filesChanged: commitData.files?.length ?? 0,
+    });
+
+    if (commits.length >= totalLimit) break;
+  }
+
+  // Sort by date (newest first)
+  commits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // Write to cache
+  writeCache(commits);
+
+  return commits;
 }

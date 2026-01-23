@@ -1,12 +1,12 @@
 ---
 import CommitCard from "./CommitCard.astro";
-import { fetchLatestCommits } from "../../lib/github";
+import { fetchLatestCommitsViaEvents } from "../../lib/github";
 
 const GITHUB_USERNAME = "jefvanzanten";
 
-// Fetch commits at build time
+// Fetch commits at build time via Events API (hybrid approach)
 // Uses GITHUB_TOKEN env var if available for higher rate limits
-const commits = await fetchLatestCommits(
+const commits = await fetchLatestCommitsViaEvents(
   GITHUB_USERNAME,
   10,
   import.meta.env.GITHUB_TOKEN

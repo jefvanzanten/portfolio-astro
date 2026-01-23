@@ -35,3 +35,40 @@ export interface CommitDisplay {
   repo: string;
   filesChanged: number;
 }
+
+// Events API types
+export interface GitHubPushEvent {
+  id: string;
+  type: "PushEvent";
+  actor: {
+    login: string;
+    avatar_url: string;
+  };
+  repo: {
+    name: string; // "username/repo-name"
+  };
+  payload: {
+    commits: Array<{
+      sha: string;
+      message: string;
+      author: {
+        name: string;
+      };
+    }>;
+  };
+  created_at: string;
+}
+
+export interface GitHubEvent {
+  id: string;
+  type: string;
+  actor: {
+    login: string;
+    avatar_url: string;
+  };
+  repo: {
+    name: string;
+  };
+  payload: unknown;
+  created_at: string;
+}
