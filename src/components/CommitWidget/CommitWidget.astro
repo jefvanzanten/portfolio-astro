@@ -1,0 +1,106 @@
+---
+import CommitCard from "./CommitCard.astro";
+import { fetchLatestCommits } from "../../lib/github";
+
+const GITHUB_USERNAME = "jefvanzanten";
+
+// Fetch commits at build time
+// Uses GITHUB_TOKEN env var if available for higher rate limits
+const commits = await fetchLatestCommits(
+  GITHUB_USERNAME,
+  10,
+  import.meta.env.GITHUB_TOKEN
+);
+---
+
+{commits.length > 0 && (
+  <section class="commits-section">
+    <div class="title">
+      <span class="line" />
+      <h2>Recent Commits</h2>
+      <span class="line" />
+    </div>
+    <div class="commits-scroll-container">
+      <div class="commits-track">
+        {commits.map((commit) => (
+          <CommitCard commit={commit} />
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+.commits-section {
+  display: none;
+  flex-direction: column;
+  gap: 1.5em;
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.title h2 {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 100;
+  font-size: 1.3rem;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.line {
+  border-bottom: 1px solid white;
+  width: 8em;
+  flex-shrink: 1;
+}
+
+.commits-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.commits-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.commits-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.commits-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.commits-track {
+  display: flex;
+  gap: 1em;
+  padding: 0.5em 2em;
+  width: max-content;
+}
+
+/* Tablet and desktop only (>940px) */
+@media screen and (min-width: 941px) {
+  .commits-section {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  .line {
+    width: 4em;
+  }
+}
+</style>

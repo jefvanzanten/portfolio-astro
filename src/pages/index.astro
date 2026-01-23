@@ -1,6 +1,7 @@
 ---
 import Layout from "../Layout.astro"
 import ProjectCard from "../components/ProjectCard.astro";
+import CommitWidget from "../components/CommitWidget/CommitWidget.astro";
 import { projects } from "../data.ts";
 const filteredProjects = projects.filter((project) => project.highlighted);
 ---
@@ -16,6 +17,7 @@ const filteredProjects = projects.filter((project) => project.highlighted);
 				Ik wissel met programmeren tussen frontend, backend en mobile projecten, zodat mijn kennis en vaardigheden op elk vlak blijven ontwikkelen.
 			</p>
 		</section>
+		<CommitWidget />
 		<section class="featured-projects-container">
           <div class="title">
 			<span class="line" />
