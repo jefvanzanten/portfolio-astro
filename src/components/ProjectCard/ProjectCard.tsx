@@ -1,8 +1,8 @@
 import styles from "./ProjectCard.module.css";
 import { For, onMount, type Component } from "solid-js";
-import type { Project } from "../../models/types.project";
 import { useImageViewModal } from "../../hooks/useImageViewModal";
 import GithubLink from "../GithubLink/GithubLink";
+import type { Project } from "../../data";
 
 type ProjectCardProps = {
   project: Project;
@@ -23,7 +23,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
           }
         });
       },
-      { rootMargin: "50px" }
+      { rootMargin: "50px" },
     );
 
     if (cardRef) {

@@ -10,6 +10,7 @@
   --card-width: 285px;
   --container-max-width: 90%;
   --project-container-width: calc(var(--card-width) * 3 + 4em);
+  --featured-projects-container-width: calc(var(--card-width) * 3 + 3 * 2em);
   --project-offset: calc((100vw - var(--project-area-width)) / 2);
   --card-bg: rgb(20, 20, 20);
   --card-text-color: rgb(175, 175, 175);

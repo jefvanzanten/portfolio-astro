@@ -2,16 +2,19 @@
 import NavBar from "./components/NavBar/NavBar"
 import ImageViewModal from "./components/ImageViewModal/ImageViewModal"
 import "./styles.css"
+
+const { title, description } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="nl">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{Astro.props.title}</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
 	<body>
         <main>
