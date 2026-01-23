@@ -1,0 +1,52 @@
+---
+const {url, iconUrl, name} = Astro.props;
+---
+
+<a class="socialContainer" href={url} target="_blank">
+    <img class="logo" src={iconUrl} />
+    <p>{name}</p>
+</a>
+
+<style>
+.socialContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0.5em;
+  border-radius: 2em;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.logo {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+a,
+a:link,
+a:visited {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+p {
+  font-size: 1rem;
+  padding: 0 2em;
+}
+
+@media screen and (min-width: 1024px) {
+  .socialContainer {
+    padding: 0.5em;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  .logo {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+}
+</style>

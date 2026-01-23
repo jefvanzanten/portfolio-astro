@@ -7,9 +7,11 @@ interface Props {
 
 const { commit } = Astro.props;
 
-const formattedDate = new Date(commit.date).toLocaleDateString("nl-NL", {
+const formattedDate = new Date(commit.date).toLocaleString("nl-NL", {
   day: "numeric",
   month: "short",
+  // hour: "2-digit",
+  // minute: "2-digit",
 });
 ---
 
@@ -20,7 +22,7 @@ const formattedDate = new Date(commit.date).toLocaleDateString("nl-NL", {
   </div>
   <p class="commit-message">{commit.title}</p>
   <div class="commit-footer">
-    <span class="author">{commit.author}</span>
+    <span class="files">{commit.filesChanged} {commit.filesChanged === 1 ? 'bestand' : 'bestanden'}</span>
     <span class="date">{formattedDate}</span>
   </div>
 </a>
@@ -30,8 +32,8 @@ const formattedDate = new Date(commit.date).toLocaleDateString("nl-NL", {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  min-width: 260px;
-  max-width: 260px;
+  min-width: var(--card-width);
+  max-width: var(--card-width);
   padding: 1em;
   background: rgb(20, 20, 20);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -89,7 +91,7 @@ const formattedDate = new Date(commit.date).toLocaleDateString("nl-NL", {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.author {
-  font-weight: 500;
+.files {
+  font-family: "JetBrains Mono", monospace;
 }
 </style>

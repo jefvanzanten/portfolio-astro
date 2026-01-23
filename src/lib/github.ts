@@ -75,6 +75,25 @@ export async function fetchUserRepos(
   return repos.filter((repo) => !repo.fork);
 }
 
+async function fetchCommitFilesCount(
+  owner: string,
+  repo: string,
+  sha: string,
+  token?: string
+): Promise<number> {
+  const headers = getHeaders(token);
+  const url = `${GITHUB_API}/repos/${owner}/${repo}/commits/${sha}`;
+
+  const response = await fetch(url, { headers });
+
+  if (!response.ok) {
+    return 0;
+  }
+
+  const data = await response.json();
+  return data.files?.length ?? 0;
+}
+
 export async function fetchRepoCommits(
   owner: string,
   repo: string,
@@ -103,6 +122,7 @@ export async function fetchRepoCommits(
     url: commit.html_url,
     avatarUrl: commit.author?.avatar_url ?? null,
     repo: repo,
+    filesChanged: 0, // Will be populated later for top commits
   }));
 }
 
@@ -135,13 +155,21 @@ export async function fetchLatestCommits(
   );
 
   // Flatten, sort by date (newest first), and limit
-  const commits = allCommitsArrays
+  const topCommits = allCommitsArrays
     .flat()
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, totalLimit);
 
-  // Write to cache
-  writeCache(commits);
+  // Fetch file counts for the top commits
+  const commitsWithStats = await Promise.all(
+    topCommits.map(async (commit) => ({
+      ...commit,
+      filesChanged: await fetchCommitFilesCount(username, commit.repo, commit.sha, token),
+    }))
+  );
 
-  return commits;
+  // Write to cache
+  writeCache(commitsWithStats);
+
+  return commitsWithStats;
 }

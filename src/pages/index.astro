@@ -9,7 +9,7 @@ const filteredProjects = projects.filter((project) => project.highlighted);
 <Layout title="Home - jefvanzanten.dev">
 	<div class="content-container">
 		<section class="introduction">
-			<h1>Full-stack en mobile developer</h1>
+			<h1>Full-stack developer</h1>
 			<p>
 				Hey, mijn naam is Jef. Momenteel volg ik de studie Software Development (HBO Associate Degree).
 				<br />
@@ -34,16 +34,20 @@ const filteredProjects = projects.filter((project) => project.highlighted);
 </Layout>
 
 <style>
-main {
-  min-height: 90vh;
-}
+
+/*  debug */
+/* main { border: 2px dashed blue }
+.content-container { border: 2px dashed magenta;}
+.introduction { border: 2px solid red; }
+p { border: 2px solid yellow}
+.featured-projects-container { border: 2px solid teal; } */
 
 .content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 2em 0;
+  padding: 20em 0;
   box-sizing: border-box;
   z-index: 0;
   gap: 4em;
@@ -51,11 +55,13 @@ main {
 	overflow: hidden;
 }
 
+/* Introduction section */
+
 .introduction {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	/* justify-content: center;
+	align-items: center; */
   	min-height: 30vh;
 }
 
@@ -64,8 +70,7 @@ h1 {
   font-weight: 400;
   font-size: 1.8rem;
   text-wrap: wrap;
-  padding: 1em 0;
-  text-align: center;
+  padding: 1rem 0;
 }
 
 p {
@@ -74,8 +79,10 @@ p {
   color: rgba(255, 255, 255, 0.603);
   text-wrap: wrap;
   max-width: 32rem;
-  padding: 0 1em;
+  /* padding: 0 1em; */
 }
+
+/* Featured projects section -- TODO: Need to move to a new component */
 
 .featured-projects-container {
   display: flex;
@@ -103,10 +110,8 @@ p {
   font-size: 1.3rem;
 }
 
-.line {
-  border-bottom: 1px solid white;
-  width: 21em;
-}
+/* Screen specific styling */
+/* Higher resolution screen */
 
 @media screen and (max-width: 1800px) {
   .content-container {
@@ -132,6 +137,8 @@ p {
     font-size: 1.4rem;
   }
 }
+
+/* Tablet and most common desktop resolution */
 
 @media screen and (max-width: 940px) {
   .content-container {

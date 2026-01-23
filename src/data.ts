@@ -55,7 +55,7 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/game-collection.png",
     category: "Frontend",
     lastUpdated: "2025-09-23",
-    highlighted: true,
+    highlighted: false,
   },
   {
     id: 10,
@@ -74,7 +74,7 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/task-manager-thumb.png",
     category: "Fullstack",
     lastUpdated: "2025-08-22",
-    highlighted: true,
+    highlighted: false,
   },
   {
     id: 9,
@@ -91,11 +91,11 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/make24_thumb.png",
     category: "Frontend",
     lastUpdated: "2025-07-24",
-    highlighted: false,
+    highlighted: true,
   },
   {
     id: 8,
-    name: "Portfolio",
+    name: "Portfolio - React",
     description: [
       "Mijn persoonlijke, statische, client-side gerenderde website. ",
       "Het toont een overzicht van mijn openbare GitHub-projecten met korte toelichtingen en links. ",
@@ -191,7 +191,7 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/hu_thumb.png",
     category: "Backend",
     lastUpdated: "2025-03-13",
-    highlighted: false,
+    highlighted: true,
   },
   {
     id: 2,

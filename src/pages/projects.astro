@@ -1,5 +1,9 @@
 ---
 import Layout from "../Layout.astro"
+import ProjectsShowCase from "../components/Projects/Projects";
+import { projects } from "../data.ts";
 ---
 
-<Layout title="Projects - jefvanzanten.dev"> projects </Layout>
+<Layout title="Projects - jefvanzanten.dev">
+    <ProjectsShowCase client:load />
+</Layout>

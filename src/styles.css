@@ -28,6 +28,11 @@ p {
     "Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", sans-serif;
 }
 
+.line {
+  border-bottom: 1px solid white;
+  width: 21em;
+}
+
 @media screen and (max-width: 600px) {
   html,
   body {

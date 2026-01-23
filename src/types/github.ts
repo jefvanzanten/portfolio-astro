@@ -33,4 +33,5 @@ export interface CommitDisplay {
   url: string;
   avatarUrl: string | null;
   repo: string;
+  filesChanged: number;
 }

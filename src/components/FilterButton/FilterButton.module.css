@@ -1,0 +1,32 @@
+.button {
+  border-radius: 0.8em;
+  /* padding: 1em 2em; */
+  align-items: center;
+  width: 6em;
+  min-height: 3em;
+  border: 1px solid rgba(219, 218, 218, 0.2);
+  /* border: 1px solid rgba(12, 217, 224, 0.767); */
+  background: rgb(20, 20, 20);
+  color: white;
+  outline: none;
+  box-shadow: none;
+}
+
+.button:hover {
+  border: 1px solid rgba(219, 218, 218, 0.8);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.active {
+  background-color: #c1c7c6c1;
+}
+
+@media screen and (min-width: 1920px) {
+  .button {
+    padding: 0.8em 1.5em;
+  }
+}
