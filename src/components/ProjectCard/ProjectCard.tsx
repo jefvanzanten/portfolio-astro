@@ -2,7 +2,7 @@ import styles from "./ProjectCard.module.css";
 import { For, onMount, type Component } from "solid-js";
 import { useImageViewModal } from "../../hooks/useImageViewModal";
 import GithubLink from "../GithubLink/GithubLink";
-import type { Project } from "../../data";
+import type { Project } from "../../types/project";
 
 type ProjectCardProps = {
   project: Project;
@@ -51,11 +51,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         </button>
         <section class={styles["project-info"]}>
           <h2 class={styles.title}>{props.project.name}</h2>
-          <p class={styles.description}>
-            {Array.isArray(props.project.description)
-              ? props.project.description.join(" ")
-              : props.project.description}
-          </p>
+          <p class={styles.description}>{Array.isArray(props.project.description) ? props.project.description.join("") : props.project.description}</p>
         </section>
         <div class={styles["tag-container"]}>
           <For each={props.project.libraries}>

@@ -8,7 +8,7 @@ export const projects: Project[] = [
       "Dit is mijn portfolio website.",
       "Hierop kun je mijn werk vinden. Voorzien van Github link en een link naar de live versie (indien aanwezig)",
       "\n\n",
-      "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactiviteit (ipv React).\n",
+      "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactiviteit (ipv React). ",
       "Ook zit er een Github widget in die mijn laatste commits laat zien!",
     ],
     slug: "portfolio",
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     name: "Portfolio - React",
     description: [
       "Mijn persoonlijke, statische, client-side gerenderde website. ",
-      "Het toont een overzicht van mijn openbare GitHub-projecten met korte toelichtingen en links. ",
+      "Het toont een overzicht van mijn openbare GitHub-projecten met korte toelichtingen en links.\n\n",
       "Hoofddoel is het delen van projecten gefilterd op relevante programmeertalen/tech stack.",
     ],
     slug: "portfolio",

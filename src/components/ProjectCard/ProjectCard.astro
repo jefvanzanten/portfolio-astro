@@ -1,0 +1,37 @@
+---
+import styles from "./ProjectCard.module.css";
+import type { Project } from "../../types/project";
+import GithubLink from "../GithubLink.astro";
+import ImageButton from "../ImageButton/ImageButton";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class={styles["project-card-container"]}>
+  <ImageButton client:load project={project} />
+  <section class={styles["project-info"]}>
+    <h2 class={styles.title}>{project.name}</h2>
+    <p class={styles.description}>{Array.isArray(project.description) ? project.description.join("") : project.description}</p>
+  </section>
+  <div class={styles["tag-container"]}>
+    {
+      project.libraries.map((library) => (
+        <span class={styles.tag}>{library}</span>
+      ))
+    }
+    {
+      project.languages.map((language) => (
+        <span class={styles.tag}>{language}</span>
+      ))
+    }
+  </div>
+  <GithubLink
+    name="Github"
+    iconUrl="/icons/github-mark-white.svg"
+    url={project.url}
+  />
+</article>
