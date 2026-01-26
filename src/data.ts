@@ -8,7 +8,7 @@ export const projects: Project[] = [
       "Dit is mijn portfolio website.",
       "Hierop kun je mijn werk vinden. Voorzien van Github link en een link naar de live versie (indien aanwezig)",
       "\n\n",
-      "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactieviteit.",
+      "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactiviteit.",
     ],
     slug: "portfolio",
     url: "https://github.com/jefvanzanten/portfolio/",
