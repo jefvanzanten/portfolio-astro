@@ -1,0 +1,6 @@
+.item {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em;
+  gap: 0.5em;
+}

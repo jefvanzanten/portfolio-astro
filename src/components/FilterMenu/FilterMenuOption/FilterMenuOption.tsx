@@ -1,8 +1,8 @@
 import type { Component } from "solid-js";
-import styles from "./FilterMenu.module.css";
+import styles from "./FilterMenuOption.module.css";
 
 type FilterMenuOptionProps = {
-  label: string;
+  name: string;
   isSelected: boolean;
   onToggle: () => void;
 };
@@ -14,10 +14,10 @@ const FilterMenuOption: Component<FilterMenuOptionProps> = (props) => {
         onChange={props.onToggle}
         checked={props.isSelected}
         type="checkbox"
-        id={props.label}
-        name={props.label}
+        id={props.name}
+        name={props.name}
       />
-      <label for={props.label}>{props.label}</label>
+      <label for={props.name}>{props.name}</label>
     </div>
   );
 };

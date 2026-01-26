@@ -1,208 +1,82 @@
-import { createEffect, type Component } from "solid-js";
+import { createSignal, Show, type Component } from "solid-js";
 import type { Language, Library } from "../../data";
 import styles from "./FilterMenu.module.css";
+import LanguageOption from "./FilterMenuOption/LanguageOption";
+import LibraryOption from "./FilterMenuOption/LibraryOption";
 
 type FilterMenuProps = {
-  closemenu: () => void;
   selectedLanguages: Language[];
   selectedLibraries: Library[];
   toggleLanguage: (language: Language) => void;
   toggleLibrary: (library: Library) => void;
 };
 
+export const [isFilterMenuOpen, setIsFilterMenuOpen] = createSignal(false);
+
 const FilterMenu: Component<FilterMenuProps> = (props) => {
-  let containerRef: HTMLDivElement | undefined;
-
-  createEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef && !containerRef.contains(event.target as Node)) {
-        setTimeout(() => props.closemenu(), 300);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        props.closemenu();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [props.closemenu]);
-
   return (
-    <div class={styles.container} ref={containerRef}>
-      <fieldset class={styles.fieldset}>
-        <legend class={styles.legend}>Programmeer- & script-talen</legend>
-        <div class={styles.libraryGroup}>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLanguage("TypeScript")}
-              checked={props.selectedLanguages.includes("TypeScript")}
-              type="checkbox"
-              id="typescript"
-              name="languages"
+    <Show when={isFilterMenuOpen()}>
+      <div
+        class={styles.backdrop}
+        onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen())}
+      />
+      <div class={styles.container}>
+        <fieldset class={styles.fieldset}>
+          <legend class={styles.legend}>Programmeer- & script-talen</legend>
+          <div class={styles.libraryGroup}>
+            <LanguageOption
+              toggleLanguage={props.toggleLanguage}
+              name="TypeScript"
             />
-            <label for="typescript">TypeScript</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLanguage("Kotlin")}
-              checked={props.selectedLanguages.includes("Kotlin")}
-              type="checkbox"
-              id="kotlin"
-              name="languages"
+            <LanguageOption
+              toggleLanguage={props.toggleLanguage}
+              name="Kotlin"
             />
-            <label for="kotlin">Kotlin</label>
+            <LanguageOption toggleLanguage={props.toggleLanguage} name="Java" />
+            <LanguageOption toggleLanguage={props.toggleLanguage} name="CSS" />
           </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLanguage("Java")}
-              checked={props.selectedLanguages.includes("Java")}
-              type="checkbox"
-              id="java"
-              name="languages"
-            />
-            <label for="java">Java</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLanguage("CSS")}
-              checked={props.selectedLanguages.includes("CSS")}
-              type="checkbox"
-              id="css"
-              name="languages"
-            />
-            <label for="css">CSS</label>
-          </div>
-        </div>
-      </fieldset>
+        </fieldset>
 
-      <fieldset class={styles.libraries}>
-        <legend class={styles.legend}>Frameworks & libraries</legend>
-        <div class={styles.libraryGroup}>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("React")}
-              checked={props.selectedLibraries.includes("React")}
-              type="checkbox"
-              id="react"
-              name="frameworks"
+        <fieldset class={styles.libraries}>
+          <legend class={styles.legend}>Frameworks & libraries</legend>
+          <div class={styles.libraryGroup}>
+            <LibraryOption toggleLibrary={props.toggleLibrary} name="React" />
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="TailwindCSS"
             />
-            <label for="react">React</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("TailwindCSS")}
-              checked={props.selectedLibraries.includes("TailwindCSS")}
-              type="checkbox"
-              id="tailwind"
-              name="frameworks"
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="React-Router"
             />
-            <label for="tailwind">Tailwind CSS</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("React-Router")}
-              checked={props.selectedLibraries.includes("React-Router")}
-              type="checkbox"
-              id="react-router"
-              name="frameworks"
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="TanStackQuery"
             />
-            <label for="react-router">React-Router</label>
           </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("TanStackQuery")}
-              checked={props.selectedLibraries.includes("TanStackQuery")}
-              type="checkbox"
-              id="tsq"
-              name="frameworks"
+          <div class={styles.libraryGroup}>
+            <LibraryOption toggleLibrary={props.toggleLibrary} name="Nextjs" />
+            <LibraryOption toggleLibrary={props.toggleLibrary} name="Express" />
+            <LibraryOption toggleLibrary={props.toggleLibrary} name="Drizzle" />
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="Better-Auth"
             />
-            <label for="tsq">TanStack Query</label>
           </div>
-        </div>
-        <div class={styles.libraryGroup}>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("Nextjs")}
-              checked={props.selectedLibraries.includes("Nextjs")}
-              type="checkbox"
-              id="next"
-              name="frameworks"
+          <div class={styles.libraryGroup}>
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="React-Native"
             />
-            <label for="next">Next.js</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("Express")}
-              checked={props.selectedLibraries.includes("Express")}
-              type="checkbox"
-              id="express"
-              name="frameworks"
+            <LibraryOption
+              toggleLibrary={props.toggleLibrary}
+              name="JetpackCompose"
             />
-            <label for="express">Express</label>
+            <LibraryOption toggleLibrary={props.toggleLibrary} name="JavaFX" />
           </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("Drizzle")}
-              checked={props.selectedLibraries.includes("Drizzle")}
-              type="checkbox"
-              id="drizzle"
-              name="frameworks"
-            />
-            <label for="drizzle">Drizzle</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("Better-Auth")}
-              checked={props.selectedLibraries.includes("Better-Auth")}
-              type="checkbox"
-              id="better-auth"
-              name="frameworks"
-            />
-            <label for="better-auth">Better-Auth</label>
-          </div>
-        </div>
-        <div class={styles.libraryGroup}>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("React-Native")}
-              checked={props.selectedLibraries.includes("React-Native")}
-              type="checkbox"
-              id="react-native"
-              name="frameworks"
-            />
-            <label for="react-native">React-Native</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("JetpackCompose")}
-              checked={props.selectedLibraries.includes("JetpackCompose")}
-              type="checkbox"
-              id="jetpack-compose"
-              name="frameworks"
-            />
-            <label for="jetpack-compose">Jetpack Compose</label>
-          </div>
-          <div class={styles.item}>
-            <input
-              onChange={() => props.toggleLibrary("JavaFX")}
-              checked={props.selectedLibraries.includes("JavaFX")}
-              type="checkbox"
-              id="javafx"
-              name="frameworks"
-            />
-            <label for="javafx">JavaFX</label>
-          </div>
-        </div>
-      </fieldset>
-    </div>
+        </fieldset>
+      </div>
+    </Show>
   );
 };
 
