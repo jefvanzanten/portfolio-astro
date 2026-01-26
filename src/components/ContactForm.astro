@@ -1,9 +1,12 @@
 <form>
-  <input type="text" placeholder="Naam" />
-  <input type="email" placeholder="jouw@email.com" />
-  <textarea class="text-area" placeholder="Schrijf je bericht hier..."
+  <input disabled type="text" placeholder="Naam" />
+  <input disabled type="email" placeholder="jouw@email.com" />
+  <textarea disabled class="text-area" placeholder="Schrijf je bericht hier..."
   ></textarea>
-  <button>Verstuur</button>
+  <button disabled>Verstuur</button>
+  <span class="error"
+    >De email service is niet live. Excuses voor het ongemak.</span
+  >
 </form>
 
 <style>
@@ -43,5 +46,9 @@
     font-family: monospace;
     border-radius: 8px;
     border: none;
+  }
+
+  .error {
+    color: rgb(194, 25, 25);
   }
 </style>
