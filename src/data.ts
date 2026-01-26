@@ -1,42 +1,4 @@
-export type Language = "TypeScript" | "CSS" | "Kotlin" | "Java";
-
-export type Category =
-  | "Frontend"
-  | "Backend"
-  | "Mobile"
-  | "Fullstack"
-  | "Desktop";
-
-export type Library =
-  | "React"
-  | "TailwindCSS"
-  | "React-Router"
-  | "Express"
-  | "Drizzle"
-  | "Better-Auth"
-  | "TanStackQuery"
-  | "Nextjs"
-  | "React-Native"
-  | "JetpackCompose"
-  | "Jest"
-  | "RoomDB"
-  | "JavaFX";
-
-export type Project = {
-  id: number;
-  name: string;
-  description: string | string[];
-  slug: string;
-  url: string;
-  languages: Language[];
-  libraries: Library[];
-  images: string[];
-  category: Category;
-  lastUpdated: string;
-  highlighted: boolean;
-  coverUrl: string;
-  thumbUrl: string;
-};
+import type { Project } from "./types/project";
 
 export const projects: Project[] = [
   {
@@ -148,7 +110,7 @@ export const projects: Project[] = [
     slug: "todo-mobile",
     url: "https://github.com/jefvanzanten/TodoRN",
     languages: ["TypeScript"],
-    libraries: ["React-Native", "Better-Auth", "TanStackQuery"],
+    libraries: ["React-Native", "Better-Auth", "TanStack Query"],
     images: [""],
     coverUrl: "/covers/todo_client_cover.png",
     thumbUrl: "/thumbs/todo_client_thumb.png",
@@ -221,7 +183,7 @@ export const projects: Project[] = [
     slug: "supplement-tracker",
     url: "https://github.com/jefvanzanten/Supplement-Tracker-Android-",
     languages: ["Kotlin"],
-    libraries: ["JetpackCompose", "RoomDB"],
+    libraries: ["Jetpack Compose", "RoomDB"],
     images: [""],
     coverUrl: "/covers/supplement_tracker_cover.png",
     thumbUrl: "/thumbs/supplement_tracker_thumb.png",

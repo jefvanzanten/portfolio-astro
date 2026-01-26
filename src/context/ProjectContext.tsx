@@ -1,10 +1,39 @@
-import { createSignal, createMemo } from "solid-js";
-import type { Language, Library } from "../data";
-import { projects as projectsData } from "../data.ts";
+import {
+  createContext,
+  useContext,
+  createSignal,
+  createMemo,
+  type ParentComponent,
+  type Accessor,
+} from "solid-js";
+import { projects as projectData } from "../data";
+import type { Language, Library, Project } from "../types/project";
 
-const [projects] = createSignal(projectsData);
+interface ProjectState {
+  projects: Accessor<Project[]>;
+  filteredProjects: Accessor<Project[]>;
+  selectedLanguages: Accessor<Language[]>;
+  selectedLibraries: Accessor<Library[]>;
+  toggleLanguage: (language: Language) => void;
+  toggleLibrary: (library: Library) => void;
+  clearFilters: () => void;
+  activeTags: Accessor<(Language | Library)[]>;
+}
 
-const useProjects = () => {
+const ProjectContext = createContext<ProjectState>();
+
+export const useProjectState = () => {
+  const context = useContext(ProjectContext);
+  if (!context) {
+    throw new Error(
+      "useProjectState must be used within ProjectContextProvider",
+    );
+  }
+  return context;
+};
+
+export const ProjectContextProvider: ParentComponent = (props) => {
+  const [projects] = createSignal(projectData);
   const [selectedLanguages, setSelectedLanguages] = createSignal<Language[]>(
     [],
   );
@@ -54,7 +83,7 @@ const useProjects = () => {
     ...selectedLibraries(),
   ]);
 
-  return {
+  const state: ProjectState = {
     projects,
     filteredProjects,
     selectedLanguages,
@@ -64,6 +93,10 @@ const useProjects = () => {
     clearFilters,
     activeTags,
   };
-};
 
-export default useProjects;
+  return (
+    <ProjectContext.Provider value={state}>
+      {props.children}
+    </ProjectContext.Provider>
+  );
+};

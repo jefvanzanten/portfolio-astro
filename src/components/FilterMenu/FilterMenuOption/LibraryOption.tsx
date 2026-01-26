@@ -1,17 +1,19 @@
 import type { Component } from "solid-js";
 import FilterMenuOption from "./FilterMenuOption";
-import type { Language, Library } from "../../../data";
+import { useProjectState } from "../../../context/ProjectContext";
+import type { Library } from "../../../types/project";
 
 interface LibraryOptionProps {
-  toggleLibrary: (library: Library) => void;
   name: Library;
 }
 
 const LibraryOption: Component<LibraryOptionProps> = (props) => {
+  const { toggleLibrary, selectedLibraries } = useProjectState();
+
   return (
     <FilterMenuOption
-      onToggle={() => props.toggleLibrary(props.name)} // Needs to derive from context / hook
-      isSelected={false} // Needs to derive from context / hook
+      onToggle={() => toggleLibrary(props.name)}
+      isSelected={selectedLibraries().includes(props.name)}
       name={props.name}
     />
   );

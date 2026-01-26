@@ -8,7 +8,6 @@
   position: absolute;
   top: 10em;
   left: 10%;
-  width: 80%;
   min-height: 50vh;
   background: rgba(20, 20, 20, 0.9);
   color: rgb(175, 175, 175);
@@ -52,7 +51,6 @@
 
 @media screen and (min-width: 1024px) {
   .container {
-    width: 40%;
     top: 8em;
     /* left: calc(var(--project-container-width) / 2); */
     left: var(--project-offset);
