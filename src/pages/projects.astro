@@ -1,8 +1,11 @@
 ---
-import Layout from "../Layout.astro"
+import Layout from "../Layout.astro";
 import ProjectPage from "../components/ProjectPage/ProjectPage";
 ---
 
-<Layout title="Projects - jefvanzanten.dev" description="Projecten van Jef van Zanten - van React frontends tot Express backends en React Native apps.">
-    <ProjectPage client:load />
+<Layout
+  title="Projects - jefvanzanten.dev"
+  description="Projecten van Jef van Zanten - van React frontends tot Express backends en React Native apps."
+>
+  <ProjectPage client:load />
 </Layout>

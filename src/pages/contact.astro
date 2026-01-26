@@ -1,5 +1,75 @@
 ---
-import Layout from "../Layout.astro"
+import ContactForm from "../components/ContactForm.astro";
+import Layout from "../Layout.astro";
 ---
 
-<Layout title="Contact - jefvanzanten.dev"> contact </Layout>
+<Layout title="Contact - jefvanzanten.dev">
+  <section>
+    <div>
+      <h1>Contact</h1>
+      <div class="container">
+        <p class="contact-info">
+          - Heb je een project in gedachte waar ik wat voor je kan betekenen? <br
+          /><br />
+          - Wil je met mij samenwerken? <br /><br />
+          - Of heb je gewoon wat vragen? <br /><br />
+          <span
+            >Neem dan contact met mij op via
+            <a href="https://www.linkedin.com/in/jefvanzanten/" target="_blank"
+              >Linkedin</a
+            > of <br />
+            mail mij naar <a>j.van.zanten@mail.com</a><br /><br />
+            U kunt ook gebruik maken van het formulier hier rechts.</span
+          >
+        </p>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* section {
+    border: 2px solid red;
+  }
+  .container {
+    border: 2px solid yellow;
+  } */
+
+  section {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1 {
+    text-align: center;
+    padding: 1em 0;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .container {
+    display: flex;
+    gap: 2em;
+  }
+
+  .contact-info {
+    padding: 2em;
+    font-size: 14px;
+    text-wrap: wrap;
+    max-width: 400px;
+    font-size: 16px;
+  }
+
+  span {
+    color: rgb(156, 156, 156);
+  }
+
+  a {
+    color: rgb(13, 145, 134);
+    text-decoration: none;
+    font-weight: 800;
+  }
+</style>
