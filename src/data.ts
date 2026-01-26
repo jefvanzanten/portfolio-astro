@@ -2,6 +2,26 @@ import type { Project } from "./types/project";
 
 export const projects: Project[] = [
   {
+    id: 12,
+    name: "Portfolio - Astro + Solidjs",
+    description: [
+      "Dit is mijn portfolio website.",
+      "Hierop kun je mijn werk vinden. Voorzien van Github link en een link naar de live versie (indien aanwezig)",
+      "/n/n",
+      "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactieviteit.",
+    ],
+    slug: "portfolio",
+    url: "https://github.com/jefvanzanten/portfolio/",
+    languages: ["TypeScript", "CSS", "HTML"],
+    libraries: ["Astro", "Solidjs"],
+    images: [],
+    coverUrl: "/covers/portfolio_cover.png",
+    thumbUrl: "/thumbs/portfolio_thumb.png",
+    category: "Frontend",
+    lastUpdated: "2026-01-26",
+    highlighted: true,
+  },
+  {
     id: 11,
     name: "Game Collection",
     description: [
@@ -77,7 +97,7 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/portfolio_thumb.png",
     category: "Frontend",
     lastUpdated: "2025-06-13",
-    highlighted: true,
+    highlighted: false,
   },
   {
     id: 6,
