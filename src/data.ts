@@ -5,11 +5,11 @@ export const projects: Project[] = [
     id: 12,
     name: "Portfolio - Astro + Solidjs",
     description: [
-      "Dit is mijn portfolio website.",
-      "Hierop kun je mijn werk vinden. Voorzien van Github link en een link naar de live versie (indien aanwezig)",
+      "Dit is mijn portfolio website. ",
+      "Hierop kun je mijn werk vinden. Voorzien van Githublink en een link naar de live versie (indien aanwezig)",
       "\n\n",
       "Dit is een vernieuwde versie met serverside generation (Astro) en Solidjs voor interactiviteit (ipv React). ",
-      "Ook zit er een Github widget in die mijn laatste commits laat zien!",
+      "Ook zit er een Github widget in die de laatste commits laat zien",
     ],
     slug: "portfolio",
     url: "https://github.com/jefvanzanten/portfolio/",
@@ -44,7 +44,7 @@ export const projects: Project[] = [
     id: 10,
     name: "Task Manager",
     description: [
-      "Een taak- en projectbeheerder, vergelijkbaar met Notion/TickTick. ",
+      "Een taak- en projectbeheerder met Notion/TickTick als voorbeeld. ",
       "Projecten en taken zijn gebruikersspecifiek en worden ingeladen op basis van het ingelogde profiel.\n\n",
       "Gebouwd met Next.js en TypeScript; alle database-operaties zijn server-side en de data wordt lokaal opgeslagen.",
     ],

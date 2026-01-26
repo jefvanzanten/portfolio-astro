@@ -5,9 +5,9 @@ import Layout from "../Layout.astro";
 
 <Layout title="Contact - jefvanzanten.dev">
   <section>
-    <div>
+    <div class="container">
       <h1>Contact</h1>
-      <div class="container">
+      <div class="content-container">
         <p class="contact-info">
           - Heb je een project in gedachte waar ik wat voor je kan betekenen? <br
           /><br />
@@ -29,13 +29,6 @@ import Layout from "../Layout.astro";
 </Layout>
 
 <style>
-  /* section {
-    border: 2px solid red;
-  }
-  .container {
-    border: 2px solid yellow;
-  } */
-
   section {
     display: flex;
     width: 100%;
@@ -50,13 +43,12 @@ import Layout from "../Layout.astro";
     font-family: "JetBrains Mono", monospace;
   }
 
-  .container {
+  .content-container {
     display: flex;
     gap: 2em;
   }
 
   .contact-info {
-    padding: 2em;
     font-size: 14px;
     text-wrap: wrap;
     max-width: 400px;
