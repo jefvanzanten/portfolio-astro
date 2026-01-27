@@ -40,7 +40,11 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
   return (
     <>
-      <article ref={cardRef} class={styles["project-card-container"]}>
+      <article
+        ref={cardRef}
+        style={{ "--card-index": props.project.id }}
+        class={styles["project-card-container"]}
+      >
         <button onclick={handleImageClick} class={styles.imgContainer}>
           <img
             class={styles.cover}
@@ -51,7 +55,11 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         </button>
         <section class={styles["project-info"]}>
           <h2 class={styles.title}>{props.project.name}</h2>
-          <p class={styles.description}>{Array.isArray(props.project.description) ? props.project.description.join("") : props.project.description}</p>
+          <p class={styles.description}>
+            {Array.isArray(props.project.description)
+              ? props.project.description.join("")
+              : props.project.description}
+          </p>
         </section>
         <div class={styles["tag-container"]}>
           <For each={props.project.libraries}>

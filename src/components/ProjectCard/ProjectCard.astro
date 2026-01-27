@@ -11,11 +11,20 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article class={styles["project-card-container"]}>
+<article
+  style={{ "--card-index": project.id }}
+  class={styles["project-card-container"]}
+>
   <ImageButton client:load project={project} />
   <section class={styles["project-info"]}>
     <h2 class={styles.title}>{project.name}</h2>
-    <p class={styles.description}>{Array.isArray(project.description) ? project.description.join("") : project.description}</p>
+    <p class={styles.description}>
+      {
+        Array.isArray(project.description)
+          ? project.description.join("")
+          : project.description
+      }
+    </p>
   </section>
   <div class={styles["tag-container"]}>
     {
