@@ -1,0 +1,9 @@
+---
+const { url, iconUrl, name } = Astro.props;
+import styles from "./GithubLink.module.css";
+---
+
+<a class={styles.socialContainer} href={url} target="_blank">
+  <img class={styles.logo} src={iconUrl} />
+  <p>{name}</p>
+</a>

@@ -11,7 +11,7 @@ const GithubLink: Component<GithubLinkProps> = (props) => {
   return (
     <a class={styles.socialContainer} href={props.url} target="_blank">
       <img class={styles.logo} src={props.iconUrl} alt={`${props.name} logo`} />
-      <p class={styles.p}>{props.name}</p>
+      <p>{props.name}</p>
     </a>
   );
 };

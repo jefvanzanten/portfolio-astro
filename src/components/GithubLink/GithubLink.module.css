@@ -21,17 +21,17 @@ a:visited {
   text-decoration: none;
 }
 
-.p {
+p {
   font-size: 1rem;
   padding: 0 2em;
 }
 
 @media screen and (min-width: 1024px) {
   .socialContainer {
-    padding: 0 0.4em;
+    padding: 0.5em;
   }
 
-  .p {
+  p {
     font-size: 0.8rem;
     padding: 0 1.5rem;
   }
