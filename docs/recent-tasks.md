@@ -1,10 +1,4 @@
-# Tasks
-
-## Planned
-
-- [ ] Update the readme with a document structure that explains the project
-
-## Recent activity
+# Recent tasks
 
 - [x] Make a markdown file where I show the past and planned activity
 - [x] Github height adjusted of the GithubLink.module.css and made the GithubLink.astro also work with the module.
