@@ -6,13 +6,14 @@ import ImageButton from "../ImageButton/ImageButton";
 
 interface Props {
   project: Project;
+  index?: number;
 }
 
-const { project } = Astro.props;
+const { project, index = 0 } = Astro.props;
 ---
 
 <article
-  style={{ "--card-index": project.id }}
+  style={{ "--card-index": index }}
   class={styles["project-card-container"]}
 >
   <ImageButton client:load project={project} />

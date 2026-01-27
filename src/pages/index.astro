@@ -31,8 +31,11 @@ const filteredProjects = projects.filter((project) => project.highlighted);
         <h1>Featured Projects</h1>
         <span class="line"></span>
       </div>
-      <div class="featured-projects-list">
-        {filteredProjects.map((project) => <ProjectCard project={project} />)}
+      <div
+        class="featured-projects-list"
+        style={{ "--total-cards": filteredProjects.length }}
+      >
+        {filteredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
       </div>
     </section>
   </div>

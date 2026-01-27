@@ -94,9 +94,7 @@
   .project-card-container {
     min-height: 26vh;
     animation: fallIn 0.6s ease-out forwards;
-    animation-delay: calc(
-      (var(--total-cards, 10) - var(--card-index, 0)) * 0.1s
-    );
+    animation-delay: calc(var(--card-index, 0) * 0.1s);
     opacity: 0;
   }
 

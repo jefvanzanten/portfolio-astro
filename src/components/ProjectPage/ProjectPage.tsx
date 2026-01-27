@@ -8,6 +8,7 @@ import {
 } from "../../context/ProjectContext";
 import styles from "./ProjectPage.module.css";
 import FilterButton from "../FilterButton/FilterButton";
+import { projects } from "../../data";
 
 const ProjectPageContent: Component = () => {
   const { filteredProjects } = useProjectState();
@@ -20,9 +21,12 @@ const ProjectPageContent: Component = () => {
           <FilterTagBar />
         </div>
         <FilterMenu />
-        <section class={styles["project-container"]}>
+        <section
+          class={styles["project-container"]}
+          style={{ "--total-cards": projects.length }}
+        >
           <For each={filteredProjects()}>
-            {(project) => <ProjectCard project={project} />}
+            {(project, index) => <ProjectCard project={project} index={index()} />}
           </For>
         </section>
       </div>

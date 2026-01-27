@@ -6,6 +6,7 @@ import type { Project } from "../../types/project";
 
 type ProjectCardProps = {
   project: Project;
+  index?: number;
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
@@ -42,7 +43,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     <>
       <article
         ref={cardRef}
-        style={{ "--card-index": props.project.id }}
+        style={{ "--card-index": props.index ?? 0 }}
         class={styles["project-card-container"]}
       >
         <button onclick={handleImageClick} class={styles.imgContainer}>
