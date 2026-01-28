@@ -19,7 +19,7 @@ interface ProjectState {
   toggleLibrary: (library: Library) => void;
   toggleCategory: (category: Category) => void;
   clearFilters: () => void;
-  activeTags: Accessor<(Language | Library)[]>;
+  activeTags: Accessor<(Category | Language | Library)[]>;
 }
 
 const ProjectContext = createContext<ProjectState>();
@@ -91,6 +91,7 @@ export const ProjectContextProvider: ParentComponent = (props) => {
   };
 
   const activeTags = createMemo(() => [
+    ...(selectedCategory() ? [selectedCategory()!] : []),
     ...selectedLanguages(),
     ...selectedLibraries(),
   ]);

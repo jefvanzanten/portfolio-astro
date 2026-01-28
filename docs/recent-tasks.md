@@ -1,5 +1,7 @@
 # Recent tasks
 
+- [x] Also reflect the selected category in the FilterTagBar
+- [x] Added a option to filter on category in FilterMenu
 - [x] Updated data.ts and types/project.ts with projects on Github I didn't add yet.
 - [x] Receive PyAPI address from env
 - [x] Create an email service that uses the email endpoint on the local PyAPI server
