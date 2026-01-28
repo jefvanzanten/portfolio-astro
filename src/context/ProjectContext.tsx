@@ -7,15 +7,17 @@ import {
   type Accessor,
 } from "solid-js";
 import { projects as projectData } from "../data";
-import type { Language, Library, Project } from "../types/project";
+import type { Category, Language, Library, Project } from "../types/project";
 
 interface ProjectState {
   projects: Accessor<Project[]>;
   filteredProjects: Accessor<Project[]>;
+  selectedCategory: Accessor<Category | null>;
   selectedLanguages: Accessor<Language[]>;
   selectedLibraries: Accessor<Library[]>;
   toggleLanguage: (language: Language) => void;
   toggleLibrary: (library: Library) => void;
+  toggleCategory: (category: Category) => void;
   clearFilters: () => void;
   activeTags: Accessor<(Language | Library)[]>;
 }
@@ -38,12 +40,17 @@ export const ProjectContextProvider: ParentComponent = (props) => {
     [],
   );
   const [selectedLibraries, setSelectedLibraries] = createSignal<Library[]>([]);
+  const [selectedCategory, setSelectedCategory] = createSignal<Category | null>(null);
 
   const filteredProjects = createMemo(() => {
     return projects().filter((project) => {
       if (!project.languages || !project.libraries) {
         return false;
       }
+
+      const categoryMatch =
+        selectedCategory() === null ||
+        project.category === selectedCategory();
 
       const languageMatch =
         selectedLanguages().length === 0 ||
@@ -53,7 +60,7 @@ export const ProjectContextProvider: ParentComponent = (props) => {
         selectedLibraries().length === 0 ||
         selectedLibraries().every((lib) => project.libraries.includes(lib));
 
-      return languageMatch && libraryMatch;
+      return languageMatch && libraryMatch && categoryMatch;
     });
   });
 
@@ -73,9 +80,14 @@ export const ProjectContextProvider: ParentComponent = (props) => {
     );
   };
 
+  const toggleCategory = (cat: Category) => {
+    setSelectedCategory((prev) => (prev === cat ? null : cat));
+  };
+
   const clearFilters = () => {
     setSelectedLanguages([]);
     setSelectedLibraries([]);
+    setSelectedCategory(null);
   };
 
   const activeTags = createMemo(() => [
@@ -86,8 +98,10 @@ export const ProjectContextProvider: ParentComponent = (props) => {
   const state: ProjectState = {
     projects,
     filteredProjects,
+    selectedCategory,
     selectedLanguages,
     selectedLibraries,
+    toggleCategory,
     toggleLanguage,
     toggleLibrary,
     clearFilters,

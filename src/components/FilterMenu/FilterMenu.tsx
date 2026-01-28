@@ -1,5 +1,6 @@
 import { createSignal, Show, type Component } from "solid-js";
 import styles from "./FilterMenu.module.css";
+import CategoryOption from "./FilterMenuOption/CategoryOption";
 import LanguageOption from "./FilterMenuOption/LanguageOption";
 import LibraryOption from "./FilterMenuOption/LibraryOption";
 
@@ -13,6 +14,19 @@ const FilterMenu: Component = () => {
         onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen())}
       />
       <div class={styles.container}>
+        <fieldset class={styles.libraries}>
+          <legend class={styles.legend}>Categorieën</legend>
+          <div class={styles.libraryGroup}>
+            <CategoryOption name="Frontend" />
+            <CategoryOption name="Backend" />
+            <CategoryOption name="Fullstack" />
+          </div>
+          <div class={styles.libraryGroup}>
+            <CategoryOption name="Mobile" />
+            <CategoryOption name="Desktop" />
+          </div>
+        </fieldset>
+
         <fieldset class={styles.libraries}>
           <legend class={styles.legend}>Programmeer- & script-talen</legend>
           <div class={styles.libraryGroup}>
