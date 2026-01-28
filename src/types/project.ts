@@ -21,18 +21,22 @@ export type Library =
   | "TailwindCSS"
   | "React-Router"
   | "Express"
-  | "Drizzle"
+  | "Drizzle ORM"
   | "Better-Auth"
   | "TanStack Query"
   | "Nextjs"
   | "React-Native"
+  | "Hono"
   | "Jetpack Compose"
   | "Jest"
   | "RoomDB"
-  | "JavaFX";
+  | "Resend"
+  | "Pydantic"
+  | "FastAPI"
+  | "JavaFX"
+  | "Weasyprint";
 
 export type Project = {
-  id: number;
   name: string;
   description: string | string[];
   slug: string;

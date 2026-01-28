@@ -16,7 +16,6 @@ const FilterMenu: Component = () => {
         <fieldset class={styles.libraries}>
           <legend class={styles.legend}>Programmeer- & script-talen</legend>
           <div class={styles.libraryGroup}>
-            <LanguageOption name="C#" />
             <LanguageOption name="CSS" />
             <LanguageOption name="HTML" />
             <LanguageOption name="Java" />
@@ -33,18 +32,19 @@ const FilterMenu: Component = () => {
           <div class={styles.libraryGroup}>
             <LibraryOption name="Astro" />
             <LibraryOption name="Better-Auth" />
-            <LibraryOption name="Drizzle" />
+            <LibraryOption name="Drizzle ORM" />
             <LibraryOption name="Express" />
-            <LibraryOption name="JavaFX" />
+            <LibraryOption name="FastAPI" />
           </div>
           <div class={styles.libraryGroup}>
+            <LibraryOption name="JavaFX" />
             <LibraryOption name="Jetpack Compose" />
             <LibraryOption name="Nextjs" />
             <LibraryOption name="React" />
             <LibraryOption name="React-Native" />
-            <LibraryOption name="React-Router" />
           </div>
           <div class={styles.libraryGroup}>
+            <LibraryOption name="React-Router" />
             <LibraryOption name="Solidjs" />
             <LibraryOption name="TailwindCSS" />
             <LibraryOption name="TanStack Query" />

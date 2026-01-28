@@ -2,7 +2,6 @@ import type { Project } from "./types/project";
 
 export const projects: Project[] = [
   {
-    id: 12,
     name: "Portfolio - Astro + Solidjs",
     description: [
       "Dit is mijn portfolio website. ",
@@ -12,18 +11,49 @@ export const projects: Project[] = [
       "Ook zit er een Github widget in die de laatste commits laat zien",
     ],
     slug: "portfolio",
-    url: "https://github.com/jefvanzanten/portfolio/",
+    url: "https://github.com/jefvanzanten/portfolio-astro/",
     languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["Astro", "Solidjs"],
     images: [],
-    coverUrl: "/covers/portfolio_cover.png",
-    thumbUrl: "/thumbs/portfolio_thumb.png",
+    coverUrl: "/covers/portfolio_astro_cover.png",
+    thumbUrl: "/thumbs/portfolio_astro_thumb.png",
     category: "Frontend",
-    lastUpdated: "2026-01-26",
+    lastUpdated: "2026-01-28",
     highlighted: true,
   },
   {
-    id: 11,
+    name: "Python API - Email send en PDF generation",
+    description: [
+      "Dit is een Python API met een email service en pdf generation service die ik kan gebruiken d.m.v. api endpoints.",
+    ],
+    slug: "python-api",
+    url: "https://github.com/jefvanzanten/PyAPI",
+    languages: ["Python"],
+    libraries: ["Resend", "FastAPI", "Pydantic", "Weasyprint"],
+    images: [],
+    coverUrl: "/covers/fastapi_custom_cover.png",
+    thumbUrl: "/thumbs/fastapi_custom_thumb.png",
+    category: "Backend",
+    lastUpdated: "2026-01-27",
+    highlighted: true,
+  },
+  {
+    name: "Bun Auth server",
+    description: [
+      "Minimale auth-server voor mijn persoonlijke projecten met beschermde routes en/of API-endpoints.",
+    ],
+    slug: "auth-server",
+    url: "https://github.com/jefvanzanten/auth-server",
+    languages: ["TypeScript"],
+    libraries: ["Hono", "Better-Auth", "Drizzle ORM"],
+    images: [],
+    coverUrl: "/covers/authserver_cover.png",
+    thumbUrl: "/thumbs/authserver_thumb.png",
+    category: "Backend",
+    lastUpdated: "2026-01-14",
+    highlighted: false,
+  },
+  {
     name: "Game Collection",
     description: [
       "Een website om mijn gamecollectie te tonen aan vrienden en om multiplayer sessies te plannen.\n\n",
@@ -31,7 +61,7 @@ export const projects: Project[] = [
     ],
     slug: "game-collection",
     url: "https://github.com/jefvanzanten/game-collection",
-    languages: ["TypeScript", "CSS"],
+    languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["React"],
     images: [""],
     coverUrl: "/covers/game-collection.png",
@@ -41,7 +71,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 10,
     name: "Task Manager",
     description: [
       "Een taak- en projectbeheerder met Notion/TickTick als voorbeeld. ",
@@ -50,8 +79,8 @@ export const projects: Project[] = [
     ],
     slug: "task-manager",
     url: "https://github.com/jefvanzanten/task-manager-nextjs",
-    languages: ["TypeScript"],
-    libraries: ["Nextjs", "TailwindCSS", "Drizzle", "Better-Auth"],
+    languages: ["TypeScript", "HTML", "CSS"],
+    libraries: ["Nextjs", "TailwindCSS", "Drizzle ORM", "Better-Auth"],
     images: [""],
     coverUrl: "/covers/task-manager-cover.png",
     thumbUrl: "/thumbs/task-manager-thumb.png",
@@ -60,14 +89,13 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 9,
     name: "Make24",
     description: [
       "Een wiskunde spel waarbij de speler de som van 24 moet maken door alle 4 getallen met operatoren te gebruiken.",
     ],
     slug: "make24",
     url: "https://github.com/jefvanzanten/make24",
-    languages: ["TypeScript", "CSS"],
+    languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["React"],
     images: [""],
     coverUrl: "/covers/make24_cover.png",
@@ -77,7 +105,6 @@ export const projects: Project[] = [
     highlighted: true,
   },
   {
-    id: 8,
     name: "Portfolio - React",
     description: [
       "Mijn persoonlijke, statische, client-side gerenderde website. ",
@@ -85,8 +112,8 @@ export const projects: Project[] = [
       "Hoofddoel is het delen van projecten gefilterd op relevante programmeertalen/tech stack.",
     ],
     slug: "portfolio",
-    url: "https://github.com/jefvanzanten/portfolio/",
-    languages: ["TypeScript", "CSS"],
+    url: "https://github.com/jefvanzanten/portfolio-react/",
+    languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["React", "React-Router"],
     images: [
       "/screenshots/portfolio/mobile landingpage.png",
@@ -101,7 +128,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 6,
     name: "Todo server (REST API)",
     description: [
       "Dit project is mijn eerste zelfgemaakte server en draait nu live sinds mid mei. ",
@@ -113,7 +139,7 @@ export const projects: Project[] = [
     slug: "todo-backend",
     url: "https://github.com/jefvanzanten/todobackend",
     languages: ["TypeScript"],
-    libraries: ["Express", "Drizzle", "Better-Auth"],
+    libraries: ["Express", "Drizzle ORM", "Better-Auth"],
     images: [""],
     coverUrl: "/covers/express_custom_cover.png",
     thumbUrl: "/thumbs/express_custom_thumb.png",
@@ -122,7 +148,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 5,
     name: "Todo client (mobile)",
     description: [
       "De mobiele app die de Todo REST API gebruikt. ",
@@ -140,7 +165,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 4,
     name: "Reeksenspel",
     description: [
       "Dit is een project waarbij ik heb geprobeerd een spel te maken met React, TypeScript en Tailwind CSS.",
@@ -149,7 +173,7 @@ export const projects: Project[] = [
     ],
     slug: "reeksenspel",
     url: "https://github.com/jefvanzanten/reeksenspel/",
-    languages: ["TypeScript"],
+    languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["React", "TailwindCSS"],
     images: [""],
     coverUrl: "/covers/reeksenspel_cover.png",
@@ -159,7 +183,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 3,
     name: "Schoolproject: OV app (backend)",
     description: [
       "De backend REST API voor de OV-applicatie uit de tweede projectfase. ",
@@ -174,10 +197,9 @@ export const projects: Project[] = [
     thumbUrl: "/thumbs/hu_thumb.png",
     category: "Backend",
     lastUpdated: "2025-03-13",
-    highlighted: true,
+    highlighted: false,
   },
   {
-    id: 2,
     name: "Schoolproject: OV app (frontend)",
     description: [
       "Dit is de frontend van de OV applicatie van het project van de 2e fase. ",
@@ -185,7 +207,7 @@ export const projects: Project[] = [
     ],
     slug: "ov-app-frontend",
     url: "https://github.com/jefvanzanten/ADSD-Fase2-OV-app/tree/main/frontend",
-    languages: ["TypeScript", "CSS"],
+    languages: ["TypeScript", "CSS", "HTML"],
     libraries: ["React"],
     images: [""],
     coverUrl: "/covers/hu_cover.png",
@@ -195,7 +217,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 1,
     name: "SupplementTracker",
     description: [
       "Dit is een van de eerste native Android apps die ik heb gemaakt. ",
@@ -213,7 +234,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 0,
     name: "Schoolproject: Picit",
     description: [
       "Dit is het eerste schoolproject waarbij we in teamverband werkten. ",
@@ -233,7 +253,6 @@ export const projects: Project[] = [
     highlighted: false,
   },
   {
-    id: 12,
     name: "Schoolproject: Fitness app",
     description: [
       "Dit is het eerste schoolproject. Een console applicatie voor de gebruikers van een fitnessschool. ",

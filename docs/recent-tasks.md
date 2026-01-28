@@ -1,6 +1,7 @@
 # Recent tasks
 
-- [x] PyAPI adres ophalen uit env
+- [x] Updated data.ts and types/project.ts with projects on Github I didn't add yet.
+- [x] Receive PyAPI address from env
 - [x] Create an email service that uses the email endpoint on the local PyAPI server
 - [x] Use the sevice with the onclick of the button on the contactform
 - [x] Make a markdown file where I show the past and planned activity
