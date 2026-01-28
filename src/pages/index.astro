@@ -35,7 +35,11 @@ const filteredProjects = projects.filter((project) => project.highlighted);
         class="featured-projects-list"
         style={{ "--total-cards": filteredProjects.length }}
       >
-        {filteredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
+        {
+          filteredProjects.map((project, index) => (
+            <ProjectCard project={project} index={index} />
+          ))
+        }
       </div>
     </section>
   </div>
@@ -43,13 +47,27 @@ const filteredProjects = projects.filter((project) => project.highlighted);
 
 <style>
   /*  debug */
-  /* main { border: 2px dashed blue }
-.content-container { border: 2px dashed magenta;}
-.introduction { border: 2px solid red; }
-.introduction-content { border: 2px solid green;}
-h1 { border: 2px solid purple}
-p { border: 2px solid yellow}
-.featured-projects-container { border: 2px solid teal; } */
+  /* main {
+    border: 2px dashed blue;
+  }
+  .content-container {
+    border: 2px dashed magenta;
+  }
+  .introduction {
+    border: 2px solid red;
+  }
+  .introduction-content {
+    border: 2px solid green;
+  }
+  h1 {
+    border: 2px solid purple;
+  }
+  p {
+    border: 2px solid yellow;
+  }
+  .featured-projects-container {
+    border: 2px solid teal;
+  } */
 
   .content-container {
     display: flex;
@@ -91,7 +109,7 @@ p { border: 2px solid yellow}
     color: rgba(255, 255, 255, 0.603);
     text-wrap: wrap;
     max-width: 32rem;
-    /* padding: 0 1em; */
+    padding: 0;
   }
 
   /* Featured projects section -- TODO: Need to move to a new component */
@@ -125,7 +143,7 @@ p { border: 2px solid yellow}
   /* Screen specific styling */
   /* Higher resolution screen */
 
-  @media screen and (max-width: 1800px) {
+  @media screen and (min-width: 1800px) {
     .introduction {
       min-height: 10vh;
     }
@@ -148,15 +166,15 @@ p { border: 2px solid yellow}
 
   /* Tablet and most common desktop resolution */
 
-  @media screen and (max-width: 940px) {
+  @media screen and (min-width: 940px) {
     .introduction {
       min-height: 20vh;
     }
 
     p {
-      font-size: 0.9rem;
-      line-height: 1.4rem;
-      max-width: 20rem;
+      font-size: 1rem;
+      /* line-height: 1.4rem; */
+      max-width: 24rem;
     }
 
     h1 {
