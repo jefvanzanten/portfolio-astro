@@ -5,7 +5,6 @@ import "./styles.css";
 
 const { title, description } = Astro.props;
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
-console.log(GA_ID);
 ---
 
 <html lang="nl">
@@ -21,6 +20,7 @@ console.log(GA_ID);
       GA_ID && (
         <>
           <script
+            is:inline
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           />
