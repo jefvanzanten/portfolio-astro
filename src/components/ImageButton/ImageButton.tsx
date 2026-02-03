@@ -1,6 +1,6 @@
 import styles from "./ImageButton.module.css";
 import { useImageViewModal } from "../../hooks/useImageViewModal";
-import type { Project } from "../../data";
+import type { Project } from "../../types/project";
 
 const ImageButton = ({ project }: { project: Project }) => {
   const { openModal, setImageUrl } = useImageViewModal();
@@ -11,9 +11,9 @@ const ImageButton = ({ project }: { project: Project }) => {
   };
 
   return (
-    <button onClick={handleImageClick} class={styles.imgContainer}>
+    <button onClick={handleImageClick} class={styles["image-container"]}>
       <img
-        class={styles.cover}
+        class={styles.thumb}
         src={project.thumbUrl}
         alt={`${project.name} cover`}
         loading="lazy"

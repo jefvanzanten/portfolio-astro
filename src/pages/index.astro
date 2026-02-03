@@ -46,38 +46,17 @@ const filteredProjects = projects.filter((project) => project.highlighted);
 </Layout>
 
 <style>
-  /*  debug */
-  /* main {
-    border: 2px dashed blue;
-  }
-  .content-container {
-    border: 2px dashed magenta;
-  }
-  .introduction {
-    border: 2px solid red;
-  }
-  .introduction-content {
-    border: 2px solid green;
-  }
-  h1 {
-    border: 2px solid purple;
-  }
-  p {
-    border: 2px solid yellow;
-  }
-  .featured-projects-container {
-    border: 2px solid teal;
-  } */
-
   .content-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    box-sizing: border-box;
     z-index: 0;
-    min-height: 90vh;
     overflow: hidden;
+
+    @media screen and (max-width: 940px) {
+      padding: 0 10vw;
+    }
   }
 
   /* Introduction section */
@@ -88,101 +67,70 @@ const filteredProjects = projects.filter((project) => project.highlighted);
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media screen and (max-width: 940px) {
+      min-height: 20vh;
+    }
+
+    @media screen and (min-width: 1800px) {
+      min-height: 10vh;
+    }
   }
 
   .introduction-content {
     display: flex;
     flex-direction: column;
     width: fit-content;
+
+    h1 {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      font-size: 1.8rem;
+      padding: 1em 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 0;
+      color: var(--text-muted);
+      text-wrap: wrap;
+      max-width: 32rem;
+      padding: 0;
+
+      @media screen and (max-width: 940px) {
+        font-size: 1rem;
+        max-width: 24rem;
+      }
+
+      @media screen and (min-width: 1800px) {
+        font-size: 0.9rem;
+        max-width: 28rem;
+      }
+    }
   }
 
-  h1 {
-    font-family: "JetBrains Mono", monospace;
-    font-weight: 400;
-    font-size: 1.8rem;
-    padding: 1em 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.603);
-    text-wrap: wrap;
-    max-width: 32rem;
-    padding: 0;
-  }
-
-  /* Featured projects section -- TODO: Need to move to a new component */
+  /* Featured Projects */
 
   .featured-projects-container {
     display: flex;
     flex-direction: column;
     gap: 2em;
+    padding: 5vh 0;
+
+    @media screen and (orientation: portrait) and (max-width: 1024px) {
+      align-items: center;
+    }
   }
 
   .featured-projects-list {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 2em;
     --card-width: 300px;
-  }
 
-  .title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .title h1 {
-    font-family: "JetBrains Mono", monospace;
-    font-weight: 100;
-    font-size: 1.3rem;
-  }
-
-  /* Screen specific styling */
-  /* Higher resolution screen */
-
-  @media screen and (min-width: 1800px) {
-    .introduction {
-      min-height: 10vh;
-    }
-
-    .home-profile-pic {
-      width: 8rem;
-      height: 8rem;
-    }
-
-    p {
-      font-size: 0.9rem;
-      max-width: 28rem;
-    }
-
-    h1 {
-      padding: 1em 0;
-      font-size: 1.4rem;
-    }
-  }
-
-  /* Tablet and most common desktop resolution */
-
-  @media screen and (min-width: 940px) {
-    .introduction {
-      min-height: 20vh;
-    }
-
-    p {
-      font-size: 1rem;
-      /* line-height: 1.4rem; */
-      max-width: 24rem;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-    }
-
-    .title .line {
-      width: 2em;
+    @media screen and (orientation: portrait) and (max-width: 1024px) {
+      width: 80%;
     }
   }
 </style>

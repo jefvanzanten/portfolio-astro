@@ -9,70 +9,55 @@ const GITHUB_USERNAME = "jefvanzanten";
 const commits = await fetchLatestCommitsViaEvents(
   GITHUB_USERNAME,
   10,
-  import.meta.env.GITHUB_TOKEN
+  import.meta.env.GITHUB_TOKEN,
 );
 ---
 
-{commits.length > 0 && (
-  <section class="commits-section">
-    <div class="title">
-      <span class="line" />
-      <h2>Recente Activiteit</h2>
-      <span class="line" />
-    </div>
-    <div class="commits-scroll-container">
-      <div class="commits-track">
-        {commits.map((commit) => (
-          <CommitCard commit={commit} />
-        ))}
+{
+  commits.length > 0 && (
+    <section class="commits-section">
+      <div class="title">
+        <span class="line" />
+        <h1>Recente Activiteit</h1>
+        <span class="line" />
       </div>
-    </div>
-  </section>
-)}
+      <div class="commits-scroll-container">
+        <div class="commits-track">
+          {commits.map((commit) => (
+            <CommitCard commit={commit} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 <style>
-/* .commits-section { border: 1px solid red;} */
-
-.commits-section {
-  display: none;
-  flex-direction: column;
-  gap: 1.5em;
-  overflow: hidden;
-  width: var(--featured-projects-container-width)
-}
-
-.title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-h2 {
-  font-family: "JetBrains Mono", monospace;
-  font-weight: 100;
-  font-size: 1.3rem;
-}
-
-.commits-scroll-container {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  padding: 1em 0;
-}
-
-.commits-track {
-  display: flex;
-  gap: 1em;
-  padding: 0.5em;
-  width: max-content;
-}
-
-@media screen and (min-width: 941px) {
   .commits-section {
     display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    overflow: hidden;
+    width: var(--featured-projects-container-width);
+
+    @media screen and (max-width: 940px) {
+      display: none;
+    }
   }
-}
+
+  .commits-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    padding: 1em 0;
+
+    .commits-track {
+      display: flex;
+      gap: 1em;
+      padding: 0.5em;
+      width: max-content;
+    }
+  }
 </style>

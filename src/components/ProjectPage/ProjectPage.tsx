@@ -26,7 +26,9 @@ const ProjectPageContent: Component = () => {
           style={{ "--total-cards": projects.length }}
         >
           <For each={filteredProjects()}>
-            {(project, index) => <ProjectCard project={project} index={index()} />}
+            {(project, index) => (
+              <ProjectCard project={project} index={index()} />
+            )}
           </For>
         </section>
       </div>

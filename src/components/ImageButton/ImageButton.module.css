@@ -1,21 +1,22 @@
-.imgContainer {
-  width: inherit;
-  height: 18vh;
+.image-container {
+  all: unset;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   border-radius: 10px 10px 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.8);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 2px solid var(--border);
   padding: 0;
   margin: 0;
-  background: #000;
+  background: var(--bg);
 
-  .cover {
+  .thumb {
     object-position: 0 0;
     width: inherit;
     height: inherit;
     cursor: pointer;
-    padding: 0;
-    margin: 0;
   }
 }

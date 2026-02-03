@@ -4,6 +4,8 @@ import ImageViewModal from "./components/ImageViewModal/ImageViewModal";
 import "./styles.css";
 
 const { title, description } = Astro.props;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+console.log(GA_ID);
 ---
 
 <html lang="nl">
@@ -12,10 +14,29 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    {
+      GA_ID && (
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          />
+          <script is:inline>
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+          </script>
+        </>
+      )
+    }
   </head>
+
   <body>
     <main>
       <Navigation client:load currentPath={Astro.url.pathname} />

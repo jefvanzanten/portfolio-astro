@@ -1,5 +1,7 @@
 # Recent tasks
 
+- [x] Lines next to Featured Projects are not 100% width like Recent Activity
+- [x] Optimized the styling for mobile and tablet resolutions
 - [x] Also reflect the selected category in the FilterTagBar
 - [x] Added a option to filter on category in FilterMenu
 - [x] Updated data.ts and types/project.ts with projects on Github I didn't add yet.

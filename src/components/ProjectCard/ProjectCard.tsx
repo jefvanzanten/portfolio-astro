@@ -3,6 +3,7 @@ import { For, onMount, type Component } from "solid-js";
 import { useImageViewModal } from "../../hooks/useImageViewModal";
 import GithubLink from "../GithubLink/GithubLink";
 import type { Project } from "../../types/project";
+import ImageButton from "../ImageButton/ImageButton";
 
 type ProjectCardProps = {
   project: Project;
@@ -46,14 +47,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         style={{ "--card-index": props.index ?? 0 }}
         class={styles["project-card-container"]}
       >
-        <button onclick={handleImageClick} class={styles.imgContainer}>
-          <img
-            class={styles.cover}
-            src={props.project.thumbUrl}
-            alt={`${props.project.name} cover`}
-            loading="lazy"
-          />
-        </button>
+        <ImageButton project={props.project} />
         <section class={styles["project-info"]}>
           <h2 class={styles.title}>{props.project.name}</h2>
           <p class={styles.description}>
