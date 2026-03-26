@@ -1,11 +1,15 @@
 ---
 import Layout from "../Layout.astro";
 import ProjectPage from "../components/ProjectPage/ProjectPage";
+import { projects } from "../data.ts";
+
+const allTech = [...new Set(projects.flatMap((p) => [...p.languages, ...p.libraries]))].join(", ");
+const description = `Projecten van Jef (Jeffrey) van Zanten - Fullstack developer. Technologieën: ${allTech}.`;
 ---
 
 <Layout
   title="Projects - jefvanzanten.dev"
-  description="Projecten van Jef van Zanten - van React frontends tot Express backends en React Native apps."
+  description={description}
 >
   <ProjectPage client:load />
 </Layout>
