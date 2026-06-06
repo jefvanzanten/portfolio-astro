@@ -14,11 +14,11 @@ interface CacheData {
   commits: CommitDisplay[];
 }
 
-function readCache(): CommitDisplay[] | null {
+function readCache(maxAgeMs: number = CACHE_TTL_MS): CommitDisplay[] | null {
   try {
     const data = fs.readFileSync(CACHE_FILE, "utf-8");
     const cache: CacheData = JSON.parse(data);
-    if (Date.now() - cache.timestamp < CACHE_TTL_MS) {
+    if (Date.now() - cache.timestamp < maxAgeMs) {
       console.log("Using cached GitHub commits");
       return cache.commits;
     }
@@ -208,7 +208,12 @@ export async function fetchLatestCommitsViaEvents(
 
   if (!response.ok) {
     console.error(`GitHub Events API error: ${response.status}`);
-    return [];
+    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
+    if (fallbackCommits.length > 0) {
+      return fallbackCommits;
+    }
+
+    return readCache(Number.POSITIVE_INFINITY) ?? [];
   }
 
   const events: GitHubEvent[] = await response.json();
@@ -233,6 +238,19 @@ export async function fetchLatestCommitsViaEvents(
 
     // Only fetch enough to get our limit
     if (pushEventsToFetch.length >= totalLimit) break;
+  }
+
+  if (pushEventsToFetch.length === 0) {
+    console.warn(
+      "No recent push events found via GitHub Events API, falling back to repository commits"
+    );
+
+    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
+    if (fallbackCommits.length > 0) {
+      return fallbackCommits;
+    }
+
+    return readCache(Number.POSITIVE_INFINITY) ?? [];
   }
 
   // Fetch commit details for each head SHA
@@ -265,6 +283,19 @@ export async function fetchLatestCommitsViaEvents(
 
   // Sort by date (newest first)
   commits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  if (commits.length === 0) {
+    console.warn(
+      "No commit details could be loaded from GitHub Events API, falling back to repository commits"
+    );
+
+    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
+    if (fallbackCommits.length > 0) {
+      return fallbackCommits;
+    }
+
+    return readCache(Number.POSITIVE_INFINITY) ?? [];
+  }
 
   // Write to cache
   writeCache(commits);

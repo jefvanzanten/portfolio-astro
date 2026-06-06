@@ -13,14 +13,15 @@ const commits = await fetchLatestCommitsViaEvents(
 );
 ---
 
-{
-  commits.length > 0 && (
-    <section class="commits-section">
-      <div class="title">
-        <span class="line" />
-        <h1>Recente Activiteit</h1>
-        <span class="line" />
-      </div>
+<section class="commits-section">
+  <div class="title">
+    <span class="line" />
+    <h1>Recente Activiteit</h1>
+    <span class="line" />
+  </div>
+
+  {
+    commits.length > 0 ? (
       <div class="commits-scroll-container">
         <div class="commits-track">
           {commits.map((commit) => (
@@ -28,9 +29,14 @@ const commits = await fetchLatestCommitsViaEvents(
           ))}
         </div>
       </div>
-    </section>
-  )
-}
+    ) : (
+      <div class="empty-state">
+        Geen GitHub-activiteit beschikbaar. De site kan nog wel online zijn, maar
+        er is op dit moment geen commitdata opgehaald.
+      </div>
+    )
+  }
+</section>
 
 <style>
   .commits-section {
@@ -59,5 +65,14 @@ const commits = await fetchLatestCommitsViaEvents(
       padding: 0.5em;
       width: max-content;
     }
+  }
+
+  .empty-state {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5em;
+    padding: 1.25em;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03);
+    line-height: 1.5;
   }
 </style>
