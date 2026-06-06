@@ -15,83 +15,95 @@ const formattedDate = new Date(commit.date).toLocaleString("nl-NL", {
 });
 ---
 
-<a href={commit.url} target="_blank" rel="noopener noreferrer" class="commit-card">
+<a
+  href={commit.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="commit-card"
+>
   <div class="commit-header">
     <span class="repo-name">{commit.repo}</span>
     <code class="sha">{commit.shortSha}</code>
   </div>
   <p class="commit-message">{commit.title}</p>
   <div class="commit-footer">
-    <span class="files">{commit.filesChanged} {commit.filesChanged === 1 ? 'bestand' : 'bestanden'}</span>
+    <span class="files"
+      >{commit.filesChanged}
+      {commit.filesChanged === 1 ? "bestand" : "bestanden"}</span
+    >
     <span class="date">{formattedDate}</span>
   </div>
 </a>
 
 <style>
-.commit-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  min-width: var(--card-width);
-  max-width: var(--card-width);
-  padding: 1em;
-  background: rgb(20, 20, 20);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5em;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.2s ease, transform 0.2s ease;
-  flex-shrink: 0;
-}
+  .commit-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    min-width: var(--card-width);
+    max-width: var(--card-width);
+    padding: 1em;
+    background: rgb(20, 20, 20);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5em;
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+    flex-shrink: 0;
+  }
 
-.commit-card:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
-}
+  .commit-card:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+  }
 
-.commit-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .commit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.repo-name {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  color: rgba(12, 217, 224, 0.767);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 140px;
-}
+  .repo-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    color: rgba(12, 217, 224, 0.767);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+  }
 
-.sha {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25em;
-}
+  .sha {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25em;
+  }
 
-.commit-message {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0;
-}
+  .commit-message {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    padding: 4px 0;
+    text-align: left;
+  }
 
-.commit-footer {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-}
+  .commit-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
 
-.files {
-  font-family: "JetBrains Mono", monospace;
-}
+  .files {
+    font-family: "JetBrains Mono", monospace;
+  }
 </style>
