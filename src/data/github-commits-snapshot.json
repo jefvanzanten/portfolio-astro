@@ -1,0 +1,122 @@
+[
+  {
+    "sha": "f1624417e5bb33f87c8ea06d2dc02b7bf722cb76",
+    "shortSha": "f162441",
+    "message": "Workspace name now gets shown in the title of the page for recognizing which workspace is loaded in which borwser tab. The file browser is now more in line with standards.",
+    "title": "Workspace name now gets shown in the title of the page for recognizing w",
+    "author": "jefvanzanten",
+    "date": "2026-06-06T08:36:21Z",
+    "url": "https://github.com/jefvanzanten/NoteMarkdownApps/commit/f1624417e5bb33f87c8ea06d2dc02b7bf722cb76",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "NoteMarkdownApps",
+    "filesChanged": 26
+  },
+  {
+    "sha": "42a8426adc546cd7ad4e889d35f2dc69e73e5128",
+    "shortSha": "42a8426",
+    "message": "Merge branch 'master' of https://github.com/jefvanzanten/NoteMarkdownApps",
+    "title": "Merge branch 'master' of https://github.com/jefvanzanten/NoteMarkdownApp",
+    "author": "jefvanzanten",
+    "date": "2026-06-05T18:42:57Z",
+    "url": "https://github.com/jefvanzanten/NoteMarkdownApps/commit/42a8426adc546cd7ad4e889d35f2dc69e73e5128",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "NoteMarkdownApps",
+    "filesChanged": 1
+  },
+  {
+    "sha": "ae1a7caa379789bac97360951046b36f515ef90b",
+    "shortSha": "ae1a7ca",
+    "message": "Tray app changes: mutliple workspace, create new tab",
+    "title": "Tray app changes: mutliple workspace, create new tab",
+    "author": "jefvanzanten",
+    "date": "2026-03-30T19:20:58Z",
+    "url": "https://github.com/jefvanzanten/note-markdown/commit/ae1a7caa379789bac97360951046b36f515ef90b",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "note-markdown",
+    "filesChanged": 44
+  },
+  {
+    "sha": "49de8674af13943a494f776ac60a2d99da789999",
+    "shortSha": "49de867",
+    "message": "code blocks support. ts only atm",
+    "title": "code blocks support. ts only atm",
+    "author": "jefvanzanten",
+    "date": "2026-03-28T09:15:45Z",
+    "url": "https://github.com/jefvanzanten/note-markdown/commit/49de8674af13943a494f776ac60a2d99da789999",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "note-markdown",
+    "filesChanged": 5
+  },
+  {
+    "sha": "60267205b4afcff97a73c4c125fe7d506b8a33a9",
+    "shortSha": "6026720",
+    "message": "SEO optimisation",
+    "title": "SEO optimisation",
+    "author": "jefvanzanten",
+    "date": "2026-03-26T18:07:19Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/60267205b4afcff97a73c4c125fe7d506b8a33a9",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 5
+  },
+  {
+    "sha": "5fb8b58bfabfc284f749bdb445c054e620775fca",
+    "shortSha": "5fb8b58",
+    "message": "removed double tray icon",
+    "title": "removed double tray icon",
+    "author": "jefvanzanten",
+    "date": "2026-03-21T23:44:45Z",
+    "url": "https://github.com/jefvanzanten/block-blue-light/commit/5fb8b58bfabfc284f749bdb445c054e620775fca",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "block-blue-light",
+    "filesChanged": 2
+  },
+  {
+    "sha": "dfbe0dbe7398ebd7cb8b7f637ea8fdd59b4abd65",
+    "shortSha": "dfbe0db",
+    "message": "Al major features are working so far.",
+    "title": "Al major features are working so far.",
+    "author": "jefvanzanten",
+    "date": "2026-03-21T23:11:46Z",
+    "url": "https://github.com/jefvanzanten/block-blue-light/commit/dfbe0dbe7398ebd7cb8b7f637ea8fdd59b4abd65",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "block-blue-light",
+    "filesChanged": 50
+  },
+  {
+    "sha": "60a89ff1621bb6c6ac2fb870a391d3f893b0c8da",
+    "shortSha": "60a89ff",
+    "message": "Slimmed down the App.tsx and started porting the spells to data.json",
+    "title": "Slimmed down the App.tsx and started porting the spells to data.json",
+    "author": "jefvanzanten",
+    "date": "2026-03-09T19:43:35Z",
+    "url": "https://github.com/jefvanzanten/cli-rpg-demo/commit/60a89ff1621bb6c6ac2fb870a391d3f893b0c8da",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "cli-rpg-demo",
+    "filesChanged": 7
+  },
+  {
+    "sha": "20a2a4245b570553bbb91ae23e91ad1897713d27",
+    "shortSha": "20a2a42",
+    "message": "Reorganizing folder structure and created empty components for the PlayerParty, Enemies and a SkilBar",
+    "title": "Reorganizing folder structure and created empty components for the Playe",
+    "author": "jefvanzanten",
+    "date": "2026-03-08T20:53:20Z",
+    "url": "https://github.com/jefvanzanten/cli-rpg-demo/commit/20a2a4245b570553bbb91ae23e91ad1897713d27",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "cli-rpg-demo",
+    "filesChanged": 13
+  },
+  {
+    "sha": "6c04dd7b3adf2f00a55b8d2ef2bab2cd2d26a4bc",
+    "shortSha": "6c04dd7",
+    "message": "convex is succesfully setup and the tables are verified in the convex container",
+    "title": "convex is succesfully setup and the tables are verified in the convex co",
+    "author": "jefvanzanten",
+    "date": "2026-03-01T18:52:46Z",
+    "url": "https://github.com/jefvanzanten/inventarius-convex/commit/6c04dd7b3adf2f00a55b8d2ef2bab2cd2d26a4bc",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
+    "repo": "inventarius-convex",
+    "filesChanged": 28
+  }
+]

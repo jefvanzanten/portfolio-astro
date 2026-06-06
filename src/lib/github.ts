@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { GitHubRepo, GitHubCommit, CommitDisplay, GitHubEvent } from "../types/github";
+import type { GitHubRepo, GitHubCommit, CommitDisplay } from "../types/github";
 
 const GITHUB_API = "https://api.github.com";
 
@@ -8,24 +8,36 @@ const GITHUB_API = "https://api.github.com";
 const CACHE_DIR = ".cache";
 const CACHE_FILE = path.join(CACHE_DIR, "github-commits.json");
 const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+const SNAPSHOT_FILE = path.join("src", "data", "github-commits-snapshot.json");
+const SHOULD_UPDATE_SNAPSHOT = process.env.UPDATE_GITHUB_SNAPSHOT === "true";
 
 interface CacheData {
   timestamp: number;
   commits: CommitDisplay[];
 }
 
-function readCache(maxAgeMs: number = CACHE_TTL_MS): CommitDisplay[] | null {
+function readJsonFile<T>(filePath: string): T | null {
   try {
-    const data = fs.readFileSync(CACHE_FILE, "utf-8");
-    const cache: CacheData = JSON.parse(data);
-    if (Date.now() - cache.timestamp < maxAgeMs) {
-      console.log("Using cached GitHub commits");
-      return cache.commits;
-    }
-    console.log("Cache expired, fetching fresh data");
+    const data = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(data) as T;
   } catch {
-    // Cache doesn't exist or is invalid
+    return null;
   }
+}
+
+function readCache(maxAgeMs: number = CACHE_TTL_MS): CommitDisplay[] | null {
+  const cache = readJsonFile<CacheData>(CACHE_FILE);
+
+  if (!cache) {
+    return null;
+  }
+
+  if (Date.now() - cache.timestamp < maxAgeMs) {
+    console.log("Using cached GitHub commits");
+    return cache.commits;
+  }
+
+  console.log("Cache expired, fetching fresh data");
   return null;
 }
 
@@ -40,6 +52,43 @@ function writeCache(commits: CommitDisplay[]): void {
   } catch (error) {
     console.error("Failed to write cache:", error);
   }
+}
+
+function readSnapshot(): CommitDisplay[] | null {
+  return readJsonFile<CommitDisplay[]>(SNAPSHOT_FILE);
+}
+
+function writeSnapshot(commits: CommitDisplay[]): void {
+  if (!SHOULD_UPDATE_SNAPSHOT || commits.length === 0) {
+    return;
+  }
+
+  const nextSnapshot = `${JSON.stringify(commits, null, 2)}\n`;
+
+  try {
+    const currentSnapshot = fs.existsSync(SNAPSHOT_FILE)
+      ? fs.readFileSync(SNAPSHOT_FILE, "utf-8")
+      : null;
+
+    if (currentSnapshot === nextSnapshot) {
+      return;
+    }
+
+    fs.mkdirSync(path.dirname(SNAPSHOT_FILE), { recursive: true });
+    fs.writeFileSync(SNAPSHOT_FILE, nextSnapshot);
+    console.log("Updated GitHub commits snapshot");
+  } catch (error) {
+    console.error("Failed to write snapshot:", error);
+  }
+}
+
+function persistCommits(commits: CommitDisplay[]): void {
+  if (commits.length === 0) {
+    return;
+  }
+
+  writeCache(commits);
+  writeSnapshot(commits);
 }
 
 function getHeaders(token?: string): HeadersInit {
@@ -131,174 +180,55 @@ export async function fetchLatestCommits(
   totalLimit: number = 10,
   token?: string
 ): Promise<CommitDisplay[]> {
-  // Check cache first
   const cached = readCache();
   if (cached) {
     return cached;
   }
 
-  // Fetch all repos for the user
-  const repos = await fetchUserRepos(username, token);
+  const snapshot = readSnapshot();
 
-  if (repos.length === 0) {
-    console.warn("No repos found for user:", username);
-    return [];
-  }
+  try {
+    const repos = await fetchUserRepos(username, token);
 
-  // Fetch recent commits from each repo (limit per repo to avoid too many requests)
-  const commitsPerRepo = Math.max(2, Math.ceil(totalLimit / repos.length));
-
-  const allCommitsArrays = await Promise.all(
-    repos.map((repo) =>
-      fetchRepoCommits(username, repo.name, commitsPerRepo, token)
-    )
-  );
-
-  // Flatten, sort by date (newest first), and limit
-  const topCommits = allCommitsArrays
-    .flat()
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, totalLimit);
-
-  // Fetch file counts for the top commits
-  const commitsWithStats = await Promise.all(
-    topCommits.map(async (commit) => ({
-      ...commit,
-      filesChanged: await fetchCommitFilesCount(username, commit.repo, commit.sha, token),
-    }))
-  );
-
-  // Write to cache
-  writeCache(commitsWithStats);
-
-  return commitsWithStats;
-}
-
-interface PushEventPayload {
-  head: string;
-  before: string;
-  ref: string;
-  commits?: Array<{
-    sha: string;
-    message: string;
-  }>;
-}
-
-/**
- * Fetch latest commits via the Events API (hybrid approach)
- * 1. Get PushEvents to find repos with recent activity
- * 2. Fetch commit details for each push's head SHA
- * More efficient than fetching all repos when you have many repos
- */
-export async function fetchLatestCommitsViaEvents(
-  username: string,
-  totalLimit: number = 10,
-  token?: string
-): Promise<CommitDisplay[]> {
-  // Check cache first
-  const cached = readCache();
-  if (cached) {
-    return cached;
-  }
-
-  const headers = getHeaders(token);
-  const url = `${GITHUB_API}/users/${username}/events/public?per_page=30`;
-
-  const response = await fetch(url, { headers });
-
-  if (!response.ok) {
-    console.error(`GitHub Events API error: ${response.status}`);
-    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
-    if (fallbackCommits.length > 0) {
-      return fallbackCommits;
+    if (repos.length === 0) {
+      console.warn("No repos found for user:", username);
+      return snapshot ?? [];
     }
 
-    return readCache(Number.POSITIVE_INFINITY) ?? [];
-  }
+    const commitsPerRepo = Math.max(2, Math.ceil(totalLimit / repos.length));
 
-  const events: GitHubEvent[] = await response.json();
-
-  // Get unique push events (dedupe by head SHA to avoid duplicate commits)
-  const seenShas = new Set<string>();
-  const pushEventsToFetch: Array<{ repoFullName: string; headSha: string; createdAt: string; actor: GitHubEvent["actor"] }> = [];
-
-  for (const event of events) {
-    if (event.type !== "PushEvent") continue;
-
-    const payload = event.payload as PushEventPayload;
-    if (!payload.head || seenShas.has(payload.head)) continue;
-
-    seenShas.add(payload.head);
-    pushEventsToFetch.push({
-      repoFullName: event.repo.name,
-      headSha: payload.head,
-      createdAt: event.created_at,
-      actor: event.actor,
-    });
-
-    // Only fetch enough to get our limit
-    if (pushEventsToFetch.length >= totalLimit) break;
-  }
-
-  if (pushEventsToFetch.length === 0) {
-    console.warn(
-      "No recent push events found via GitHub Events API, falling back to repository commits"
+    const allCommitsArrays = await Promise.all(
+      repos.map((repo) =>
+        fetchRepoCommits(username, repo.name, commitsPerRepo, token)
+      )
     );
 
-    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
-    if (fallbackCommits.length > 0) {
-      return fallbackCommits;
+    const topCommits = allCommitsArrays
+      .flat()
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, totalLimit);
+
+    if (topCommits.length === 0) {
+      return snapshot ?? [];
     }
 
-    return readCache(Number.POSITIVE_INFINITY) ?? [];
-  }
-
-  // Fetch commit details for each head SHA
-  const commits: CommitDisplay[] = [];
-
-  for (const pushEvent of pushEventsToFetch) {
-    const [owner, repo] = pushEvent.repoFullName.split("/");
-    const commitUrl = `${GITHUB_API}/repos/${owner}/${repo}/commits/${pushEvent.headSha}`;
-
-    const commitResponse = await fetch(commitUrl, { headers });
-    if (!commitResponse.ok) continue;
-
-    const commitData = await commitResponse.json();
-
-    commits.push({
-      sha: commitData.sha,
-      shortSha: commitData.sha.substring(0, 7),
-      message: commitData.commit.message,
-      title: commitData.commit.message.split("\n")[0].substring(0, 72),
-      author: commitData.author?.login ?? commitData.commit.author.name,
-      date: commitData.commit.author.date,
-      url: commitData.html_url,
-      avatarUrl: commitData.author?.avatar_url ?? pushEvent.actor.avatar_url,
-      repo: repo,
-      filesChanged: commitData.files?.length ?? 0,
-    });
-
-    if (commits.length >= totalLimit) break;
-  }
-
-  // Sort by date (newest first)
-  commits.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  if (commits.length === 0) {
-    console.warn(
-      "No commit details could be loaded from GitHub Events API, falling back to repository commits"
+    const commitsWithStats = await Promise.all(
+      topCommits.map(async (commit) => ({
+        ...commit,
+        filesChanged: await fetchCommitFilesCount(
+          username,
+          commit.repo,
+          commit.sha,
+          token
+        ),
+      }))
     );
 
-    const fallbackCommits = await fetchLatestCommits(username, totalLimit, token);
-    if (fallbackCommits.length > 0) {
-      return fallbackCommits;
-    }
+    persistCommits(commitsWithStats);
 
-    return readCache(Number.POSITIVE_INFINITY) ?? [];
+    return commitsWithStats;
+  } catch (error) {
+    console.error("Failed to fetch latest GitHub commits:", error);
+    return snapshot ?? [];
   }
-
-  // Write to cache
-  writeCache(commits);
-
-  return commits;
 }

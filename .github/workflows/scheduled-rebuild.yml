@@ -1,4 +1,4 @@
-name: Scheduled Rebuild
+name: Refresh GitHub Commit Snapshot
 
 on:
   schedule:
@@ -7,10 +7,44 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  trigger-rebuild:
+  refresh-snapshot:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - name: Trigger Coolify rebuild
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh snapshot via production build
+        run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPDATE_GITHUB_SNAPSHOT: "true"
+
+      - name: Configure git
         run: |
-          curl -X GET "${{ secrets.COOLIFY_WEBHOOK_URL }}" \
-            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push snapshot if changed
+        run: |
+          if git diff --quiet -- src/data/github-commits-snapshot.json; then
+            echo "No snapshot changes detected"
+            exit 0
+          fi
+
+          git add src/data/github-commits-snapshot.json
+          git commit -m "chore: refresh github commits snapshot"
+          git push
