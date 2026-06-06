@@ -15,9 +15,9 @@ const commits = await fetchLatestCommits(
 
 <section class="commits-section">
   <div class="title">
-    <span class="line" />
-    <h1>Recente Activiteit</h1>
-    <span class="line" />
+    <span class="line"></span>
+    <h1>Recente Git commits</h1>
+    <span class="line"></span>
   </div>
 
   {
@@ -31,8 +31,8 @@ const commits = await fetchLatestCommits(
       </div>
     ) : (
       <div class="empty-state">
-        Geen GitHub-activiteit beschikbaar. De site kan nog wel online zijn, maar
-        er is op dit moment geen commitdata opgehaald.
+        Geen GitHub-activiteit beschikbaar. De site kan nog wel online zijn,
+        maar er is op dit moment geen commitdata opgehaald.
       </div>
     )
   }
