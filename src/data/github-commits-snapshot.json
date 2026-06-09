@@ -1,5 +1,17 @@
 [
   {
+    "sha": "8475c7e0419b25a99e6b9aafeeeb67c8bdf395dc",
+    "shortSha": "8475c7e",
+    "message": "chore: refresh github commits snapshot",
+    "title": "chore: refresh github commits snapshot",
+    "author": "github-actions[bot]",
+    "date": "2026-06-08T10:51:35Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/8475c7e0419b25a99e6b9aafeeeb67c8bdf395dc",
+    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 1
+  },
+  {
     "sha": "a0e19d777116684c25e74a105a8666406663b0e1",
     "shortSha": "a0e19d7",
     "message": "chore: refresh github commits snapshot",
@@ -10,18 +22,6 @@
     "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
     "repo": "portfolio-astro",
     "filesChanged": 1
-  },
-  {
-    "sha": "a7454ed1f088583cad77920b68e457bc5d260e41",
-    "shortSha": "a7454ed",
-    "message": "Edited the styling of the titles on the mainpage and changed the alignment of the commit title on the commitcard",
-    "title": "Edited the styling of the titles on the mainpage and changed the alignme",
-    "author": "jefvanzanten",
-    "date": "2026-06-06T11:08:20Z",
-    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/a7454ed1f088583cad77920b68e457bc5d260e41",
-    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
-    "repo": "portfolio-astro",
-    "filesChanged": 2
   },
   {
     "sha": "f1624417e5bb33f87c8ea06d2dc02b7bf722cb76",
