@@ -1,5 +1,29 @@
 [
   {
+    "sha": "0a9138697606b042ca23875a4df3d3ce21804a9d",
+    "shortSha": "0a91386",
+    "message": "chore: refresh github commits snapshot",
+    "title": "chore: refresh github commits snapshot",
+    "author": "github-actions[bot]",
+    "date": "2026-06-14T09:32:13Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/0a9138697606b042ca23875a4df3d3ce21804a9d",
+    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 1
+  },
+  {
+    "sha": "934e5fdd955370d975686094d1c6e963a014d6d5",
+    "shortSha": "934e5fd",
+    "message": "chore: refresh github commits snapshot",
+    "title": "chore: refresh github commits snapshot",
+    "author": "github-actions[bot]",
+    "date": "2026-06-13T08:56:39Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/934e5fdd955370d975686094d1c6e963a014d6d5",
+    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 1
+  },
+  {
     "sha": "f1624417e5bb33f87c8ea06d2dc02b7bf722cb76",
     "shortSha": "f162441",
     "message": "Workspace name now gets shown in the title of the page for recognizing which workspace is loaded in which borwser tab. The file browser is now more in line with standards.",
@@ -45,18 +69,6 @@
     "url": "https://github.com/jefvanzanten/note-markdown/commit/49de8674af13943a494f776ac60a2d99da789999",
     "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
     "repo": "note-markdown",
-    "filesChanged": 5
-  },
-  {
-    "sha": "60267205b4afcff97a73c4c125fe7d506b8a33a9",
-    "shortSha": "6026720",
-    "message": "SEO optimisation",
-    "title": "SEO optimisation",
-    "author": "jefvanzanten",
-    "date": "2026-03-26T18:07:19Z",
-    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/60267205b4afcff97a73c4c125fe7d506b8a33a9",
-    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
-    "repo": "portfolio-astro",
     "filesChanged": 5
   },
   {
@@ -106,17 +118,5 @@
     "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
     "repo": "cli-rpg-demo",
     "filesChanged": 13
-  },
-  {
-    "sha": "6c04dd7b3adf2f00a55b8d2ef2bab2cd2d26a4bc",
-    "shortSha": "6c04dd7",
-    "message": "convex is succesfully setup and the tables are verified in the convex container",
-    "title": "convex is succesfully setup and the tables are verified in the convex co",
-    "author": "jefvanzanten",
-    "date": "2026-03-01T18:52:46Z",
-    "url": "https://github.com/jefvanzanten/inventarius-convex/commit/6c04dd7b3adf2f00a55b8d2ef2bab2cd2d26a4bc",
-    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
-    "repo": "inventarius-convex",
-    "filesChanged": 28
   }
 ]
