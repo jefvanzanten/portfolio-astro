@@ -1,5 +1,17 @@
 [
   {
+    "sha": "664f3820f60a0728fe27998579e4adaadc814db5",
+    "shortSha": "664f382",
+    "message": "chore: refresh github commits snapshot",
+    "title": "chore: refresh github commits snapshot",
+    "author": "github-actions[bot]",
+    "date": "2026-06-17T10:52:51Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/664f3820f60a0728fe27998579e4adaadc814db5",
+    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 1
+  },
+  {
     "sha": "008f79006befa38162832fa0bc9cb3a6973198fc",
     "shortSha": "008f790",
     "message": "chore: refresh github commits snapshot",
@@ -8,18 +20,6 @@
     "date": "2026-06-16T11:08:43Z",
     "url": "https://github.com/jefvanzanten/portfolio-astro/commit/008f79006befa38162832fa0bc9cb3a6973198fc",
     "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
-    "repo": "portfolio-astro",
-    "filesChanged": 1
-  },
-  {
-    "sha": "0c5ee4a982ba63d7aaada38e0830a45d2126c09b",
-    "shortSha": "0c5ee4a",
-    "message": "Merge branch 'main' of https://github.com/jefvanzanten/portfolio-astro",
-    "title": "Merge branch 'main' of https://github.com/jefvanzanten/portfolio-astro",
-    "author": "jefvanzanten",
-    "date": "2026-06-16T07:24:47Z",
-    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/0c5ee4a982ba63d7aaada38e0830a45d2126c09b",
-    "avatarUrl": "https://avatars.githubusercontent.com/u/20519127?v=4",
     "repo": "portfolio-astro",
     "filesChanged": 1
   },
