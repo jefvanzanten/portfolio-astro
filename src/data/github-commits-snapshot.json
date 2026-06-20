@@ -1,5 +1,17 @@
 [
   {
+    "sha": "e65f462922a9db691be3a19720e1f70915e5f781",
+    "shortSha": "e65f462",
+    "message": "chore: refresh github commits snapshot",
+    "title": "chore: refresh github commits snapshot",
+    "author": "github-actions[bot]",
+    "date": "2026-06-19T10:24:12Z",
+    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/e65f462922a9db691be3a19720e1f70915e5f781",
+    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
+    "repo": "portfolio-astro",
+    "filesChanged": 1
+  },
+  {
     "sha": "385b0e1661f99a05ae1b1933b40f344dd0f27a96",
     "shortSha": "385b0e1",
     "message": "chore: refresh github commits snapshot",
@@ -7,18 +19,6 @@
     "author": "github-actions[bot]",
     "date": "2026-06-18T10:19:04Z",
     "url": "https://github.com/jefvanzanten/portfolio-astro/commit/385b0e1661f99a05ae1b1933b40f344dd0f27a96",
-    "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
-    "repo": "portfolio-astro",
-    "filesChanged": 1
-  },
-  {
-    "sha": "664f3820f60a0728fe27998579e4adaadc814db5",
-    "shortSha": "664f382",
-    "message": "chore: refresh github commits snapshot",
-    "title": "chore: refresh github commits snapshot",
-    "author": "github-actions[bot]",
-    "date": "2026-06-17T10:52:51Z",
-    "url": "https://github.com/jefvanzanten/portfolio-astro/commit/664f3820f60a0728fe27998579e4adaadc814db5",
     "avatarUrl": "https://avatars.githubusercontent.com/in/15368?v=4",
     "repo": "portfolio-astro",
     "filesChanged": 1
