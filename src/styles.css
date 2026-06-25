@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -12,6 +12,8 @@
   --project-container-width: calc(var(--card-width) * 3 + 4em);
   --featured-projects-container-width: calc(var(--card-width) * 3 + 3 * 2em);
   --project-offset: calc((100vw - var(--project-area-width)) / 2);
+  --font-body: "Inter", sans-serif;
+  --font-display: "JetBrains Mono", monospace;
   --bg: #000000;
   --text: white;
   --accent: #0d9186;
@@ -28,6 +30,7 @@ html,
 body {
   background-color: var(--bg);
   color: var(--text);
+  font-family: var(--font-body);
 
   /* Force Portrait mode on mobile for the best ux */
   @media screen and (orientation: landscape) and (max-width: 940px) {
@@ -42,8 +45,7 @@ body {
 }
 
 p {
-  font-family:
-    "Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS", sans-serif;
+  font-family: inherit;
 }
 
 /* Title with lines next to it. Used in index.astro and CommitWidget */
@@ -71,7 +73,7 @@ p {
   }
 
   h1 {
-    font-family: "JetBrains Mono", monospace;
+    font-family: var(--font-display);
     font-weight: 100;
     font-size: 1.3rem;
     width: max-content;
