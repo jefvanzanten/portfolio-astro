@@ -37,7 +37,11 @@ const ctaLinks = [
   <div class="content-container">
     <section class="introduction">
       <div class="introduction-content">
-        <h1>Full-stack developer</h1>
+        <div class="title introduction-title">
+          <span class="line"></span>
+          <h1>Full-stack developer</h1>
+          <span class="line"></span>
+        </div>
         <p>
           Hey, mijn naam is Jef. Momenteel volg ik de studie Software
           Development (HBO Associate Degree).
@@ -116,9 +120,10 @@ const ctaLinks = [
     text-align: center;
 
     h1 {
-      font-family: "JetBrains Mono", monospace;
-      font-weight: 400;
-      font-size: 1.8rem;
+      font-family: var(--font-display);
+      font-weight: 100;
+      font-size: 1.3rem;
+      text-wrap: nowrap;
       padding-top: 1em;
     }
 
@@ -142,6 +147,10 @@ const ctaLinks = [
     }
   }
 
+  .introduction-title {
+    width: 100%;
+  }
+
   .cta-row {
     display: flex;
     flex-wrap: wrap;
@@ -163,6 +172,19 @@ const ctaLinks = [
     @media screen and (orientation: portrait) and (max-width: 1024px) {
       align-items: center;
     }
+  }
+
+  .featured-projects-container .title .line {
+    border-bottom: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.1)
+    );
   }
 
   @media screen and (max-width: 640px) {
