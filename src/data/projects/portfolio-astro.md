@@ -1,6 +1,7 @@
 ---
 name: "Portfolio - Astro + Solidjs"
 slug: "portfolio"
+liveUrl: "https://jefvanzanten.dev/"
 url: "https://github.com/jefvanzanten/portfolio-astro/"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["Astro", "Solidjs"]

@@ -1,6 +1,7 @@
 ---
 name: "Reeksenspel"
 slug: "reeksenspel"
+liveUrl: "https://jefvanzanten.github.io/reeksenspel/"
 url: "https://github.com/jefvanzanten/reeksenspel/"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["React", "TailwindCSS"]

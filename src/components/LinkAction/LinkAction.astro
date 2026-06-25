@@ -1,0 +1,26 @@
+---
+const {
+  url,
+  label,
+  iconOnly = false,
+  variant = "secondary",
+  target = url.startsWith("/") ? undefined : "_blank",
+  rel = target === "_blank" ? "noreferrer" : undefined,
+} = Astro.props;
+import styles from "./LinkAction.module.css";
+---
+
+<a
+  class:list={[
+    styles.linkAction,
+    iconOnly && styles.iconOnly,
+    variant === "primary" && styles.primary,
+  ]}
+  href={url}
+  target={target}
+  rel={rel}
+  aria-label={label}
+  title={label}
+>
+  <slot />
+</a>

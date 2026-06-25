@@ -1,0 +1,12 @@
+---
+const {
+  iconUrl = "/icons/external-link.svg",
+  name = "Bekijk live",
+} = Astro.props;
+import styles from "./ExternalLinkContent.module.css";
+---
+
+<span class={styles.content}>
+  <img class={styles.icon} src={iconUrl} alt={`${name} logo`} />
+  <span class={styles.label}>{name}</span>
+</span>

@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import LinkAction from "../LinkAction/LinkAction";
 import styles from "./GithubLink.module.css";
 
 type GithubLinkProps = {
@@ -12,27 +13,24 @@ type GithubLinkProps = {
 };
 
 const GithubLink: Component<GithubLinkProps> = (props) => {
-  const target = () =>
-    props.target ?? (props.url.startsWith("/") ? undefined : "_blank");
-  const rel = () =>
-    props.rel ?? (target() === "_blank" ? "noreferrer" : undefined);
-
   return (
-    <a
-      classList={{
-        [styles.socialContainer]: true,
-        [styles.iconOnly]: props.iconOnly ?? false,
-        [styles.primary]: props.variant === "primary",
-      }}
-      href={props.url}
-      target={target()}
-      rel={rel()}
-      aria-label={props.name}
-      title={props.name}
+    <LinkAction
+      url={props.url}
+      label={props.name}
+      iconOnly={props.iconOnly}
+      variant={props.variant}
+      target={props.target}
+      rel={props.rel}
     >
-      <img class={styles.logo} src={props.iconUrl} alt={`${props.name} logo`} />
-      {!props.iconOnly && <span class={styles.label}>{props.name}</span>}
-    </a>
+      <span class={styles.content}>
+        <img
+          class={styles.logo}
+          src={props.iconUrl}
+          alt={`${props.name} logo`}
+        />
+        {!props.iconOnly && <span class={styles.label}>{props.name}</span>}
+      </span>
+    </LinkAction>
   );
 };
 

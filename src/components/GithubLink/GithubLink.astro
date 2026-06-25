@@ -1,4 +1,5 @@
 ---
+import LinkAction from "../LinkAction/LinkAction.astro";
 const {
   url,
   iconUrl,
@@ -11,18 +12,16 @@ const {
 import styles from "./GithubLink.module.css";
 ---
 
-<a
-  class:list={[
-    styles.socialContainer,
-    iconOnly && styles.iconOnly,
-    variant === "primary" && styles.primary,
-  ]}
-  href={url}
+<LinkAction
+  url={url}
+  label={name}
+  iconOnly={iconOnly}
+  variant={variant}
   target={target}
   rel={rel}
-  aria-label={name}
-  title={name}
 >
-  <img class={styles.logo} src={iconUrl} alt={`${name} logo`} />
-  {!iconOnly && <span class={styles.label}>{name}</span>}
-</a>
+  <span class={styles.content}>
+    <img class={styles.logo} src={iconUrl} alt={`${name} logo`} />
+    {!iconOnly && <span class={styles.label}>{name}</span>}
+  </span>
+</LinkAction>

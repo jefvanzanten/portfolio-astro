@@ -3,6 +3,8 @@ import styles from "./ProjectCard.module.css";
 import type { Project } from "../../types/project";
 import ImageButton from "../ImageButton/ImageButton";
 import GithubLink from "../GithubLink/GithubLink.astro";
+import LinkAction from "../LinkAction/LinkAction.astro";
+import ExternalLinkContent from "../ExternalLinkContent/ExternalLinkContent.astro";
 
 interface Props {
   project: Project;
@@ -47,12 +49,9 @@ const { project, index = 0 } = Astro.props;
         }
         {
           project.liveUrl && (
-            <GithubLink
-              name="Open project"
-              iconUrl="/icons/external-link.svg"
-              url={project.liveUrl}
-              iconOnly={true}
-            />
+            <LinkAction url={project.liveUrl} label="Bekijk live">
+              <ExternalLinkContent />
+            </LinkAction>
           )
         }
       </div>

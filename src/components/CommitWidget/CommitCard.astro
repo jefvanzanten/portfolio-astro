@@ -13,6 +13,10 @@ const formattedDate = new Date(commit.date).toLocaleString("nl-NL", {
   // hour: "2-digit",
   // minute: "2-digit",
 });
+
+const filesLabel = `${commit.filesChanged} ${
+  commit.filesChanged === 1 ? "bestand" : "bestanden"
+}`;
 ---
 
 <a
@@ -27,10 +31,7 @@ const formattedDate = new Date(commit.date).toLocaleString("nl-NL", {
   </div>
   <p class="commit-message">{commit.title}</p>
   <div class="commit-footer">
-    <span class="files"
-      >{commit.filesChanged}
-      {commit.filesChanged === 1 ? "bestand" : "bestanden"}</span
-    >
+    <span class="files">{filesLabel}</span>
     <span class="date">{formattedDate}</span>
   </div>
 </a>

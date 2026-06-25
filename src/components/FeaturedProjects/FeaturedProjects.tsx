@@ -16,7 +16,13 @@ const FeaturedProjects: Component<FeaturedProjectsProps> = (props) => {
         style={{ "--total-cards": props.projects.length }}
       >
         <For each={props.projects}>
-          {(project, index) => <ProjectCard project={project} index={index()} />}
+          {(project, index) => (
+            <ProjectCard
+              project={project}
+              index={index()}
+              priority={index() < 3}
+            />
+          )}
         </For>
       </div>
       <ImageViewModal />

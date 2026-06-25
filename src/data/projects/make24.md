@@ -1,6 +1,7 @@
 ---
 name: "Make24"
 slug: "make24"
+liveUrl: "https://jefvanzanten.github.io/make24/"
 url: "https://github.com/jefvanzanten/make24"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["React"]
