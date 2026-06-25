@@ -8,8 +8,8 @@ images: [""]
 coverUrl: "/covers/note_markdown_apps.png"
 thumbUrl: "/thumbs/note_markdown_apps_thumb.png"
 category: "Desktop"
-lastUpdated: "2026-06-25"
-highlighted: false
+lastUpdated: "2026-06-06"
+highlighted: true
 ---
 
 Een `pnpm`-monorepo met drie apps: `desktop-app`, `web-tray-app` en `demo`. In plaats van een Tauri/Rust-core gebruikt deze versie Electron en gedeelde TypeScript-packages voor onder meer de editor, bestandsbrowser en serverlogica.

@@ -10,7 +10,7 @@ coverUrl: "/covers/make24_cover.png"
 thumbUrl: "/thumbs/make24_thumb.png"
 category: "Frontend"
 lastUpdated: "2025-07-24"
-highlighted: true
+highlighted: false 
 ---
 
 Een wiskunde spel waarbij de speler de som van 24 moet maken door alle 4 getallen met operatoren te gebruiken.

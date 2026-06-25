@@ -9,7 +9,7 @@ coverUrl: "/covers/fastapi_custom_cover.png"
 thumbUrl: "/thumbs/fastapi_custom_thumb.png"
 category: "Backend"
 lastUpdated: "2026-01-27"
-highlighted: true
+highlighted: false
 ---
 
 Dit is een Python API met een email service en pdf generation service die ik kan gebruiken d.m.v. api endpoints.
