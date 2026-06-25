@@ -29,11 +29,12 @@ textarea {
 
 button {
   padding: 0.5em 0;
-  background-color: rgba(13, 145, 134, 0.6);
-  color: rgb(216, 216, 216);
+  background-color: var(--accent-bright);
+  color: rgb(46, 46, 46);
   font-family: monospace;
   border-radius: 8px;
   border: none;
+  font-size: 14px;
 }
 
 .error {

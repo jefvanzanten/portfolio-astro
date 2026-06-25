@@ -1,19 +1,16 @@
 .dialog {
   border: none;
-  border-radius: 1em;
   position: fixed;
-  top: 15vh;
-  bottom: 15vh;
-  right: 5vw;
-  left: 5vw;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
   background: transparent;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.3s;
+  overflow: visible;
   z-index: 999;
-  width: 90%;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.8);
@@ -21,15 +18,43 @@
   }
 }
 
-.dialog .header {
+.dialog:not([open]) {
+  display: none;
+}
+
+.dialog[open] {
   display: flex;
-  justify-content: flex-end;
-  padding: 1em;
-  background: transparent;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.media {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  transform-origin: center;
+}
+
+.media-rotated {
+  transform-origin: center;
+}
+
+.dialog .header {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
 }
 
 .close-button {
@@ -54,31 +79,19 @@
   }
 }
 
+.close-button-rotated {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
 .image {
+  display: block;
   width: 100%;
   height: 100%;
-  max-width: 90vw;
-  max-height: 90vh;
   object-fit: contain;
   border-radius: 1em;
   border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-@media screen and (max-width: 940px) {
-  .dialog {
-    top: 5vh;
-  }
-
-  .image {
-    transform: rotate(90deg);
-    transform-origin: left top;
-    height: 100%;
-    width: 100%;
-  }
-}
-
-.dialog[open] {
-  animation: fadeIn 0.2s ease-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes fadeIn {
@@ -86,6 +99,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);

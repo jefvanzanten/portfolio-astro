@@ -4,6 +4,7 @@ export type Language =
   | "Python"
   | "CSS"
   | "HTML"
+  | "Rust"
   | "Kotlin"
   | "Java";
 
@@ -16,8 +17,11 @@ export type Category =
 
 export type Library =
   | "React"
+  | "Electron"
   | "Astro"
   | "Solidjs"
+  | "Svelte"
+  | "Tauri"
   | "TailwindCSS"
   | "React-Router"
   | "Express"
@@ -38,9 +42,12 @@ export type Library =
 
 export type Project = {
   name: string;
-  description: string | string[];
+  description: string;
+  descriptionHtml: string;
   slug: string;
-  url: string;
+  url?: string;
+  liveUrl?: string;
+  downloadUrl?: string;
   languages: Language[];
   libraries: Library[];
   images: string[];
@@ -50,3 +57,5 @@ export type Project = {
   coverUrl: string;
   thumbUrl: string;
 };
+
+export type ProjectFrontmatter = Omit<Project, "description" | "descriptionHtml">;

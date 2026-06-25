@@ -1,18 +1,16 @@
-import { createSignal, Show, type Component } from "solid-js";
+import { Show, type Component } from "solid-js";
 import styles from "./FilterMenu.module.css";
 import CategoryOption from "./FilterMenuOption/CategoryOption";
 import LanguageOption from "./FilterMenuOption/LanguageOption";
 import LibraryOption from "./FilterMenuOption/LibraryOption";
-
-export const [isFilterMenuOpen, setIsFilterMenuOpen] = createSignal(false);
+import { useFilterMenu } from "../../hooks/useFilterMenu";
 
 const FilterMenu: Component = () => {
+  const { isOpen, setIsOpen } = useFilterMenu();
+
   return (
-    <Show when={isFilterMenuOpen()}>
-      <div
-        class={styles.backdrop}
-        onClick={() => setIsFilterMenuOpen(!isFilterMenuOpen())}
-      />
+    <Show when={isOpen()}>
+      <div class={styles.backdrop} onClick={() => setIsOpen(false)} />
       <div class={styles.container}>
         <fieldset class={styles.libraries}>
           <legend class={styles.legend}>Categorieën</legend>
@@ -28,7 +26,7 @@ const FilterMenu: Component = () => {
         </fieldset>
 
         <fieldset class={styles.libraries}>
-          <legend class={styles.legend}>Programmeer- & script-talen</legend>
+          <legend class={styles.legend}>Programmeer- & scripttalen</legend>
           <div class={styles.libraryGroup}>
             <LanguageOption name="CSS" />
             <LanguageOption name="HTML" />
@@ -37,6 +35,7 @@ const FilterMenu: Component = () => {
           <div class={styles.libraryGroup}>
             <LanguageOption name="Kotlin" />
             <LanguageOption name="Python" />
+            <LanguageOption name="Rust" />
             <LanguageOption name="TypeScript" />
           </div>
         </fieldset>
@@ -47,6 +46,7 @@ const FilterMenu: Component = () => {
             <LibraryOption name="Astro" />
             <LibraryOption name="Better-Auth" />
             <LibraryOption name="Drizzle ORM" />
+            <LibraryOption name="Electron" />
             <LibraryOption name="Express" />
             <LibraryOption name="FastAPI" />
           </div>
@@ -60,6 +60,8 @@ const FilterMenu: Component = () => {
           <div class={styles.libraryGroup}>
             <LibraryOption name="React-Router" />
             <LibraryOption name="Solidjs" />
+            <LibraryOption name="Svelte" />
+            <LibraryOption name="Tauri" />
             <LibraryOption name="TailwindCSS" />
             <LibraryOption name="TanStack Query" />
           </div>

@@ -24,18 +24,19 @@ main {
 }
 
 .project-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2em;
   padding-bottom: 8vh;
   --card-width: 340px;
+  width: 100%;
 
   @media screen and (max-width: 940px) {
-    --card-width: 100%;
+    grid-template-columns: 1fr;
   }
 
   @media screen and (min-width: 1920px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     --card-width: 320px;
   }
 }

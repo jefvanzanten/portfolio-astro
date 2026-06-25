@@ -1,0 +1,11 @@
+.featured-projects-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2em;
+  width: 100%;
+  margin: 0 auto;
+
+  @media screen and (max-width: 940px) {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,9 +1,33 @@
 ---
 import Layout from "../Layout.astro";
 import CommitWidget from "../components/CommitWidget/CommitWidget.astro";
-import ProjectCard from "../components/ProjectCard/ProjectCard.astro";
+import FeaturedProjects from "../components/FeaturedProjects/FeaturedProjects";
+import GithubLink from "../components/GithubLink/GithubLink.astro";
 import { projects } from "../data.ts";
 const filteredProjects = projects.filter((project) => project.highlighted);
+const ctaLinks = [
+  {
+    name: "Mail mij",
+    iconUrl: "/icons/mail-outline.svg",
+    url: "mailto:j.van.zanten@mail.com",
+    variant: "primary",
+  },
+  {
+    name: "GitHub",
+    iconUrl: "/icons/github-mark-white.svg",
+    url: "https://github.com/jefvanzanten",
+  },
+  {
+    name: "LinkedIn",
+    iconUrl: "/icons/linkedin.svg",
+    url: "https://www.linkedin.com/in/jefvanzanten/",
+  },
+  {
+    name: "Projecten",
+    iconUrl: "/icons/folder-open.svg",
+    url: "/projects",
+  },
+] as const;
 ---
 
 <Layout
@@ -20,8 +44,20 @@ const filteredProjects = projects.filter((project) => project.highlighted);
           <br />
           <br />
           Ik wissel met programmeren tussen frontend, backend en mobile projecten,
-          zodat mijn kennis en vaardigheden op elk vlak blijven ontwikkelen..
+          zodat mijn kennis en vaardigheden op elk vlak blijven ontwikkelen.
         </p>
+        <div class="cta-row">
+          {
+            ctaLinks.map((link) => (
+              <GithubLink
+                name={link.name}
+                iconUrl={link.iconUrl}
+                url={link.url}
+                variant={link.variant}
+              />
+            ))
+          }
+        </div>
       </div>
     </section>
     <CommitWidget />
@@ -31,16 +67,7 @@ const filteredProjects = projects.filter((project) => project.highlighted);
         <h1>Uitgelichte Projecten</h1>
         <span class="line"></span>
       </div>
-      <div
-        class="featured-projects-list"
-        style={{ "--total-cards": filteredProjects.length }}
-      >
-        {
-          filteredProjects.map((project, index) => (
-            <ProjectCard project={project} index={index} />
-          ))
-        }
-      </div>
+      <FeaturedProjects client:load projects={filteredProjects} />
     </section>
   </div>
 </Layout>
@@ -53,6 +80,9 @@ const filteredProjects = projects.filter((project) => project.highlighted);
     justify-content: space-between;
     z-index: 0;
     overflow: hidden;
+    width: 100%;
+    --home-section-width: min(100%, calc(var(--card-width) * 3 + 240px));
+    --featured-projects-container-width: var(--home-section-width);
 
     @media screen and (max-width: 940px) {
       padding: 0 10vw;
@@ -80,13 +110,16 @@ const filteredProjects = projects.filter((project) => project.highlighted);
   .introduction-content {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    align-items: center;
+    width: min(100%, 42rem);
+    gap: 1.75rem;
+    text-align: center;
 
     h1 {
       font-family: "JetBrains Mono", monospace;
       font-weight: 400;
       font-size: 1.8rem;
-      padding: 1em 0;
+      padding-top: 1em;
     }
 
     p {
@@ -94,7 +127,7 @@ const filteredProjects = projects.filter((project) => project.highlighted);
       margin: 0;
       color: var(--text-muted);
       text-wrap: wrap;
-      max-width: 32rem;
+      max-width: 36rem;
       padding: 0;
 
       @media screen and (max-width: 940px) {
@@ -109,6 +142,15 @@ const filteredProjects = projects.filter((project) => project.highlighted);
     }
   }
 
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    align-items: center;
+    justify-content: center;
+    max-width: 42rem;
+  }
+
   /* Featured Projects */
 
   .featured-projects-container {
@@ -116,21 +158,21 @@ const filteredProjects = projects.filter((project) => project.highlighted);
     flex-direction: column;
     gap: 2em;
     padding: 5vh 0;
+    width: var(--home-section-width);
 
     @media screen and (orientation: portrait) and (max-width: 1024px) {
       align-items: center;
     }
   }
 
-  .featured-projects-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 2em;
-    --card-width: 300px;
+  @media screen and (max-width: 640px) {
+    .cta-row {
+      width: 100%;
+    }
 
-    @media screen and (orientation: portrait) and (max-width: 1024px) {
-      width: 80%;
+    .cta-row :global(a) {
+      flex: 1 1 calc(50% - 0.45rem);
     }
   }
+
 </style>

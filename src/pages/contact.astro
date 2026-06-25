@@ -14,11 +14,15 @@ import Layout from "../Layout.astro";
           - Wil je met mij samenwerken? <br /><br />
           - Of heb je gewoon wat vragen? <br /><br />
           <span
-            >Neem dan contact met mij op via
-            <a href="https://www.linkedin.com/in/jefvanzanten/" target="_blank"
-              >Linkedin</a
+            >Neem dan contact met mij op via <a
+              href="https://www.linkedin.com/in/jefvanzanten/"
+              target="_blank"
+            >
+              Linkedin</a
             > of <br />
-            mail mij naar <a>j.van.zanten@mail.com</a><br /><br />
+            mail mij naar <a href="mailto:j.van.zanten@mail.com"
+              >j.van.zanten@mail.com</a
+            ><br /><br />
             U kunt ook gebruik maken van het formulier hier rechts.</span
           >
         </p>
@@ -60,7 +64,7 @@ import Layout from "../Layout.astro";
   }
 
   a {
-    color: rgb(13, 145, 134);
+    color: var(--accent-bright);
     text-decoration: none;
     font-weight: 800;
   }

@@ -19,13 +19,7 @@ const { project, index = 0 } = Astro.props;
   <ImageButton client:load project={project} />
   <section class={styles["project-info"]}>
     <h2 class={styles.title}>{project.name}</h2>
-    <p class={styles.description}>
-      {
-        Array.isArray(project.description)
-          ? project.description.join("")
-          : project.description
-      }
-    </p>
+    <div class={styles.description} set:html={project.descriptionHtml} />
   </section>
   <div class={styles["tag-container"]}>
     {
@@ -39,9 +33,29 @@ const { project, index = 0 } = Astro.props;
       ))
     }
   </div>
-  <GithubLink
-    name="Github"
-    iconUrl="/icons/github-mark-white.svg"
-    url={project.url}
-  />
+  {
+    (project.url || project.liveUrl || project.downloadUrl) && (
+      <div class={styles["card-actions"]}>
+        {
+          project.url && (
+            <GithubLink
+              name="GitHub"
+              iconUrl="/icons/github-mark-white.svg"
+              url={project.url}
+            />
+          )
+        }
+        {
+          project.liveUrl && (
+            <GithubLink
+              name="Open project"
+              iconUrl="/icons/external-link.svg"
+              url={project.liveUrl}
+              iconOnly={true}
+            />
+          )
+        }
+      </div>
+    )
+  }
 </article>

@@ -8,9 +8,14 @@ import {
 } from "../../context/ProjectContext";
 import styles from "./ProjectPage.module.css";
 import FilterButton from "../FilterButton/FilterButton";
-import { projects } from "../../data";
+import type { Project } from "../../types/project";
+import ImageViewModal from "../ImageViewModal/ImageViewModal";
 
-const ProjectPageContent: Component = () => {
+type ProjectPageProps = {
+  projects: Project[];
+};
+
+const ProjectPageContent: Component<ProjectPageProps> = (props) => {
   const { filteredProjects } = useProjectState();
 
   return (
@@ -21,9 +26,10 @@ const ProjectPageContent: Component = () => {
           <FilterTagBar />
         </div>
         <FilterMenu />
+        <ImageViewModal />
         <section
           class={styles["project-container"]}
-          style={{ "--total-cards": projects.length }}
+          style={{ "--total-cards": props.projects.length }}
         >
           <For each={filteredProjects()}>
             {(project, index) => (
@@ -36,10 +42,10 @@ const ProjectPageContent: Component = () => {
   );
 };
 
-const ProjectPage: Component = () => {
+const ProjectPage: Component<ProjectPageProps> = (props) => {
   return (
-    <ProjectContextProvider>
-      <ProjectPageContent />
+    <ProjectContextProvider projects={props.projects}>
+      <ProjectPageContent projects={props.projects} />
     </ProjectContextProvider>
   );
 };

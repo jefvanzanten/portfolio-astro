@@ -1,16 +1,15 @@
 import type { Component } from "solid-js";
-import {
-  isFilterMenuOpen,
-  setIsFilterMenuOpen,
-} from "../FilterMenu/FilterMenu";
 import styles from "./FilterButton.module.css";
+import { useFilterMenu } from "../../hooks/useFilterMenu";
 
 const FilterButton: Component = () => {
-  const handleClick = () => setIsFilterMenuOpen(!isFilterMenuOpen());
+  const { isOpen, setIsOpen } = useFilterMenu();
+
+  const handleClick = () => setIsOpen(!isOpen());
 
   return (
     <button
-      class={`${styles.button} ${isFilterMenuOpen() ? styles.active : ""}`}
+      class={`${styles.button} ${isOpen() ? styles.active : ""}`}
       onClick={handleClick}
     >
       Filter

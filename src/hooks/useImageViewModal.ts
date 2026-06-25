@@ -2,7 +2,6 @@ import { createSignal } from "solid-js";
 
 const [imageUrl, setImageUrl] = createSignal("");
 const [isOpen, setIsOpen] = createSignal(false);
-
 let dialogRef: HTMLDialogElement | undefined;
 
 export const useImageViewModal = () => {

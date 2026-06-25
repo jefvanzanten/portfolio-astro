@@ -1,9 +1,28 @@
 ---
-const { url, iconUrl, name } = Astro.props;
+const {
+  url,
+  iconUrl,
+  name,
+  iconOnly = false,
+  variant = "secondary",
+  target = url.startsWith("/") ? undefined : "_blank",
+  rel = target === "_blank" ? "noreferrer" : undefined,
+} = Astro.props;
 import styles from "./GithubLink.module.css";
 ---
 
-<a class={styles.socialContainer} href={url} target="_blank">
-  <img class={styles.logo} src={iconUrl} />
-  <p>{name}</p>
+<a
+  class:list={[
+    styles.socialContainer,
+    iconOnly && styles.iconOnly,
+    variant === "primary" && styles.primary,
+  ]}
+  href={url}
+  target={target}
+  rel={rel}
+  aria-label={name}
+  title={name}
+>
+  <img class={styles.logo} src={iconUrl} alt={`${name} logo`} />
+  {!iconOnly && <span class={styles.label}>{name}</span>}
 </a>

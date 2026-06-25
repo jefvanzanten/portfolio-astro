@@ -6,7 +6,6 @@ import {
   type ParentComponent,
   type Accessor,
 } from "solid-js";
-import { projects as projectData } from "../data";
 import type { Category, Language, Library, Project } from "../types/project";
 
 interface ProjectState {
@@ -24,6 +23,10 @@ interface ProjectState {
 
 const ProjectContext = createContext<ProjectState>();
 
+type ProjectContextProviderProps = {
+  projects: Project[];
+};
+
 export const useProjectState = () => {
   const context = useContext(ProjectContext);
   if (!context) {
@@ -34,8 +37,10 @@ export const useProjectState = () => {
   return context;
 };
 
-export const ProjectContextProvider: ParentComponent = (props) => {
-  const [projects] = createSignal(projectData);
+export const ProjectContextProvider: ParentComponent<ProjectContextProviderProps> = (
+  props,
+) => {
+  const [projects] = createSignal(props.projects);
   const [selectedLanguages, setSelectedLanguages] = createSignal<Language[]>(
     [],
   );

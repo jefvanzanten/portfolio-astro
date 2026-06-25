@@ -1,6 +1,5 @@
 import styles from "./ProjectCard.module.css";
 import { For, onMount, type Component } from "solid-js";
-import { useImageViewModal } from "../../hooks/useImageViewModal";
 import GithubLink from "../GithubLink/GithubLink";
 import type { Project } from "../../types/project";
 import ImageButton from "../ImageButton/ImageButton";
@@ -11,7 +10,6 @@ type ProjectCardProps = {
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
-  const { openModal, setImageUrl } = useImageViewModal();
   let cardRef: HTMLElement | undefined;
 
   onMount(() => {
@@ -35,11 +33,6 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     return () => observer.disconnect();
   });
 
-  const handleImageClick = () => {
-    setImageUrl(props.project.coverUrl);
-    openModal();
-  };
-
   return (
     <>
       <article
@@ -50,11 +43,10 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         <ImageButton project={props.project} />
         <section class={styles["project-info"]}>
           <h2 class={styles.title}>{props.project.name}</h2>
-          <p class={styles.description}>
-            {Array.isArray(props.project.description)
-              ? props.project.description.join("")
-              : props.project.description}
-          </p>
+          <div
+            class={styles.description}
+            innerHTML={props.project.descriptionHtml}
+          />
         </section>
         <div class={styles["tag-container"]}>
           <For each={props.project.libraries}>
@@ -64,11 +56,25 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
             {(language) => <span class={styles.tag}>{language}</span>}
           </For>
         </div>
-        <GithubLink
-          name="Github"
-          iconUrl="/icons/github-mark-white.svg"
-          url={props.project.url}
-        />
+        {(props.project.url || props.project.liveUrl || props.project.downloadUrl) && (
+          <div class={styles["card-actions"]}>
+            {props.project.url && (
+              <GithubLink
+                name="GitHub"
+                iconUrl="/icons/github-mark-white.svg"
+                url={props.project.url}
+              />
+            )}
+            {props.project.liveUrl && (
+              <GithubLink
+                name="Open project"
+                iconUrl="/icons/external-link.svg"
+                url={props.project.liveUrl}
+                iconOnly
+              />
+            )}
+          </div>
+        )}
       </article>
     </>
   );

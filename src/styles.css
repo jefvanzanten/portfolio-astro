@@ -14,6 +14,8 @@
   --project-offset: calc((100vw - var(--project-area-width)) / 2);
   --bg: #000000;
   --text: white;
+  --accent: #0d9186;
+  --accent-bright: #0cd9e0;
   --card-bg: color-mix(in oklch, var(--bg), #fff 17%);
   --card-text-color: color-mix(in oklch, var(--text), #000 20%);
   --text-muted: oklch(from var(--text) l c h / 0.9);
