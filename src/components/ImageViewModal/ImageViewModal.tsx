@@ -25,8 +25,8 @@ const ImageViewModal: Component = () => {
       return;
     }
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
     const isLandscape = window.matchMedia("(orientation: landscape)").matches;
 
     setViewport({

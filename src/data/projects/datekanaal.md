@@ -6,8 +6,8 @@ languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["Nextjs", "React", "TailwindCSS"]
 tags: ["Nextjs","React", "TypeScript", "TailwindCSS"]
 images: []
-coverUrl: "/covers/datekanaal_cover.jpg"
-thumbUrl: "/thumbs/datekanaal_thumb.jpg"
+coverUrl: "/covers/datekanaal_cover.png"
+thumbUrl: "/thumbs/datekanaal_thumb.png"
 category: "Fullstack"
 lastUpdated: "2026-06-25"
 highlighted: false
