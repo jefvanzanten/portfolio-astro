@@ -6,37 +6,37 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1em;
-}
 
-input,
-textarea {
-  background-color: rgb(44, 42, 42);
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  color: rgb(216, 216, 216);
+  input,
+  textarea {
+    background-color: rgb(44, 42, 42);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: rgb(216, 216, 216);
 
-  &::placeholder {
-    color: rgb(163, 163, 163);
+    &::placeholder {
+      color: rgb(163, 163, 163);
+    }
   }
-}
 
-textarea {
-  text-wrap: wrap;
-  width: 340px;
-  height: 10vh;
-}
+  textarea {
+    text-wrap: wrap;
+    width: 340px;
+    height: 10vh;
+  }
 
-button {
-  padding: 0.5em 0;
-  background-color: var(--accent-bright);
-  color: rgb(46, 46, 46);
-  font-family: monospace;
-  border-radius: 8px;
-  border: none;
-  font-size: 14px;
-}
+  button {
+    padding: 0.5em 0;
+    background-color: var(--accent-bright);
+    color: rgb(46, 46, 46);
+    font-family: monospace;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+  }
 
-.error {
-  color: rgb(190, 48, 48);
+  .error {
+    color: rgb(190, 48, 48);
+  }
 }

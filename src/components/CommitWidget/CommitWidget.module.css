@@ -23,29 +23,29 @@
   gap: 1rem;
   min-width: 0;
   flex: 1 1 auto;
-}
 
-.line {
-  flex: 1 1 auto;
-  min-width: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0.1)
-  );
-}
+  .line {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.1)
+    );
+  }
 
-.title h1 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 100;
-  font-size: 1.3rem;
-  white-space: nowrap;
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 100;
+    font-size: 1.3rem;
+    white-space: nowrap;
 
-  @media screen and (min-width: 1920px) {
-    font-size: 16px;
+    @media screen and (min-width: 1920px) {
+      font-size: 16px;
+    }
   }
 }
 
@@ -117,59 +117,59 @@
     border-color 0.2s ease,
     transform 0.2s ease;
   flex-shrink: 0;
-}
 
-.commitCard:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
-}
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+  }
 
-.commitHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .commitHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.repoName {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  color: var(--accent-bright);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 140px;
-}
+    .repoName {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      color: var(--accent-bright);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 140px;
+    }
 
-.sha {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25em;
-}
+    .sha {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2em 0.4em;
+      border-radius: 0.25em;
+    }
+  }
 
-.commitMessage {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0;
-  padding: 4px 0;
-  text-align: left;
-}
+  .commitMessage {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 0;
+    padding: 4px 0;
+    text-align: left;
+  }
 
-.commitFooter {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-}
+  .commitFooter {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
 
-.files {
-  font-family: "JetBrains Mono", monospace;
+    .files {
+      font-family: "JetBrains Mono", monospace;
+    }
+  }
 }
 
 .loadingState {

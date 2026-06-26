@@ -15,6 +15,13 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
     <meta name="description" content={description} />
     <meta name="author" content="Jef (Jeffrey) van Zanten" />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const storedTheme = localStorage.getItem("portfolio-theme");
+        document.documentElement.dataset.theme =
+          storedTheme === "light" ? "light" : "dark";
+      })();
+    </script>
 
     {
       GA_ID && (

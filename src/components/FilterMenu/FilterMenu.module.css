@@ -19,38 +19,33 @@
   flex-direction: column;
   gap: 2em;
   z-index: 1;
-}
 
-.legend {
-  padding: 0.1em 1em;
-  color: rgba(255, 255, 255, 0.9);
-}
+  .legend {
+    padding: 0.1em 1em;
+    color: rgba(255, 255, 255, 0.7);
+  }
 
-.libraries {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  border: 1px solid rgba(174, 185, 184, 0.4);
-}
+  .libraries {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    border: 1px solid rgba(174, 185, 184, 0.4);
+  }
 
-.libraryGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  /* border: 1px solid rgba(174, 185, 184, 0.9); */
-}
+  .libraryGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    /* border: 1px solid rgba(174, 185, 184, 0.9); */
+  }
 
-.fieldset {
-  border: 1px solid rgba(174, 185, 184, 0.4);
-  display: flex;
-  flex-direction: column;
-}
+  .fieldset {
+    border: 1px solid rgba(174, 185, 184, 0.4);
+    display: flex;
+    flex-direction: column;
+  }
 
-@media screen and (min-width: 800px) and (max-width: 1024px) {
-}
-
-@media screen and (min-width: 1024px) {
-  .container {
+  @media screen and (min-width: 1024px) {
     top: 8em;
     /* left: calc(var(--project-container-width) / 2); */
     left: var(--project-offset);

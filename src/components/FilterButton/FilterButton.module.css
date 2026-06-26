@@ -1,32 +1,41 @@
 .button {
   border-radius: 0.8em;
-  /* padding: 1em 2em; */
   align-items: center;
   width: 6em;
   min-height: 3em;
-  border: 1px solid rgba(219, 218, 218, 0.2);
-  /* border: 1px solid rgba(12, 217, 224, 0.767); */
-  background: rgb(20, 20, 20);
-  color: white;
+  border: 1px solid var(--button-secondary-border);
+  background: linear-gradient(
+    180deg,
+    var(--button-secondary-bg-start),
+    var(--button-secondary-bg-end)
+  );
+  color: rgba(255, 255, 255, 0.92);
   outline: none;
   box-shadow: none;
-}
 
-.button:hover {
-  border: 1px solid rgba(219, 218, 218, 0.8);
-}
+  &:hover {
+    border-color: var(--border-bright);
+    background: linear-gradient(
+      180deg,
+      var(--button-secondary-hover-start),
+      var(--button-secondary-hover-end)
+    );
+  }
 
-.button:focus {
-  outline: none;
-  box-shadow: none;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  @media screen and (min-width: 1920px) {
+    padding: 0.8em 1.5em;
+  }
 }
 
 .active {
-  background-color: #c1c7c6c1;
-}
-
-@media screen and (min-width: 1920px) {
-  .button {
-    padding: 0.8em 1.5em;
-  }
+  background: linear-gradient(
+    180deg,
+    var(--button-secondary-hover-start),
+    var(--button-secondary-hover-end)
+  );
 }

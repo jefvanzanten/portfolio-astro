@@ -8,16 +8,16 @@
   width: 100%;
   overflow: hidden;
   border-radius: 10px 10px 0 0;
-  border-top: 1px solid var(--border);
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  border-bottom: 2px solid var(--border);
+  /* border-top: 1px solid var(--project-card-border, rgba(0, 0, 0, 0.5)); */
+  /* border-left: 1px solid var(--project-card-border, rgba(0, 0, 0, 0.5)); */
+  /* border-right: 1px solid var(--project-card-border, rgba(0, 0, 0, 0.5)); */
+  border-bottom: 1px solid var(--project-card-border, rgba(0, 0, 0, 0.5));
   padding: 0;
   margin: 0;
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.01),
       rgba(255, 255, 255, 0.01)
     ),
     var(--bg);
@@ -26,6 +26,21 @@
     content: "";
     display: block;
     padding-top: 75%;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 10, 14, 0.08) 0%,
+        rgba(8, 10, 14, 0.02) 100%
+      ),
+      rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    z-index: 1;
   }
 
   .thumb {
@@ -38,30 +53,34 @@
     object-position: center top;
     cursor: pointer;
     opacity: 0;
+    z-index: 0;
     transition: opacity 0.18s ease-out;
   }
-}
 
-.image-container[data-loaded="true"] .thumb {
-  opacity: 1;
-}
+  .loader {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 2rem;
+    height: 2rem;
+    margin-left: -1rem;
+    margin-top: -1rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    border-top-color: var(--accent-bright);
+    animation: spin 0.8s linear infinite;
+    transition: opacity 0.18s ease-out;
+    z-index: 2;
+  }
 
-.loader {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 2rem;
-  height: 2rem;
-  margin-left: -1rem;
-  margin-top: -1rem;
-  border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.16);
-  border-top-color: var(--accent-bright);
-  animation: spin 0.8s linear infinite;
-  transition: opacity 0.18s ease-out;
-}
+  &[data-loaded="true"] {
+    .thumb {
+      opacity: 1;
+    }
 
-.image-container[data-loaded="true"] .loader {
-  opacity: 0;
+    .loader {
+      opacity: 0;
+    }
+  }
 }
 
 @keyframes spin {

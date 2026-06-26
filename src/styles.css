@@ -71,6 +71,7 @@
 :root {
   --card-width: 285px;
   --container-max-width: 90%;
+  --page-content-width: min(100%, calc(var(--card-width) * 3 + 240px));
   --project-container-width: calc(var(--card-width) * 3 + 4em);
   --featured-projects-container-width: calc(var(--card-width) * 3 + 3 * 2em);
   --project-offset: calc((100vw - var(--project-area-width)) / 2);
@@ -80,12 +81,62 @@
   --text: white;
   --accent: #0d9186;
   --accent-bright: #0cd9e0;
+  --surface: rgb(20, 20, 20);
+  --surface-raised: rgba(255, 255, 255, 0.06);
+  --surface-border: rgba(255, 255, 255, 0.16);
+  --nav-control-text: rgba(255, 255, 255, 0.7);
+  --nav-control-muted: rgba(208, 215, 222, 0.5);
+  --nav-control-active: #f3f4f6;
+  --nav-control-active-bg: rgba(255, 255, 255, 0.08);
+  --nav-menu-border: rgba(255, 255, 255, 0.4);
+  --nav-menu-hover: rgba(255, 255, 255, 0.1);
+  --button-secondary-bg-start: color-mix(in oklch, var(--card-bg), #fff 4%);
+  --button-secondary-bg-end: color-mix(in oklch, var(--card-bg), #000 4%);
+  --button-secondary-hover-start: color-mix(in oklch, var(--card-bg), #fff 8%);
+  --button-secondary-hover-end: color-mix(in oklch, var(--card-bg), #000 2%);
+  --button-secondary-border: var(--border);
   --card-bg: color-mix(in oklch, var(--bg), #fff 17%);
   --card-text-color: color-mix(in oklch, var(--text), #000 20%);
+  --card-title-color: var(--text-bright);
   --text-muted: oklch(from var(--text) l c h / 0.9);
   --text-bright: oklch(from var(--text) l c h / 0.9);
   --border: oklch(from var(--text) l c h / 0.2);
   --border-bright: oklch(from var(--text) l c h / 0.8);
+  color-scheme: dark;
+
+  &[data-theme="light"] {
+    --bg: color-mix(in oklch, #64aeb8, white 0%);
+    --text: #0f1720;
+    --accent: #0d9186;
+    --accent-bright: #fff;
+    --surface: rgb(20, 20, 20);
+    --surface-raised: rgba(255, 255, 255, 0.06);
+    --surface-border: rgba(255, 255, 255, 0.16);
+    --nav-control-text: rgba(255, 255, 255, 0.7);
+    --nav-control-muted: rgba(208, 215, 222, 0.5);
+    --nav-control-active: #f3f4f6;
+    --nav-control-active-bg: rgba(255, 255, 255, 0.08);
+    --nav-menu-border: rgba(255, 255, 255, 0.4);
+    --nav-menu-hover: rgba(255, 255, 255, 0.1);
+    --button-secondary-bg-start: #171717;
+    --button-secondary-bg-end: #050505;
+    --button-secondary-hover-start: #242424;
+    --button-secondary-hover-end: #0c0c0c;
+    --button-secondary-border: rgba(0, 0, 0, 0.24);
+    --card-bg: rgba(250, 252, 251, 0.96);
+    --card-text-color: #0f1720;
+    --card-title-color: #0f1720;
+    color-scheme: light;
+  }
+
+  &[data-theme="dark"] {
+    --accent: #0d9186;
+    --accent-bright: #0aa8c2;
+  }
+
+  @media screen and (min-width: 1920px) {
+    --page-content-width: min(100%, calc(320px * 3 + 240px));
+  }
 }
 
 html,
@@ -126,7 +177,7 @@ p {
   }
 
   .line {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--border-bright);
     width: 100%;
 
     @media screen and (max-width: 440px) {
