@@ -106,7 +106,7 @@ export const createProjectFilterController = (root: HTMLElement) => {
     }
 
     applyFilters();
-    setFilterPanelOpen(true);
+    setFilterPanelOpen(false);
   };
 
   return {

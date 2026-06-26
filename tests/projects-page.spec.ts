@@ -10,7 +10,12 @@ test("projects filters toggle and layout work", async ({ page }) => {
   const panel = page.locator("[data-filter-panel]");
 
   await expect(toggle).toBeVisible();
+  await expect(panel).toBeHidden();
+  await expect(toggle).toHaveText("Toon filters");
+
+  await toggle.click();
   await expect(panel).toBeVisible();
+  await expect(toggle).toHaveText("Verberg filters");
 
   await toggle.click();
   await expect(panel).toBeHidden();
@@ -18,7 +23,6 @@ test("projects filters toggle and layout work", async ({ page }) => {
 
   await toggle.click();
   await expect(panel).toBeVisible();
-  await expect(toggle).toHaveText("Verberg filters");
 
   const groups = page.locator(".filter-group");
   await expect(groups).toHaveCount(3);
@@ -50,6 +54,8 @@ test("projects filters toggle and layout work", async ({ page }) => {
 
 test("projects filters change the visible project set", async ({ page }) => {
   await page.goto("/projects");
+
+  await page.getByRole("button", { name: /toon filters/i }).click();
 
   const visibleCards = getVisibleProjectCards(page);
   const initialCount = await visibleCards.count();

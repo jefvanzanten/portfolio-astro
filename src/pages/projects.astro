@@ -30,17 +30,17 @@ const libraries = [...new Set(projects.flatMap((project) => project.libraries))]
   description={description}
 >
   <section class="projects-page">
-    <div class="content-container" data-projects-root data-filters-open="true">
+    <div class="content-container" data-projects-root data-filters-open="false">
       <section class="filters">
         <div class="title-row">
           <button
             type="button"
             class="filter-toggle"
-            aria-expanded="true"
+            aria-expanded="false"
             aria-controls="project-filter-panel"
             data-filter-toggle
           >
-            Verberg filters
+            Toon filters
           </button>
         </div>
 
@@ -49,6 +49,7 @@ const libraries = [...new Set(projects.flatMap((project) => project.libraries))]
           class="filter-form"
           data-filter-form
           data-filter-panel
+          hidden
         >
           <fieldset class="filter-group">
             <legend>Categorie</legend>
