@@ -1,7 +1,7 @@
 ---
 import styles from "./ProjectCard.module.css";
+import imageStyles from "../ImageButton/ImageButton.module.css";
 import type { Project } from "../../types/project";
-import ImageButton from "../ImageButton/ImageButton";
 import GithubLink from "../GithubLink/GithubLink.astro";
 import LinkAction from "../LinkAction/LinkAction.astro";
 import ExternalLinkContent from "../ExternalLinkContent/ExternalLinkContent.astro";
@@ -9,29 +9,51 @@ import ExternalLinkContent from "../ExternalLinkContent/ExternalLinkContent.astr
 interface Props {
   project: Project;
   index?: number;
+  priority?: boolean;
 }
 
-const { project, index = 0 } = Astro.props;
+const { project, index = 0, priority = false } = Astro.props;
 ---
 
 <article
   style={{ "--card-index": index }}
   class={styles["project-card-container"]}
+  data-project-card
+  data-category={project.category}
+  data-languages={project.languages.join(",")}
+  data-libraries={project.libraries.join(",")}
 >
-  <ImageButton client:load project={project} />
+  <a
+    href={project.coverUrl}
+    class={imageStyles["image-container"]}
+    data-project-image-trigger
+    data-loaded="false"
+    aria-label={`Open screenshot van ${project.name}`}
+  >
+    <span class={imageStyles.loader} aria-hidden="true"></span>
+    <img
+      class={imageStyles.thumb}
+      src={project.thumbUrl}
+      alt={`${project.name} cover`}
+      fetchpriority={priority ? "high" : undefined}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      data-project-thumb
+    />
+  </a>
   <section class={styles["project-info"]}>
     <h2 class={styles.title}>{project.name}</h2>
     <div class={styles.description} set:html={project.descriptionHtml} />
   </section>
   <div class={styles["tag-container"]}>
     {
-      project.libraries.map((library) => (
-        <span class={styles.tag}>{library}</span>
+      project.languages.map((language) => (
+        <span class={styles.tag}>{language}</span>
       ))
     }
     {
-      project.languages.map((language) => (
-        <span class={styles.tag}>{language}</span>
+      project.libraries.map((library) => (
+        <span class={styles.tag}>{library}</span>
       ))
     }
   </div>
