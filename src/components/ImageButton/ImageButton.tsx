@@ -38,6 +38,7 @@ const ImageButton = ({
         class={styles.thumb}
         src={project.thumbUrl}
         alt={`${project.name} cover`}
+        fetchpriority={priority ? "high" : undefined}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         onLoad={() => setIsLoaded(true)}
