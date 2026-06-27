@@ -69,7 +69,7 @@
 
 .logo {
   color: var(--nav-control-active);
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
   padding-left: 0;
 
@@ -203,7 +203,7 @@
     color: var(--nav-control-muted);
     font-family: var(--font-body);
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     padding: 0.5rem 0.7rem;
     border-radius: 999px;

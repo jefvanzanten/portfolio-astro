@@ -9,33 +9,9 @@
 @font-face {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/inter-500.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
   font-weight: 600;
   font-display: swap;
   src: url("/fonts/inter-600.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/inter-700.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/jetbrains-mono-400.ttf") format("truetype");
 }
 
 @font-face {
@@ -44,22 +20,6 @@
   font-weight: 500;
   font-display: swap;
   src: url("/fonts/jetbrains-mono-500.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/jetbrains-mono-600.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/jetbrains-mono-700.ttf") format("truetype");
 }
 
 * {
@@ -187,7 +147,7 @@ p {
 
   h1 {
     font-family: var(--font-display);
-    font-weight: 100;
+    font-weight: 500;
     font-size: 1.3rem;
     width: max-content;
     text-wrap: nowrap;

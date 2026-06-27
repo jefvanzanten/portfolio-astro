@@ -1,0 +1,56 @@
+---
+import type { Project } from "../../types/project";
+import ProjectCard from "../ProjectCard/ProjectCard.astro";
+import ProjectImageModal from "../ProjectImageModal/ProjectImageModal.astro";
+import styles from "./FeaturedProjects.module.css";
+
+type Props = {
+  projects: Project[];
+};
+
+const { projects }: Props = Astro.props;
+---
+
+<div
+  class={styles["featured-projects-list"]}
+  data-featured-projects-root
+  style={{ "--total-cards": projects.length }}
+>
+  {
+    projects.map((project, index) => (
+      <ProjectCard project={project} index={index} priority={index < 3} />
+    ))
+  }
+</div>
+
+<ProjectImageModal />
+
+<script>
+  import { createProjectImageModalController } from "../../scripts/projectsPage/projectImageModal";
+
+  const ROOT_SELECTOR = "[data-featured-projects-root]";
+
+  const setupFeaturedProjects = () => {
+    const root = document.querySelector(ROOT_SELECTOR);
+
+    if (
+      !(root instanceof HTMLElement) ||
+      root.dataset.featuredProjectsInitialized === "true"
+    ) {
+      return;
+    }
+
+    root.dataset.featuredProjectsInitialized = "true";
+    createProjectImageModalController(root).init();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupFeaturedProjects, {
+      once: true,
+    });
+  } else {
+    setupFeaturedProjects();
+  }
+
+  document.addEventListener("astro:page-load", setupFeaturedProjects);
+</script>

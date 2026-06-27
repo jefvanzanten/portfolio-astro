@@ -1,3 +1,5 @@
+import type { ImageMetadata } from "astro";
+
 export type Language =
   | "TypeScript"
   | "C#"
@@ -56,6 +58,10 @@ export type Project = {
   highlighted: boolean;
   coverUrl: string;
   thumbUrl: string;
+  thumbImage: ImageMetadata;
 };
 
-export type ProjectFrontmatter = Omit<Project, "description" | "descriptionHtml">;
+export type ProjectFrontmatter = Omit<
+  Project,
+  "description" | "descriptionHtml" | "thumbImage"
+>;

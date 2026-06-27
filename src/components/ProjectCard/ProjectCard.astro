@@ -1,4 +1,5 @@
 ---
+import { Picture } from "astro:assets";
 import styles from "./ProjectCard.module.css";
 import imageStyles from "../ImageButton/ImageButton.module.css";
 import type { Project } from "../../types/project";
@@ -31,10 +32,13 @@ const { project, index = 0, priority = false } = Astro.props;
     aria-label={`Open screenshot van ${project.name}`}
   >
     <span class={imageStyles.loader} aria-hidden="true"></span>
-    <img
+    <Picture
       class={imageStyles.thumb}
-      src={project.thumbUrl}
+      src={project.thumbImage}
       alt={`${project.name} cover`}
+      formats={["avif", "webp"]}
+      widths={[320, 640]}
+      sizes="(max-width: 940px) 90vw, (max-width: 1400px) 31vw, 320px"
       fetchpriority={priority ? "high" : undefined}
       loading={priority ? "eager" : "lazy"}
       decoding="async"

@@ -94,7 +94,7 @@
     background-color: color-mix(in oklch, var(--card-bg), #000 30%);
     border: 1px solid color-mix(in oklch, var(--border), var(--accent) 28%);
     font-size: 9px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0.5em 0.7em;
   }
 }

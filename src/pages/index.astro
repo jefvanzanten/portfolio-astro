@@ -1,7 +1,7 @@
 ---
 import Layout from "../Layout.astro";
 import CommitWidget from "../components/CommitWidget/CommitWidget.astro";
-import FeaturedProjects from "../components/FeaturedProjects/FeaturedProjects";
+import FeaturedProjects from "../components/FeaturedProjects/FeaturedProjects.astro";
 import GithubLink from "../components/GithubLink/GithubLink.astro";
 import { projects } from "../data.ts";
 const filteredProjects = projects.filter((project) => project.highlighted);
@@ -69,7 +69,7 @@ const ctaLinks = [
         <h1>Uitgelichte Projecten</h1>
         <span class="line"></span>
       </div>
-      <FeaturedProjects client:load projects={filteredProjects} />
+      <FeaturedProjects projects={filteredProjects} />
     </section>
   </div>
 </Layout>
@@ -119,7 +119,7 @@ const ctaLinks = [
 
     h1 {
       font-family: var(--font-display);
-      font-weight: 100;
+      font-weight: 500;
       font-size: 1.3rem;
       text-wrap: nowrap;
       padding-top: 1em;
