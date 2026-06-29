@@ -1,4 +1,8 @@
-import type { ProjectFilterState, ProjectViewModel } from "./types";
+import type {
+  ProjectFilterState,
+  ProjectFilterable,
+  ProjectViewModel,
+} from "./types";
 
 const categoryOrder = [
   "Frontend",
@@ -11,7 +15,7 @@ const categoryOrder = [
 const matchesAll = (selectedValues: string[], availableValues: string[]) =>
   selectedValues.every((value) => availableValues.includes(value));
 
-export function getProjectFilterOptions(projects: ProjectViewModel[]) {
+export function getProjectFilterOptions<T extends ProjectFilterable>(projects: T[]) {
   return {
     categories: categoryOrder.filter((category) =>
       projects.some((project) => project.category === category),

@@ -14,6 +14,12 @@ export type ProjectViewModel = {
   thumbHeight: number;
 };
 
+export type ProjectFilterable = {
+  category: string;
+  languages: string[];
+  libraries: string[];
+};
+
 export type ProjectFilterState = {
   categories: string[];
   languages: string[];
