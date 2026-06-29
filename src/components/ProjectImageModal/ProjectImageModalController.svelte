@@ -1,10 +1,10 @@
 <script lang="ts">
   import ProjectImageModal from "./ProjectImageModal.svelte";
-  import { projectImageStore } from "./ProjectImageStore";
+  import { closeProjectImage, projectImageState } from "./ProjectImageState.svelte";
 
   const closeModal = () => {
-    projectImageStore.close();
+    closeProjectImage();
   };
 </script>
 
-<ProjectImageModal imageUrl={$projectImageStore.activeImageUrl} onClose={closeModal} />
+<ProjectImageModal imageUrl={projectImageState.activeImageUrl} onClose={closeModal} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { projectImageStore } from "./ProjectImageStore";
+  import { openProjectImage } from "./ProjectImageState.svelte";
 
   export let imageUrl = "";
   export let ariaLabel = "Open project screenshot";
@@ -7,7 +7,7 @@
 
   const openImage = (event: MouseEvent) => {
     event.preventDefault();
-    projectImageStore.open(imageUrl);
+    openProjectImage(imageUrl);
   };
 </script>
 
