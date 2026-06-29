@@ -1,11 +1,10 @@
 ---
 import { Picture } from "astro:assets";
-import styles from "./ProjectCard.module.css";
-import imageStyles from "../ImageButton/ImageButton.module.css";
 import type { Project } from "../../types/project";
 import GithubLink from "../GithubLink/GithubLink.astro";
 import LinkAction from "../LinkAction/LinkAction.astro";
 import ExternalLinkContent from "../ExternalLinkContent/ExternalLinkContent.astro";
+import ProjectImageTrigger from "../ProjectImageModal/ProjectImageTrigger.svelte";
 
 interface Props {
   project: Project;
@@ -18,22 +17,20 @@ const { project, index = 0, priority = false } = Astro.props;
 
 <article
   style={{ "--card-index": index }}
-  class={styles["project-card-container"]}
+  class="project-card-container"
   data-project-card
   data-category={project.category}
   data-languages={project.languages.join(",")}
   data-libraries={project.libraries.join(",")}
 >
-  <a
-    href={project.coverUrl}
-    class={imageStyles["image-container"]}
-    data-project-image-trigger
-    data-loaded="false"
-    aria-label={`Open screenshot van ${project.name}`}
+  <ProjectImageTrigger
+    client:idle
+    imageUrl={project.coverUrl}
+    className="image-container"
+    ariaLabel={`Open screenshot van ${project.name}`}
   >
-    <span class={imageStyles.loader} aria-hidden="true"></span>
     <Picture
-      class={imageStyles.thumb}
+      class="thumb"
       src={project.thumbImage}
       alt={`${project.name} cover`}
       formats={["avif", "webp"]}
@@ -42,45 +39,219 @@ const { project, index = 0, priority = false } = Astro.props;
       fetchpriority={priority ? "high" : undefined}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
-      data-project-thumb
     />
-  </a>
-  <section class={styles["project-info"]}>
-    <h2 class={styles.title}>{project.name}</h2>
-    <div class={styles.description} set:html={project.descriptionHtml} />
+  </ProjectImageTrigger>
+  <section class="project-info">
+    <h2 class="title">{project.name}</h2>
+    <div class="description" set:html={project.descriptionHtml} />
   </section>
-  <div class={styles["tag-container"]}>
-    {
-      project.languages.map((language) => (
-        <span class={styles.tag}>{language}</span>
-      ))
-    }
-    {
-      project.libraries.map((library) => (
-        <span class={styles.tag}>{library}</span>
-      ))
-    }
+  <div class="tag-container">
+    {project.languages.map((language) => <span class="tag">{language}</span>)}
+    {project.libraries.map((library) => <span class="tag">{library}</span>)}
   </div>
   {
     (project.url || project.liveUrl || project.downloadUrl) && (
-      <div class={styles["card-actions"]}>
-        {
-          project.url && (
-            <GithubLink
-              name="GitHub"
-              iconUrl="/icons/github-mark-white.svg"
-              url={project.url}
-            />
-          )
-        }
-        {
-          project.liveUrl && (
-            <LinkAction url={project.liveUrl} label="Bekijk live">
-              <ExternalLinkContent />
-            </LinkAction>
-          )
-        }
+      <div class="card-actions">
+        {project.url && (
+          <GithubLink
+            name="GitHub"
+            iconUrl="/icons/github-mark-white.svg"
+            url={project.url}
+          />
+        )}
+        {project.liveUrl && (
+          <LinkAction url={project.liveUrl} label="Bekijk live">
+            <ExternalLinkContent />
+          </LinkAction>
+        )}
       </div>
     )
   }
 </article>
+
+<style>
+  .project-card-container {
+    --project-card-border: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--project-card-border);
+    color: var(--card-text-color);
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5em;
+    padding-bottom: 0.5em;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-card-container:hover {
+    border: 1px solid var(--project-card-border);
+    translate: 0 -6px;
+  }
+
+  :global(.image-container) {
+    all: unset;
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid var(--project-card-border, rgba(0, 0, 0, 0.5));
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.01),
+        rgba(255, 255, 255, 0.01)
+      ),
+      var(--bg);
+  }
+
+  :global(.image-container)::before {
+    content: "";
+    display: block;
+    padding-top: 75%;
+  }
+
+  :global(.image-container)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 10, 14, 0.08) 0%,
+        rgba(8, 10, 14, 0.02) 100%
+      ),
+      rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  :global(.image-container .thumb) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    cursor: pointer;
+    z-index: 0;
+    transition: transform 0.22s ease-out;
+  }
+
+  :global(.image-container:hover .thumb) {
+    transform: scale(1.02);
+  }
+
+  .project-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    padding: 1em;
+  }
+
+  .title {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 500;
+    text-align: center;
+    color: var(--card-title-color);
+    width: 100%;
+    font-size: 16px;
+    padding: 1em 0;
+    margin: 0;
+  }
+
+  .description {
+    flex: 1 1 auto;
+    font-size: 13px;
+    white-space: normal;
+    padding: 1em 0;
+  }
+
+  .description :global(p) {
+    margin: 0 0 1em;
+  }
+
+  .description :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .tag-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    gap: 0.7rem;
+    padding: 1em 2em 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90%;
+  }
+
+  .tag {
+    border-radius: 0.4em;
+    color: color-mix(in oklch, var(--text), var(--accent-bright) 14%);
+    background-color: color-mix(in oklch, var(--card-bg), #000 30%);
+    border: 1px solid color-mix(in oklch, var(--border), var(--accent) 28%);
+    font-size: 9px;
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+  }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 1rem 0.75rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .project-card-container {
+      animation: fallIn 0.45s ease-out both;
+      animation-delay: calc(var(--card-index, 0) * 0.06s);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .project-info {
+      padding: 0.5em 1.3em;
+    }
+  }
+
+  @media screen and (max-width: 940px) {
+    .description {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (min-width: 1920px) {
+    .title {
+      font-size: 18px;
+    }
+
+    .description {
+      font-size: 16px;
+    }
+  }
+
+  @keyframes fallIn {
+    from {
+      opacity: 0.72;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

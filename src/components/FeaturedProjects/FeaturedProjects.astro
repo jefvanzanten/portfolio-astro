@@ -1,8 +1,7 @@
 ---
 import type { Project } from "../../types/project";
 import ProjectCard from "../ProjectCard/ProjectCard.astro";
-import ProjectImageModal from "../ProjectImageModal/ProjectImageModal.astro";
-import styles from "./FeaturedProjects.module.css";
+import ProjectImageModalController from "../ProjectImageModal/ProjectImageModalController.svelte";
 
 type Props = {
   projects: Project[];
@@ -12,7 +11,7 @@ const { projects }: Props = Astro.props;
 ---
 
 <div
-  class={styles["featured-projects-list"]}
+  class="featured-projects-list"
   data-featured-projects-root
   style={{ "--total-cards": projects.length }}
 >
@@ -23,34 +22,20 @@ const { projects }: Props = Astro.props;
   }
 </div>
 
-<ProjectImageModal />
+<ProjectImageModalController client:idle />
 
-<script>
-  import { createProjectImageModalController } from "../../scripts/projectsPage/projectImageModal";
-
-  const ROOT_SELECTOR = "[data-featured-projects-root]";
-
-  const setupFeaturedProjects = () => {
-    const root = document.querySelector(ROOT_SELECTOR);
-
-    if (
-      !(root instanceof HTMLElement) ||
-      root.dataset.featuredProjectsInitialized === "true"
-    ) {
-      return;
-    }
-
-    root.dataset.featuredProjectsInitialized = "true";
-    createProjectImageModalController(root).init();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupFeaturedProjects, {
-      once: true,
-    });
-  } else {
-    setupFeaturedProjects();
+<style>
+  .featured-projects-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2em;
+    width: 100%;
+    margin: 0 auto;
   }
 
-  document.addEventListener("astro:page-load", setupFeaturedProjects);
-</script>
+  @media screen and (max-width: 940px) {
+    .featured-projects-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

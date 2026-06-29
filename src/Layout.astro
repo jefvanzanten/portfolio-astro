@@ -1,5 +1,5 @@
 ---
-import Navigation from "./components/NavBar/NavBar.svelte";
+import Navigation from "./components/NavBar/NavBar.astro";
 import "./styles.css";
 
 const { title, description } = Astro.props;
@@ -44,10 +44,7 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
 
   <body>
     <main>
-      <Navigation
-        client:media="(max-width: 940px)"
-        currentPath={Astro.url.pathname}
-      />
+      <Navigation currentPath={Astro.url.pathname} />
       <slot />
     </main>
   </body>

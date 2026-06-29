@@ -1,9 +1,10 @@
 ---
 import Layout from "../Layout.astro";
-import ProjectImageModal from "../components/ProjectImageModal/ProjectImageModal.astro";
-import ProjectCard from "../components/ProjectCard/ProjectCard.astro";
 import { projects } from "../data.ts";
-import type { Category, Language, Library } from "../types/project";
+import ProjectCard from "../components/ProjectCard/ProjectCard.astro";
+import ProjectsFilters from "../components/ProjectsView/ProjectsFilters.svelte";
+import ProjectImageModalController from "../components/ProjectImageModal/ProjectImageModalController.svelte";
+import { getProjectFilterOptions } from "../components/ProjectsView/helpers";
 
 const allTech = [
   ...new Set(
@@ -11,354 +12,73 @@ const allTech = [
   ),
 ].join(", ");
 const description = `Projecten van Jef (Jeffrey) van Zanten - Fullstack developer. Technologieen: ${allTech}.`;
-const selectedCategories = new Set(Astro.url.searchParams.getAll("category"));
-const selectedLanguages = new Set(Astro.url.searchParams.getAll("language"));
-const selectedLibraries = new Set(Astro.url.searchParams.getAll("library"));
 
-const categoryOrder: Category[] = [
-  "Frontend",
-  "Backend",
-  "Fullstack",
-  "Mobile",
-  "Desktop",
-];
-
-const categories = categoryOrder.filter((category) =>
-  projects.some((project) => project.category === category),
-);
-const languages = [
-  ...new Set(projects.flatMap((project) => project.languages)),
-].sort() as Language[];
-const libraries = [
-  ...new Set(projects.flatMap((project) => project.libraries)),
-].sort() as Library[];
+const { categories, languages, libraries } = getProjectFilterOptions(projects);
 ---
 
 <Layout title="Projects - jefvanzanten.dev" description={description}>
   <section class="projects-page">
-    <div class="content-container" data-projects-root data-filters-open="false">
-      <section class="filters">
-        <div class="title-row">
-          <button
-            type="button"
-            class="filter-toggle"
-            aria-expanded="false"
-            aria-controls="project-filter-panel"
-            data-filter-toggle
-          >
-            Toon filters
-          </button>
-        </div>
+    <div class="content-container">
+      <ProjectsFilters
+        client:load
+        categories={categories}
+        languages={languages}
+        libraries={libraries}
+        totalProjects={projects.length}
+      />
 
-        <form
-          id="project-filter-panel"
-          class="filter-form"
-          data-filter-form
-          data-filter-panel
-          hidden
-        >
-          <fieldset class="filter-group">
-            <legend>Categorie</legend>
-            <div class="filter-options filter-options-compact">
-              {
-                categories.map((category) => (
-                  <label class="filter-option">
-                    <input
-                      type="checkbox"
-                      name="category"
-                      value={category}
-                      checked={selectedCategories.has(category)}
-                    />
-                    <span>{category}</span>
-                  </label>
-                ))
-              }
-            </div>
-          </fieldset>
-
-          <fieldset class="filter-group">
-            <legend>Programmeertalen</legend>
-            <div class="filter-options filter-options-compact">
-              {
-                languages.map((language) => (
-                  <label class="filter-option">
-                    <input
-                      type="checkbox"
-                      name="language"
-                      value={language}
-                      checked={selectedLanguages.has(language)}
-                    />
-                    <span>{language}</span>
-                  </label>
-                ))
-              }
-            </div>
-          </fieldset>
-
-          <fieldset class="filter-group">
-            <legend>Frameworks & libraries</legend>
-            <div class="filter-options filter-options-libraries">
-              {
-                libraries.map((library) => (
-                  <label class="filter-option">
-                    <input
-                      type="checkbox"
-                      name="library"
-                      value={library}
-                      checked={selectedLibraries.has(library)}
-                    />
-                    <span>{library}</span>
-                  </label>
-                ))
-              }
-            </div>
-          </fieldset>
-        </form>
-      </section>
-
-      <p class="empty-state" data-project-empty hidden>
-        Geen projecten gevonden met deze filters.
-      </p>
-
-      <section class="project-container" data-project-list>
+      <section class="project-container">
         {
           projects.map((project, index) => (
             <ProjectCard project={project} index={index} priority={index < 3} />
           ))
         }
       </section>
+
+      <p class="empty-state" data-projects-empty hidden>
+        Geen projecten gevonden met deze filters.
+      </p>
     </div>
 
-    <ProjectImageModal />
+    <ProjectImageModalController client:idle />
   </section>
+</Layout>
 
-  <script>
-    import { setupProjectsPage } from "../scripts/projectsPage";
+<style>
+  .projects-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 8vh;
+  }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", setupProjectsPage, {
-        once: true,
-      });
-    } else {
-      setupProjectsPage();
-    }
+  .content-container {
+    width: var(--page-content-width);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-    document.addEventListener("astro:page-load", setupProjectsPage);
-  </script>
+  .project-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2em;
+    width: 100%;
+  }
 
-  <style>
-    .projects-page {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      padding-bottom: 8vh;
-    }
+  .empty-state {
+    color: var(--text-muted);
+    padding-bottom: 1rem;
+  }
 
+  @media screen and (max-width: 940px) {
     .content-container {
-      width: var(--page-content-width);
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-
-      @media screen and (max-width: 940px) {
-        width: 90%;
-      }
-    }
-
-    .filters {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem 0 0.5rem;
-    }
-
-    .title-row {
-      display: flex;
-      justify-content: flex-start;
-      gap: 1rem;
-    }
-
-    .filter-toggle {
-      border: 1px solid var(--button-secondary-border);
-      border-radius: 999px;
-      background: linear-gradient(
-        180deg,
-        var(--button-secondary-bg-start),
-        var(--button-secondary-bg-end)
-      );
-      color: rgba(255, 255, 255, 0.92);
-      cursor: pointer;
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      padding: 0.7rem 1rem;
-      transition:
-        border-color 0.15s ease,
-        transform 0.15s ease,
-        background 0.15s ease;
-
-      &:hover {
-        border-color: var(--border-bright);
-        transform: translateY(-1px);
-        background: linear-gradient(
-          180deg,
-          var(--button-secondary-hover-start),
-          var(--button-secondary-hover-end)
-        );
-      }
-    }
-
-    .filter-form {
-      display: grid;
-      grid-template-columns: minmax(210px, 0.85fr) minmax(230px, 1fr) minmax(
-          440px,
-          1.8fr
-        );
-      gap: 1rem;
-      align-items: stretch;
-
-      &[hidden] {
-        display: none;
-      }
-    }
-
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      padding: 1rem 1.1rem 1.1rem;
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      background: color-mix(in oklch, var(--card-bg), #000 18%);
-      height: 100%;
-
-      legend {
-        padding: 0 0.4rem;
-        font-family: var(--font-display);
-        font-size: 0.9rem;
-        color: var(--text-bright);
-      }
-    }
-
-    .filter-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-
-      &.filter-options-compact {
-        flex: 1 1 auto;
-        align-items: center;
-        justify-content: center;
-
-        .filter-option {
-          width: min(100%, 14rem);
-        }
-      }
-
-      &.filter-options-libraries {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: start;
-
-        .filter-option {
-          padding: 0.45rem 0.65rem;
-          font-size: 0.82rem;
-        }
-      }
-    }
-
-    .filter-option {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      padding: 0.55rem 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      cursor: pointer;
-      user-select: none;
-      font-size: 0.9rem;
-      width: 100%;
-
-      input {
-        accent-color: var(--accent-bright);
-        flex: 0 0 auto;
-      }
-
-      span {
-        min-width: 0;
-      }
-    }
-
-    :global(html[data-theme="light"]) .filter-group {
-      background: rgba(231, 230, 230, 0.4);
-      border: 2px solid #000000;
-
-      legend {
-        color: #000000;
-      }
-    }
-
-    :global(html[data-theme="light"]) .filter-option {
-      background: #464646;
-      border: 2px solid #000000;
-      color: #ffffff;
+      width: 90%;
     }
 
     .project-container {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 2em;
-      width: 100%;
-
-      @media screen and (max-width: 940px) {
-        grid-template-columns: 1fr;
-      }
+      grid-template-columns: 1fr;
     }
-
-    :global([data-project-card][hidden]) {
-      display: none !important;
-    }
-
-    .empty-state {
-      color: var(--text-muted);
-      padding-bottom: 1rem;
-    }
-
-    .title-row {
-      @media screen and (max-width: 940px) {
-        justify-content: flex-start;
-      }
-    }
-
-    .filter-toggle {
-      @media screen and (max-width: 940px) {
-        width: 100%;
-      }
-    }
-
-    .filter-form {
-      @media screen and (max-width: 940px) {
-        grid-template-columns: 1fr;
-      }
-
-      @media screen and (min-width: 1920px) {
-        grid-template-columns:
-          minmax(220px, 0.8fr) minmax(240px, 0.95fr)
-          minmax(540px, 2fr);
-      }
-    }
-
-    .filter-options {
-      &.filter-options-libraries {
-        @media screen and (max-width: 940px) {
-          grid-template-columns: 1fr;
-        }
-
-        @media screen and (min-width: 1920px) {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-      }
-    }
-  </style>
-</Layout>
+  }
+</style>
