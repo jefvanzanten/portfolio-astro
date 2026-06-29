@@ -1,0 +1,175 @@
+---
+import {
+  getActiveNavigationItem,
+  isNavigationItemActive,
+  navigationItems,
+} from "../../lib/navigation";
+import HamburgerToggle from "./HamburgerToggle.svelte";
+
+type Props = {
+  currentPath: string;
+};
+
+const { currentPath }: Props = Astro.props;
+const activeItem = getActiveNavigationItem(currentPath);
+---
+
+<div class="navcontainer">
+  <nav class="nav" data-mobile-nav data-open="false">
+    <HamburgerToggle client:media="(max-width: 940px)" />
+
+    <a href="/" class="navlink logo"> JEFVANZANTEN.DEV </a>
+
+    {
+      activeItem && (
+        <a href={activeItem.to} class="pageName">
+          {activeItem.name}
+        </a>
+      )
+    }
+
+    <div class="navlist">
+      {
+        navigationItems.map((item) => (
+          <a
+            href={item.to}
+            class={isNavigationItemActive(currentPath, item.to)
+              ? "navlink active"
+              : "navlink"}
+          >
+            {item.name}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</div>
+
+<style>
+  .navcontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+    z-index: 1000;
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .pageName {
+    display: none;
+    color: var(--nav-control-active);
+  }
+
+  .nav {
+    width: var(--page-content-width);
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-body);
+    padding: 0;
+  }
+
+  .navlink {
+    display: inline-block;
+    padding: 1em 3em;
+    color: var(--nav-control-active);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+    font-size: 1rem;
+  }
+
+  .logo {
+    color: var(--nav-control-active);
+    font-weight: 600;
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .navlist {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0 0 0 auto;
+  }
+
+  .active {
+    border-color: var(--accent-bright);
+  }
+
+  @media (max-width: 1800px) {
+    .navlink {
+      padding: 1em 2em;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 940px) {
+    .navcontainer {
+      width: auto;
+      height: 6vh;
+      line-height: 6vh;
+      padding: 0;
+    }
+
+    .pageName {
+      display: block;
+      font-size: 1.2rem;
+    }
+
+    .nav {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      justify-content: inherit;
+    }
+
+    .navlink {
+      padding: 1em 2em;
+    }
+
+    .logo {
+      padding-inline: 1rem;
+    }
+
+    .navlist {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--surface);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      gap: 0;
+    }
+
+    .navlist .navlink {
+      display: block;
+      width: 100%;
+      padding: 1.5em 0;
+      border-bottom: 1px solid var(--nav-menu-border);
+      line-height: 1vh;
+    }
+
+    .navlist .navlink:hover {
+      background-color: var(--nav-menu-hover);
+    }
+
+    .nav[data-open="true"] .navlist {
+      max-height: 400px;
+    }
+  }
+</style>

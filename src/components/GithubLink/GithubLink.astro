@@ -9,7 +9,6 @@ const {
   target = url.startsWith("/") ? undefined : "_blank",
   rel = target === "_blank" ? "noreferrer" : undefined,
 } = Astro.props;
-import styles from "./GithubLink.module.css";
 ---
 
 <LinkAction
@@ -20,8 +19,42 @@ import styles from "./GithubLink.module.css";
   target={target}
   rel={rel}
 >
-  <span class={styles.content}>
-    <img class={styles.logo} src={iconUrl} alt={`${name} logo`} />
-    {!iconOnly && <span class={styles.label}>{name}</span>}
+  <span class="content">
+    <img class="logo" src={iconUrl} alt={`${name} logo`} />
+    {!iconOnly && <span class="label">{name}</span>}
   </span>
 </LinkAction>
+
+<style>
+  .content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .logo {
+    height: 1.1rem;
+    width: 1.1rem;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .label {
+    font-size: 0.95rem;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .label {
+      font-size: 0.8rem;
+    }
+
+    .logo {
+      height: 1rem;
+      width: 1rem;
+    }
+  }
+</style>

@@ -6,7 +6,9 @@ const getVisibleProjectCards = (page: import("@playwright/test").Page) =>
 test("projects filters toggle and layout work", async ({ page }) => {
   await page.goto("/projects");
 
-  const toggle = page.getByRole("button", { name: /verberg filters|toon filters/i });
+  const toggle = page.getByRole("button", {
+    name: /verberg filters|toon filters/i,
+  });
   const panel = page.locator("[data-filter-panel]");
 
   await expect(toggle).toBeVisible();
@@ -46,7 +48,13 @@ test("projects filters toggle and layout work", async ({ page }) => {
     .locator(".filter-options-libraries .filter-option")
     .evaluateAll((elements) => {
       const rounded = (value: number) => Math.round(value);
-      return [...new Set(elements.map((element) => rounded(element.getBoundingClientRect().left)))];
+      return [
+        ...new Set(
+          elements.map((element) =>
+            rounded(element.getBoundingClientRect().left),
+          ),
+        ),
+      ];
     });
 
   expect(libraryOptionXs.length).toBeGreaterThanOrEqual(3);
@@ -55,13 +63,17 @@ test("projects filters toggle and layout work", async ({ page }) => {
 test("projects filters change the visible project set", async ({ page }) => {
   await page.goto("/projects");
 
-  await page.getByRole("button", { name: /toon filters/i }).click();
+  const toggle = page.getByRole("button", {
+    name: /verberg filters|toon filters/i,
+  });
+  await toggle.click();
 
   const visibleCards = getVisibleProjectCards(page);
   const initialCount = await visibleCards.count();
   expect(initialCount).toBeGreaterThan(0);
 
   await page.locator('input[name="category"][value="Frontend"]').check();
+  await page.waitForURL(/\/projects\?category=Frontend/);
 
   const frontendCount = await visibleCards.count();
   expect(frontendCount).toBeGreaterThan(0);
@@ -76,6 +88,7 @@ test("projects filters change the visible project set", async ({ page }) => {
   );
 
   await page.locator('input[name="language"][value="TypeScript"]').check();
+  await page.waitForURL(/language=TypeScript/);
 
   const frontendTypeScriptCards = await visibleCards.evaluateAll((elements) =>
     elements.map((element) => {
@@ -91,13 +104,11 @@ test("projects filters change the visible project set", async ({ page }) => {
   expect(
     frontendTypeScriptCards.every(
       (card) =>
-        card.category === "Frontend" &&
-        card.languages.includes("TypeScript"),
+        card.category === "Frontend" && card.languages.includes("TypeScript"),
     ),
   ).toBe(true);
 
-  await page.locator('input[name="category"][value="Frontend"]').uncheck();
-  await page.locator('input[name="language"][value="TypeScript"]').uncheck();
-
+  await page.getByRole("button", { name: "Reset filters" }).click();
+  await page.waitForURL(/\/projects$/);
   await expect(visibleCards).toHaveCount(initialCount);
 });

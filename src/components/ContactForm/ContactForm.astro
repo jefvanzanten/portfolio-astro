@@ -1,0 +1,169 @@
+---
+const apiUrl = import.meta.env.PUBLIC_API_URL;
+const submitUrl = apiUrl ? `${apiUrl}/email/send-email` : "";
+---
+
+<form
+  data-contact-form
+  data-submitting="false"
+  data-status="idle"
+  data-submit-url={submitUrl}
+>
+  <input type="text" name="name" placeholder="Naam" autocomplete="name" required />
+  <input
+    type="email"
+    name="email"
+    placeholder="jouw@email.com"
+    autocomplete="email"
+    required
+  />
+  <textarea
+    name="message"
+    placeholder="Schrijf je bericht hier..."
+    required
+  ></textarea>
+  <button type="submit" disabled={!submitUrl}>
+    <span class="idle-label">Verstuur</span>
+    <span class="loading-label">Versturen...</span>
+  </button>
+  <span class="success">Email verstuurd!</span>
+  <span class="error">Er ging iets mis, probeer opnieuw</span>
+  {
+    !submitUrl && (
+      <span class="error config-error">
+        Contactformulier is momenteel niet beschikbaar.
+      </span>
+    )
+  }
+</form>
+
+<script is:inline>
+  document.querySelectorAll("[data-contact-form]").forEach((formElement) => {
+    if (!(formElement instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const submitUrl = formElement.dataset.submitUrl ?? "";
+
+    if (!submitUrl) {
+      return;
+    }
+
+    formElement.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (formElement.dataset.submitting === "true") {
+        return;
+      }
+
+      formElement.dataset.submitting = "true";
+      formElement.dataset.status = "idle";
+
+      const formData = new FormData(formElement);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch(submitUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        formElement.dataset.status = response.ok ? "success" : "error";
+
+        if (response.ok) {
+          formElement.reset();
+        }
+      } catch (error) {
+        console.error("Sending email failed:", error);
+        formElement.dataset.status = "error";
+      } finally {
+        formElement.dataset.submitting = "false";
+      }
+    });
+  });
+</script>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  input,
+  textarea {
+    background-color: rgb(44, 42, 42);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: rgb(216, 216, 216);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgb(163, 163, 163);
+  }
+
+  textarea {
+    text-wrap: wrap;
+    width: 340px;
+    height: 10vh;
+  }
+
+  button {
+    padding: 0.5em 0;
+    background-color: var(--accent-bright);
+    color: rgb(46, 46, 46);
+    font-family: monospace;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  .success,
+  .error,
+  .loading-label {
+    display: none;
+  }
+
+  .error {
+    color: rgb(190, 48, 48);
+  }
+
+  .success {
+    color: rgb(77, 182, 106);
+  }
+
+  form[data-submitting="true"] button {
+    opacity: 0.8;
+  }
+
+  form[data-submitting="true"] .idle-label {
+    display: none;
+  }
+
+  form[data-submitting="true"] .loading-label {
+    display: inline;
+  }
+
+  form[data-status="success"] .success {
+    display: inline;
+  }
+
+  form[data-status="error"] .error {
+    display: inline;
+  }
+
+  .config-error {
+    display: inline;
+  }
+</style>

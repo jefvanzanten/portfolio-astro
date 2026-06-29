@@ -1,5 +1,5 @@
 ---
-import Navigation from "./components/NavBar/NavBar.svelte";
+import Navigation from "./components/NavBar/NavBar.astro";
 import "./styles.css";
 
 const { title, description } = Astro.props;
@@ -11,6 +11,27 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <link
+      rel="preload"
+      href="/fonts/inter-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono-500.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="author" content="Jef (Jeffrey) van Zanten" />
@@ -44,10 +65,7 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
 
   <body>
     <main>
-      <Navigation
-        client:media="(max-width: 940px)"
-        currentPath={Astro.url.pathname}
-      />
+      <Navigation currentPath={Astro.url.pathname} />
       <slot />
     </main>
   </body>
