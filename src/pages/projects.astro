@@ -54,10 +54,11 @@ const { categories, languages, libraries } = getProjectFilterOptions(projects);
   }
 
   .content-container {
-    width: var(--page-content-width);
+    width: min(calc(100% - 3rem), var(--page-content-width));
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    margin: 0 auto;
   }
 
   .project-container {

@@ -18,7 +18,7 @@ const activeItem = getActiveNavigationItem(currentPath);
   <nav class="nav" data-mobile-nav data-open="false">
     <HamburgerToggle client:media="(max-width: 940px)" />
 
-    <a href="/" class="navlink logo"> JEFVANZANTEN.DEV </a>
+    <a href="/" class="navlink logo">JEFVANZANTEN.DEV</a>
 
     {
       activeItem && (
@@ -79,7 +79,7 @@ const activeItem = getActiveNavigationItem(currentPath);
 
   .navlink {
     display: inline-block;
-    padding: 1em 3em;
+    padding: 1em 0;
     color: var(--nav-control-active);
     text-decoration: none;
     border-bottom: 2px solid transparent;
@@ -99,6 +99,7 @@ const activeItem = getActiveNavigationItem(currentPath);
     align-items: center;
     list-style: none;
     margin: 0 0 0 auto;
+    gap: 4rem;
   }
 
   .active {
@@ -107,8 +108,11 @@ const activeItem = getActiveNavigationItem(currentPath);
 
   @media (max-width: 1800px) {
     .navlink {
-      padding: 1em 2em;
       font-size: 1rem;
+    }
+
+    .navlist {
+      gap: 3rem;
     }
   }
 
