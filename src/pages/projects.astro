@@ -3,8 +3,8 @@ import Layout from "../Layout.astro";
 import { projects } from "../data.ts";
 import ProjectCard from "../components/ProjectCard/ProjectCard.astro";
 import ProjectsFilters from "../components/ProjectsView/ProjectsFilters.svelte";
-import ProjectImageModalController from "../components/ProjectImageModal/ProjectImageModalController.svelte";
 import { getProjectFilterOptions } from "../components/ProjectsView/helpers";
+import ProjectImageModalWrapper from "../components/ProjectImageModal/ProjectImageModalWrapper.svelte";
 
 const allTech = [
   ...new Set(
@@ -20,7 +20,7 @@ const { categories, languages, libraries } = getProjectFilterOptions(projects);
   <section class="projects-page">
     <div class="content-container">
       <ProjectsFilters
-        client:load
+        client:idle
         categories={categories}
         languages={languages}
         libraries={libraries}
@@ -40,7 +40,7 @@ const { categories, languages, libraries } = getProjectFilterOptions(projects);
       </p>
     </div>
 
-    <ProjectImageModalController client:idle />
+    <ProjectImageModalWrapper client:idle />
   </section>
 </Layout>
 

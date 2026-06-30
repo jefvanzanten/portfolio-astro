@@ -1,7 +1,7 @@
 ---
 import type { Project } from "../../types/project";
 import ProjectCard from "../ProjectCard/ProjectCard.astro";
-import ProjectImageModalController from "../ProjectImageModal/ProjectImageModalController.svelte";
+import ProjectImageModalWrapper from "../ProjectImageModal/ProjectImageModalWrapper.svelte";
 
 type Props = {
   projects: Project[];
@@ -22,7 +22,7 @@ const { projects }: Props = Astro.props;
   }
 </div>
 
-<ProjectImageModalController client:idle />
+<ProjectImageModalWrapper client:idle />
 
 <style>
   .featured-projects-list {
