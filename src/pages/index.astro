@@ -4,6 +4,14 @@ import CommitWidget from "../components/CommitWidget/CommitWidget.astro";
 import FeaturedProjects from "../components/FeaturedProjects/FeaturedProjects.astro";
 import GithubLink from "../components/GithubLink/GithubLink.astro";
 import { projects } from "../data.ts";
+
+type CtaLink = {
+  name: string;
+  iconUrl: string;
+  url: string;
+  variant?: "primary" | "secondary";
+};
+
 const filteredProjects = projects.filter((project) => project.highlighted);
 const ctaLinks = [
   {
@@ -27,7 +35,7 @@ const ctaLinks = [
     iconUrl: "/icons/folder-open.svg",
     url: "/projects",
   },
-] as const;
+] satisfies readonly CtaLink[];
 ---
 
 <Layout
@@ -179,21 +187,6 @@ const ctaLinks = [
 
     @media screen and (orientation: portrait) and (max-width: 1024px) {
       align-items: center;
-    }
-
-    .title {
-      .line {
-        border-bottom: none;
-        flex: 1 1 auto;
-        min-width: 0;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.5),
-          rgba(255, 255, 255, 0.1)
-        );
-      }
     }
   }
 </style>
