@@ -16,7 +16,7 @@ const activeItem = getActiveNavigationItem(currentPath);
 
 <div class="navcontainer">
   <nav class="nav" data-mobile-nav data-open="false">
-    <HamburgerToggle client:media="(max-width: 940px)" />
+    <HamburgerToggle client:media="(max-width: 767px)" />
 
     <a href="/" class="navlink logo">JEFVANZANTEN.DEV</a>
 
@@ -106,7 +106,7 @@ const activeItem = getActiveNavigationItem(currentPath);
     border-color: var(--accent-bright);
   }
 
-  @media (max-width: 1800px) {
+  @media screen and (max-width: 1800px) {
     .navlink {
       font-size: 1rem;
     }
@@ -116,7 +116,7 @@ const activeItem = getActiveNavigationItem(currentPath);
     }
   }
 
-  @media (max-width: 940px) {
+  @media screen and (max-width: 767px) {
     .navcontainer {
       width: auto;
       height: 6vh;

@@ -3,7 +3,6 @@ import Layout from "../Layout.astro";
 import { projects } from "../data.ts";
 import ProjectCard from "../components/ProjectCard/ProjectCard.astro";
 import ProjectsFilters from "../components/ProjectsView/ProjectsFilters.svelte";
-import { getProjectFilterOptions } from "../components/ProjectsView/helpers";
 import ProjectImageModalWrapper from "../components/ProjectImageModal/ProjectImageModalWrapper.svelte";
 
 const allTech = [
@@ -13,24 +12,30 @@ const allTech = [
 ].join(", ");
 const description = `Projecten van Jef (Jeffrey) van Zanten - Fullstack developer. Technologieen: ${allTech}.`;
 
-const { categories, languages, libraries } = getProjectFilterOptions(projects);
+const filterableProjects = projects.map(
+  ({ category, languages, libraries }, index) => ({
+    filterId: String(index),
+    category,
+    languages,
+    libraries,
+  }),
+);
 ---
 
 <Layout title="Projects - jefvanzanten.dev" description={description}>
   <section class="projects-page">
     <div class="content-container">
-      <ProjectsFilters
-        client:idle
-        categories={categories}
-        languages={languages}
-        libraries={libraries}
-        totalProjects={projects.length}
-      />
+      <ProjectsFilters client:idle projects={filterableProjects} />
 
       <section class="project-container">
         {
           projects.map((project, index) => (
-            <ProjectCard project={project} index={index} priority={index < 3} />
+            <ProjectCard
+              project={project}
+              index={index}
+              priority={index < 3}
+              filterId={String(index)}
+            />
           ))
         }
       </section>
@@ -76,8 +81,15 @@ const { categories, languages, libraries } = getProjectFilterOptions(projects);
   @media screen and (max-width: 940px) {
     .content-container {
       width: 90%;
+      gap: 0.5rem;
     }
 
+    .project-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 640px) {
     .project-container {
       grid-template-columns: 1fr;
     }

@@ -1,27 +1,17 @@
-export type ProjectViewModel = {
-  name: string;
-  slug: string;
-  descriptionHtml: string;
-  url?: string;
-  liveUrl?: string;
-  downloadUrl?: string;
-  languages: string[];
-  libraries: string[];
-  category: string;
-  coverUrl: string;
-  thumbSrc: string;
-  thumbWidth: number;
-  thumbHeight: number;
-};
+import type { Category } from "../../types/project";
 
 export type ProjectFilterable = {
-  category: string;
+  category: Category;
   languages: string[];
   libraries: string[];
+};
+
+export type ProjectFilterItem = ProjectFilterable & {
+  filterId: string;
 };
 
 export type ProjectFilterState = {
-  categories: string[];
-  languages: string[];
+  category: Category | null;
+  language: string | null;
   libraries: string[];
 };

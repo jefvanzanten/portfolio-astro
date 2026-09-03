@@ -1,114 +1,172 @@
 import { expect, test } from "@playwright/test";
 
-const getVisibleProjectCards = (page: import("@playwright/test").Page) =>
-  page.locator("[data-project-card]:visible");
+/**
+ * Returns project cards that are currently visible.
+ *
+ * @param page - Active Playwright page.
+ * @returns Locator for visible project cards.
+ */
+function getVisibleProjectCards(page: import("@playwright/test").Page) {
+  return page.locator("[data-project-card]:visible");
+}
 
-test("projects filters toggle and layout work", async ({ page }) => {
+/**
+ * Opens a project filter and selects one of its options.
+ *
+ * @param page - Active Playwright page.
+ * @param filterLabel - Accessible label of the filter trigger.
+ * @param option - Exact option text to select.
+ * @returns Promise that resolves after selecting the option.
+ */
+async function chooseFilterOption(
+  page: import("@playwright/test").Page,
+  filterLabel: string,
+  option: string,
+): Promise<void> {
+  await page.getByLabel(filterLabel, { exact: true }).click();
+  await page.getByRole("button", { name: option, exact: true }).click();
+}
+
+test("project filter controls display as compact dropdowns", async ({
+  page,
+}) => {
   await page.goto("/projects");
 
-  const toggle = page.getByRole("button", {
-    name: /verberg filters|toon filters/i,
-  });
-  const panel = page.locator("[data-filter-panel]");
-
-  await expect(toggle).toBeVisible();
-  await expect(panel).toBeHidden();
-  await expect(toggle).toHaveText("Toon filters");
-
-  await toggle.click();
-  await expect(panel).toBeVisible();
-  await expect(toggle).toHaveText("Verberg filters");
-
-  await toggle.click();
-  await expect(panel).toBeHidden();
-  await expect(toggle).toHaveText("Toon filters");
-
-  await toggle.click();
-  await expect(panel).toBeVisible();
-
-  const groups = page.locator(".filter-group");
-  await expect(groups).toHaveCount(3);
-
-  const boxes = await groups.evaluateAll((elements) =>
-    elements.map((element) => {
-      const rect = element.getBoundingClientRect();
-      return {
-        width: rect.width,
-        height: rect.height,
-      };
-    }),
+  await expect(page.locator("[data-filter-panel]")).toBeVisible();
+  await expect(page.getByLabel("Categorie", { exact: true })).toHaveCount(1);
+  await expect(page.getByLabel("Programmeertaal", { exact: true })).toHaveCount(
+    1,
   );
+  await expect(
+    page.getByText("Kies frameworks / libraries", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Zoek framework of library")).toBeHidden();
 
-  expect(boxes[0].height).toBe(boxes[1].height);
-  expect(boxes[1].height).toBe(boxes[2].height);
-  expect(boxes[2].width).toBeGreaterThan(boxes[1].width);
-  expect(boxes[1].width).toBeGreaterThan(boxes[0].width);
+  await page.getByText("Kies frameworks / libraries", { exact: true }).click();
+  await expect(page.getByLabel("Zoek framework of library")).toBeVisible();
 
-  const libraryOptionXs = await page
-    .locator(".filter-options-libraries .filter-option")
-    .evaluateAll((elements) => {
-      const rounded = (value: number) => Math.round(value);
-      return [
-        ...new Set(
-          elements.map((element) =>
-            rounded(element.getBoundingClientRect().left),
-          ),
-        ),
-      ];
-    });
-
-  expect(libraryOptionXs.length).toBeGreaterThanOrEqual(3);
+  await page.getByLabel("Categorie", { exact: true }).click();
+  await expect(page.getByLabel("Zoek framework of library")).toBeHidden();
 });
 
-test("projects filters change the visible project set", async ({ page }) => {
-  await page.goto("/projects");
-
-  const toggle = page.getByRole("button", {
-    name: /verberg filters|toon filters/i,
+test("mobile filters start closed and toggle from the filter action", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
   });
-  await toggle.click();
+  const page = await context.newPage();
+  await page.goto("http://localhost:4321/projects?category=Frontend");
+
+  const panel = page.locator("[data-filter-panel]");
+  const showFilters = page.getByRole("button", { name: "Toon filters" });
+  await expect(panel).toBeHidden();
+  await expect(showFilters).toBeVisible();
+
+  await showFilters.tap();
+  await expect(panel).toBeVisible();
+
+  const hideFilters = page.getByRole("button", { name: "Verberg filters" });
+  await hideFilters.tap();
+  await expect(panel).toBeHidden();
+
+  await page.getByRole("button", { name: "Toon filters" }).tap();
+  const category = page.getByLabel("Categorie", { exact: true });
+  const menu = page.locator("#project-category-menu");
+  await category.tap();
+  await expect(menu).toBeVisible();
+  await category.tap();
+  await expect(menu).toBeHidden();
+
+  await context.close();
+});
+
+test("category and language dynamically limit downstream options", async ({
+  page,
+}) => {
+  await page.goto("/projects");
 
   const visibleCards = getVisibleProjectCards(page);
   const initialCount = await visibleCards.count();
-  expect(initialCount).toBeGreaterThan(0);
 
-  await page.locator('input[name="category"][value="Frontend"]').check();
-  await page.waitForURL(/\/projects\?category=Frontend/);
+  await chooseFilterOption(page, "Categorie", "Frontend");
+  await expect(page).toHaveURL(/category=Frontend/);
+  await expect(page.locator("#project-language-menu button")).toHaveText([
+    "Alle programmeertalen",
+    "CSS",
+    "HTML",
+    "TypeScript",
+  ]);
+  await expect(
+    page.getByRole("button", { name: /Categorie: Frontend/ }),
+  ).toBeVisible();
+  expect(await visibleCards.count()).toBeLessThan(initialCount);
 
-  const frontendCount = await visibleCards.count();
-  expect(frontendCount).toBeGreaterThan(0);
-  expect(frontendCount).toBeLessThan(initialCount);
+  await chooseFilterOption(page, "Programmeertaal", "TypeScript");
+  await expect(page).toHaveURL(/language=TypeScript/);
+  await expect(
+    page.getByRole("button", { name: /Taal: TypeScript/ }),
+  ).toBeVisible();
+});
 
-  const frontendCategories = await visibleCards.evaluateAll((elements) =>
-    elements.map((element) => (element as HTMLElement).dataset.category),
+test("library dropdown searches, multi-selects, and applies AND filtering", async ({
+  page,
+}) => {
+  await page.goto("/projects");
+  await chooseFilterOption(page, "Categorie", "Fullstack");
+  await chooseFilterOption(page, "Programmeertaal", "TypeScript");
+  await page.getByText("Kies frameworks / libraries", { exact: true }).click();
+
+  const search = page.getByLabel("Zoek framework of library");
+  await search.fill("eact");
+  await expect(page.getByLabel("React", { exact: true })).toBeVisible();
+  await expect(page.getByLabel("React-Router", { exact: true })).toBeVisible();
+  await expect(page.getByLabel("Hono", { exact: true })).toHaveCount(0);
+
+  await page.getByLabel("React", { exact: true }).check();
+  await expect(page).toHaveURL(/library=React/);
+  await expect(
+    page.getByRole("button", { name: "React", exact: true }),
+  ).toBeVisible();
+
+  await search.fill("Hono");
+  await page.getByLabel("Hono", { exact: true }).check();
+  await expect(page).toHaveURL(/library=React.*library=Hono/);
+
+  const visibleCards = getVisibleProjectCards(page);
+  await expect(visibleCards).toHaveCount(1);
+  await expect(visibleCards.first()).toContainText("React");
+  await expect(visibleCards.first()).toContainText("Hono");
+});
+
+test("changing an upstream filter removes incompatible filters", async ({
+  page,
+}) => {
+  await page.goto(
+    "/projects?category=Fullstack&language=TypeScript&library=React&library=Hono",
   );
+  await expect(
+    page.getByRole("button", { name: /Categorie: Fullstack/ }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "React", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Hono", exact: true }),
+  ).toBeVisible();
 
-  expect(frontendCategories.every((category) => category === "Frontend")).toBe(
-    true,
+  await chooseFilterOption(page, "Categorie", "Mobile");
+
+  await expect(page).toHaveURL(/category=Mobile&language=TypeScript$/);
+  await expect(
+    page.getByRole("button", { name: "React", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Hono", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Reset filters" })).toHaveCount(
+    0,
   );
-
-  await page.locator('input[name="language"][value="TypeScript"]').check();
-  await page.waitForURL(/language=TypeScript/);
-
-  const frontendTypeScriptCards = await visibleCards.evaluateAll((elements) =>
-    elements.map((element) => {
-      const card = element as HTMLElement;
-      return {
-        category: card.dataset.category,
-        languages: (card.dataset.languages ?? "").split(",").filter(Boolean),
-      };
-    }),
-  );
-
-  expect(frontendTypeScriptCards.length).toBeGreaterThan(0);
-  expect(
-    frontendTypeScriptCards.every(
-      (card) =>
-        card.category === "Frontend" && card.languages.includes("TypeScript"),
-    ),
-  ).toBe(true);
-
-  await page.getByRole("button", { name: "Reset filters" }).click();
-  await page.waitForURL(/\/projects$/);
-  await expect(visibleCards).toHaveCount(initialCount);
 });

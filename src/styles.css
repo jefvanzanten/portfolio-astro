@@ -104,17 +104,6 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-
-  /* Force Portrait mode on mobile for the best ux */
-  @media screen and (orientation: landscape) and (max-width: 940px) {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    height: 100vw;
-    position: absolute;
-    top: 100%;
-    left: 0;
-  }
 }
 
 p {

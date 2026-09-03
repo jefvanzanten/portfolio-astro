@@ -83,9 +83,13 @@
     position: fixed;
     inset: 0;
     margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+    padding:
+      max(1rem, env(safe-area-inset-top))
+      max(1rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom))
+      max(1rem, env(safe-area-inset-left));
+    width: 100dvw;
+    height: 100dvh;
     max-width: none;
     max-height: none;
     background: transparent;
@@ -110,8 +114,8 @@
 
   .project-image-frame {
     position: relative;
-    width: min(92vw, 1200px);
-    max-height: 88vh;
+    width: min(100%, 1200px);
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,8 +136,10 @@
 
   .project-image {
     display: block;
+    width: auto;
+    height: auto;
     max-width: 100%;
-    max-height: 88vh;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 1em;
     border: 1px solid rgba(255, 255, 255, 0.4);

@@ -40,7 +40,11 @@ export type Library =
   | "Pydantic"
   | "FastAPI"
   | "JavaFX"
-  | "Weasyprint";
+  | "Weasyprint"
+  | "CodeMirror"
+  | "Convex"
+  | "SQLite"
+  | "Zod";
 
 export type Project = {
   name: string;
