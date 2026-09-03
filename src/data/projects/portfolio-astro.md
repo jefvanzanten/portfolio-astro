@@ -10,7 +10,7 @@ coverUrl: "/covers/portfolio_astro_cover.png"
 thumbUrl: "/thumbs/portfolio_astro_thumb.png"
 category: "Frontend"
 lastUpdated: "2026-06-30"
-highlighted: true
+highlighted: false
 ---
 
 Dit is mijn portfolio website. Hierop kun je mijn werk vinden. Voorzien van Githublink en een link naar de live versie (indien aanwezig).
