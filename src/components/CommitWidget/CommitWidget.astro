@@ -67,6 +67,10 @@ function getFilesLabel(filesChanged: number): string {
     gap: 1.5em;
     overflow: hidden;
     width: var(--featured-projects-container-width);
+
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
 
   .headingRow {
@@ -126,11 +130,11 @@ function getFilesLabel(filesChanged: number): string {
       border-color 0.2s ease,
       transform 0.2s ease;
     flex-shrink: 0;
-  }
 
-  .commitCard:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-2px);
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
   }
 
   .commitHeader {
@@ -190,9 +194,4 @@ function getFilesLabel(filesChanged: number): string {
     line-height: 1.5;
   }
 
-  @media screen and (max-width: 767px) {
-    .commitsSection {
-      display: none;
-    }
-  }
 </style>

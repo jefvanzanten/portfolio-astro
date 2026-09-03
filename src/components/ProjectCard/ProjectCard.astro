@@ -83,11 +83,16 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     padding-bottom: 0.5em;
     opacity: 1;
     transform: translateY(0);
-  }
 
-  .project-card-container:hover {
-    border: 1px solid var(--project-card-border);
-    translate: 0 -6px;
+    &:hover {
+      border: 1px solid var(--project-card-border);
+      translate: 0 -6px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: fallIn 0.45s ease-out both;
+      animation-delay: calc(var(--card-index, 0) * 0.06s);
+    }
   }
 
   :global(.image-container) {
@@ -108,27 +113,27 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
         rgba(255, 255, 255, 0.01)
       ),
       var(--bg);
-  }
 
-  :global(.image-container)::before {
-    content: "";
-    display: block;
-    padding-top: 75%;
-  }
+    &::before {
+      content: "";
+      display: block;
+      padding-top: 75%;
+    }
 
-  :global(.image-container)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(8, 10, 14, 0.08) 0%,
-        rgba(8, 10, 14, 0.02) 100%
-      ),
-      rgba(0, 0, 0, 0.08);
-    pointer-events: none;
-    z-index: 1;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(8, 10, 14, 0.08) 0%,
+          rgba(8, 10, 14, 0.02) 100%
+        ),
+        rgba(0, 0, 0, 0.08);
+      pointer-events: none;
+      z-index: 1;
+    }
   }
 
   :global(.image-container .thumb) {
@@ -154,6 +159,10 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     flex-direction: column;
     width: 100%;
     padding: 1em;
+
+    @media screen and (min-width: 1024px) {
+      padding: 0.5em 1.3em;
+    }
   }
 
   .title {
@@ -166,6 +175,10 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     font-size: 16px;
     padding: 1em 0;
     margin: 0;
+
+    @media screen and (min-width: 1920px) {
+      font-size: 18px;
+    }
   }
 
   .description {
@@ -173,14 +186,22 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     font-size: 13px;
     white-space: normal;
     padding: 1em 0;
-  }
 
-  .description :global(p) {
-    margin: 0 0 1em;
-  }
+    :global(p) {
+      margin: 0 0 1em;
 
-  .description :global(p:last-child) {
-    margin-bottom: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    @media screen and (max-width: 940px) {
+      font-size: 14px;
+    }
+
+    @media screen and (min-width: 1920px) {
+      font-size: 16px;
+    }
   }
 
   .tag-container {
@@ -214,34 +235,6 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     padding: 0 1rem 0.75rem;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .project-card-container {
-      animation: fallIn 0.45s ease-out both;
-      animation-delay: calc(var(--card-index, 0) * 0.06s);
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .project-info {
-      padding: 0.5em 1.3em;
-    }
-  }
-
-  @media screen and (max-width: 940px) {
-    .description {
-      font-size: 14px;
-    }
-  }
-
-  @media screen and (min-width: 1920px) {
-    .title {
-      font-size: 18px;
-    }
-
-    .description {
-      font-size: 16px;
-    }
-  }
 
   @keyframes fallIn {
     from {

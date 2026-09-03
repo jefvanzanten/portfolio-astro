@@ -91,79 +91,77 @@ const submitUrl = apiUrl ? `${apiUrl}/email/send-email` : "";
     display: flex;
     flex-direction: column;
     gap: 1em;
-  }
 
-  input,
-  textarea {
-    background-color: rgb(44, 42, 42);
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    color: rgb(216, 216, 216);
-  }
+    input,
+    textarea {
+      background-color: rgb(44, 42, 42);
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      color: rgb(216, 216, 216);
 
-  input::placeholder,
-  textarea::placeholder {
-    color: rgb(163, 163, 163);
-  }
+      &::placeholder {
+        color: rgb(163, 163, 163);
+      }
+    }
 
-  textarea {
-    text-wrap: wrap;
-    width: 340px;
-    height: 10vh;
-  }
+    textarea {
+      text-wrap: wrap;
+      width: 340px;
+      height: 10vh;
+    }
 
-  button {
-    padding: 0.5em 0;
-    background-color: var(--accent-bright);
-    color: rgb(46, 46, 46);
-    font-family: monospace;
-    border-radius: 8px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-  }
+    button {
+      padding: 0.5em 0;
+      background-color: var(--accent-bright);
+      color: rgb(46, 46, 46);
+      font-family: monospace;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
 
-  button:disabled {
-    cursor: not-allowed;
-    opacity: 0.65;
-  }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+    }
 
-  .success,
-  .error,
-  .loading-label {
-    display: none;
-  }
+    .success,
+    .error,
+    .loading-label {
+      display: none;
+    }
 
-  .error {
-    color: rgb(190, 48, 48);
-  }
+    .error {
+      color: rgb(190, 48, 48);
+    }
 
-  .success {
-    color: rgb(77, 182, 106);
-  }
+    .success {
+      color: rgb(77, 182, 106);
+    }
 
-  form[data-submitting="true"] button {
-    opacity: 0.8;
-  }
+    .config-error {
+      display: inline;
+    }
 
-  form[data-submitting="true"] .idle-label {
-    display: none;
-  }
+    &[data-submitting="true"] {
+      button {
+        opacity: 0.8;
+      }
 
-  form[data-submitting="true"] .loading-label {
-    display: inline;
-  }
+      .idle-label {
+        display: none;
+      }
 
-  form[data-status="success"] .success {
-    display: inline;
-  }
+      .loading-label {
+        display: inline;
+      }
+    }
 
-  form[data-status="error"] .error {
-    display: inline;
-  }
-
-  .config-error {
-    display: inline;
+    &[data-status="success"] .success,
+    &[data-status="error"] .error {
+      display: inline;
+    }
   }
 </style>

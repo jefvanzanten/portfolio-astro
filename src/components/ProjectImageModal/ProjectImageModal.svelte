@@ -95,54 +95,54 @@
     background: transparent;
     overflow: hidden;
     z-index: 999;
-  }
 
-  .project-image-modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(4px);
-  }
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+    }
 
-  .project-image-modal:not([open]) {
-    display: none;
-  }
+    &:not([open]) {
+      display: none;
+    }
 
-  .project-image-modal[open] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    &[open] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .project-image-frame {
-    position: relative;
-    width: min(100%, 1200px);
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .project-image-frame {
+      position: relative;
+      width: min(100%, 1200px);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  .project-image-close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    z-index: 2;
-    background: rgb(145, 64, 64);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.4em 0.6em;
-    cursor: pointer;
-  }
+      .project-image-close {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        z-index: 2;
+        background: rgb(145, 64, 64);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 0.4em 0.6em;
+        cursor: pointer;
+      }
 
-  .project-image {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 1em;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      .project-image {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 1em;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+    }
   }
 </style>

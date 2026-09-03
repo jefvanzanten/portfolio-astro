@@ -8,6 +8,7 @@
     getAvailableLanguages,
     getAvailableLibraries,
   } from "./helpers";
+  import SelectFilter from "./SelectFilter.svelte";
   import type { ProjectFilterItem, ProjectFilterState } from "./types";
 
   export let projects: ProjectFilterItem[] = [];
@@ -312,75 +313,25 @@
     data-open={isFilterPanelOpen ? "true" : "false"}
     on:submit|preventDefault={handleSubmit}
   >
-    <div class="filter-group">
-      <label for="project-category">Categorie</label>
-      <button
-        id="project-category"
-        type="button"
-        class="select-trigger category-trigger"
-        popovertarget="project-category-menu"
-      >
-        {selectedCategory || "Alle categorieën"}
-      </button>
-      <div
-        id="project-category-menu"
-        class="select-menu category-menu"
-        popover="auto"
-        aria-label="Categorieopties"
-      >
-        <button
-          type="button"
-          aria-pressed={!selectedCategory}
-          popovertarget="project-category-menu"
-          popovertargetaction="hide"
-          on:click={() => selectCategory("")}
-        >Alle categorieën</button>
-        {#each availableCategories as category}
-          <button
-            type="button"
-            aria-pressed={selectedCategory === category}
-            popovertarget="project-category-menu"
-            popovertargetaction="hide"
-            on:click={() => selectCategory(category)}
-          >{category}</button>
-        {/each}
-      </div>
-    </div>
+    <SelectFilter
+      id="project-category"
+      label="Categorie"
+      allLabel="Alle categorieën"
+      options={availableCategories}
+      selectedValue={selectedCategory}
+      onSelect={selectCategory}
+      anchorName="--category-filter"
+    />
 
-    <div class="filter-group">
-      <label for="project-language">Programmeertaal</label>
-      <button
-        id="project-language"
-        type="button"
-        class="select-trigger language-trigger"
-        popovertarget="project-language-menu"
-      >
-        {selectedLanguage || "Alle programmeertalen"}
-      </button>
-      <div
-        id="project-language-menu"
-        class="select-menu language-menu"
-        popover="auto"
-        aria-label="Programmeertaalopties"
-      >
-        <button
-          type="button"
-          aria-pressed={!selectedLanguage}
-          popovertarget="project-language-menu"
-          popovertargetaction="hide"
-          on:click={() => selectLanguage("")}
-        >Alle programmeertalen</button>
-        {#each availableLanguages as language}
-          <button
-            type="button"
-            aria-pressed={selectedLanguage === language}
-            popovertarget="project-language-menu"
-            popovertargetaction="hide"
-            on:click={() => selectLanguage(language)}
-          >{language}</button>
-        {/each}
-      </div>
-    </div>
+    <SelectFilter
+      id="project-language"
+      label="Programmeertaal"
+      allLabel="Alle programmeertalen"
+      options={availableLanguages}
+      selectedValue={selectedLanguage}
+      onSelect={selectLanguage}
+      anchorName="--language-filter"
+    />
 
     <div class="filter-group">
       <span class="filter-label">Frameworks & libraries</span>
@@ -468,13 +419,25 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem 0 0.5rem;
+    padding: 2rem 0 1rem 0rem;
+
+    @media screen and (max-width: 767px) {
+      padding: 1rem 0 0.5rem;
+    }
 
     .filter-form {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
       align-items: start;
+
+      @media screen and (max-width: 767px) {
+        grid-template-columns: 1fr;
+
+        &[data-open="false"] {
+          display: none;
+        }
+      }
     }
 
     .filter-group {
@@ -483,14 +446,12 @@
       gap: 0.55rem;
       min-width: 0;
 
-      > label,
       .filter-label {
         color: var(--text-bright);
         font-family: var(--font-display);
         font-size: 0.9rem;
       }
 
-      .select-trigger,
       summary {
         box-sizing: border-box;
         width: 100%;
@@ -505,79 +466,6 @@
       }
     }
 
-    .select-trigger {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      text-align: left;
-
-      &::after {
-        content: "▾";
-        flex: 0 0 auto;
-      }
-    }
-
-    .filter-group:has(.select-menu:popover-open) .select-trigger::after {
-      transform: rotate(180deg);
-    }
-
-    .category-trigger {
-      anchor-name: --category-filter;
-    }
-
-    .language-trigger {
-      anchor-name: --language-filter;
-    }
-
-    .select-menu {
-      box-sizing: border-box;
-      width: anchor-size(width);
-      max-width: calc(100vw - 2rem);
-      max-height: min(20rem, 60vh);
-      padding: 0.35rem;
-      border: 1px solid var(--border-bright);
-      border-radius: 0.65rem;
-      margin: 0.4rem 0;
-      overflow-y: auto;
-      position-area: block-end span-inline-end;
-      position-try-fallbacks: flip-block;
-      background: var(--card-bg);
-      color: var(--text-bright);
-      box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
-
-      &:popover-open {
-        display: flex;
-        flex-direction: column;
-        gap: 0.2rem;
-      }
-
-      button {
-        width: 100%;
-        border: 0;
-        border-radius: 0.45rem;
-        background: transparent;
-        color: inherit;
-        cursor: pointer;
-        font: inherit;
-        padding: 0.65rem 0.85rem;
-        text-align: left;
-
-        &:hover,
-        &[aria-pressed="true"] {
-          background: rgba(255, 255, 255, 0.08);
-        }
-      }
-    }
-
-    .category-menu {
-      position-anchor: --category-filter;
-    }
-
-    .language-menu {
-      position-anchor: --language-filter;
-    }
-
     .library-dropdown {
       position: relative;
 
@@ -587,15 +475,15 @@
         justify-content: space-between;
         gap: 0.75rem;
         list-style: none;
+      }
 
-        &::-webkit-details-marker {
-          display: none;
-        }
+      summary::-webkit-details-marker {
+        display: none;
+      }
 
-        &::after {
-          content: "▾";
-          flex: 0 0 auto;
-        }
+      summary::after {
+        content: "▾";
+        flex: 0 0 auto;
       }
 
       &[open] summary::after {
@@ -618,6 +506,11 @@
       border-radius: 0.65rem;
       background: var(--card-bg);
       box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
+
+      @media screen and (max-width: 767px) {
+        position: static;
+        margin-top: 0.4rem;
+      }
     }
 
     .search-label {
@@ -656,17 +549,17 @@
         padding: 0.55rem 0.6rem;
         border-radius: 0.45rem;
         cursor: pointer;
+      }
 
-        &:hover {
-          background: rgba(255, 255, 255, 0.06);
-        }
+      .library-option:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
 
-        input {
-          width: 1rem;
-          height: 1rem;
-          margin: 0;
-          accent-color: var(--accent-bright);
-        }
+      .library-option input {
+        width: 1rem;
+        height: 1rem;
+        margin: 0;
+        accent-color: var(--accent-bright);
       }
     }
 
@@ -717,6 +610,10 @@
         stroke-linecap: round;
         stroke-width: 1.8;
       }
+
+      @media screen and (max-width: 767px) {
+        display: inline-flex;
+      }
     }
 
     .filter-chip {
@@ -738,45 +635,15 @@
       }
     }
 
-    @media screen and (max-width: 940px) {
-      .filter-form {
-        grid-template-columns: 1fr;
-
-        &[data-open="false"] {
-          display: none;
-        }
-      }
-
-      .mobile-filter-toggle {
-        display: inline-flex;
-      }
-
-      .library-popover {
-        position: static;
-        margin-top: 0.4rem;
-      }
-    }
   }
 
   :global(html[data-theme="light"]) .filters {
     .filter-group {
-      .select-trigger,
       summary,
       .library-search {
         border: 2px solid #000;
         background: rgba(231, 230, 230, 0.95);
         color: #000;
-      }
-    }
-
-    .select-menu {
-      border: 2px solid #000;
-      background: #e7e6e6;
-      color: #000;
-
-      button:hover,
-      button[aria-pressed="true"] {
-        background: rgba(0, 0, 0, 0.1);
       }
     }
 

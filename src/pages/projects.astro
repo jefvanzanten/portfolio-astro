@@ -56,42 +56,39 @@ const filterableProjects = projects.map(
     align-items: center;
     width: 100%;
     padding-bottom: 8vh;
-  }
 
-  .content-container {
-    width: min(calc(100% - 3rem), var(--page-content-width));
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin: 0 auto;
-  }
-
-  .project-container {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2em;
-    width: 100%;
-  }
-
-  .empty-state {
-    color: var(--text-muted);
-    padding-bottom: 1rem;
-  }
-
-  @media screen and (max-width: 940px) {
     .content-container {
-      width: 90%;
-      gap: 0.5rem;
-    }
+      width: min(calc(100% - 3rem), var(--page-content-width));
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 0 auto;
 
-    .project-container {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      .project-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2em;
+        width: 100%;
+
+        @media screen and (max-width: 940px) {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 640px) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .empty-state {
+        color: var(--text-muted);
+        padding-bottom: 1rem;
+      }
+
+      @media screen and (max-width: 940px) {
+        width: 90%;
+        gap: 0.5rem;
+      }
     }
   }
 
-  @media screen and (max-width: 640px) {
-    .project-container {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>
