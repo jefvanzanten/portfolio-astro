@@ -217,6 +217,10 @@ const carouselId = "featured-projects-carousel";
       .carousel-slide:nth-child(2) {
         scroll-initial-target: none;
       }
+
+      .carousel-slide :global(.image-container)::before {
+        padding-top: 50%;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {

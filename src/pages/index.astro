@@ -70,7 +70,6 @@ const ctaLinks = [
         </div>
       </div>
     </section>
-    <CommitWidget />
     <section class="featured-projects-container">
       <div class="title">
         <span class="line"></span>
@@ -79,27 +78,42 @@ const ctaLinks = [
       </div>
       <FeaturedProjects projects={filteredProjects} />
     </section>
+    <CommitWidget />
   </div>
 </Layout>
 
 <style>
+  :global(html) {
+    --home-nav-height: 3.5rem;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--home-nav-height);
+  }
+
   .content-container {
+    --home-section-width: min(100%, calc(var(--card-width) * 3 + 240px));
+    --featured-projects-container-width: var(--home-section-width);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     z-index: 0;
-    overflow: hidden;
+    overflow-x: clip;
     width: 100%;
-    --home-section-width: min(100%, calc(var(--card-width) * 3 + 240px));
-    --featured-projects-container-width: var(--home-section-width);
+    padding-block: clamp(4rem, 16svh, 8.5rem);
+
+    > .introduction,
+    > .featured-projects-container,
+    > :global(.commitsSection) {
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+    }
 
     @media screen and (max-width: 940px) {
-      padding: 0 10vw;
+      padding-inline: 10vw;
     }
 
     @media screen and (max-width: 640px) {
-      padding: 0;
+      padding-inline: 0;
     }
 
     /* Introduction section */
@@ -188,13 +202,25 @@ const ctaLinks = [
     .featured-projects-container {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: 2em;
-      padding: 5vh 0;
+      padding: 2rem 0;
       width: var(--home-section-width);
 
       @media screen and (orientation: portrait) and (max-width: 1024px) {
         align-items: center;
       }
+
+      @media screen and (max-width: 640px) {
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
     }
   }
 </style>
