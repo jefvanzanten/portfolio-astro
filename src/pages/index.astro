@@ -97,96 +97,96 @@ const ctaLinks = [
     @media screen and (max-width: 940px) {
       padding: 0 10vw;
     }
-  }
 
-  /* Introduction section */
+    /* Introduction section */
 
-  .introduction {
-    padding: 4em;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @media screen and (max-width: 940px) {
-      min-height: 20vh;
-    }
-
-    @media screen and (min-width: 1800px) {
-      min-height: 10vh;
-    }
-  }
-
-  .introduction-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: min(100%, 42rem);
-    gap: 1.75rem;
-    text-align: center;
-
-    h1 {
-      font-family: var(--font-display);
-      font-weight: 500;
-      font-size: 1.3rem;
-      text-wrap: nowrap;
-      padding-top: 1em;
-    }
-
-    p {
-      font-size: 0.9rem;
-      margin: 0;
-      color: var(--text-muted);
-      text-wrap: wrap;
-      max-width: 36rem;
-      padding: 0;
+    .introduction {
+      padding: 4em;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       @media screen and (max-width: 940px) {
-        font-size: 1rem;
-        max-width: 24rem;
+        min-height: 20vh;
       }
 
       @media screen and (min-width: 1800px) {
-        font-size: 0.9rem;
-        max-width: 28rem;
+        min-height: 10vh;
       }
     }
-  }
 
-  .introduction-title {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.9rem;
-    align-items: center;
-    justify-content: center;
-    max-width: 42rem;
-    padding-top: 1rem;
-
-    @media screen and (max-width: 640px) {
-      width: 100%;
-
-      :global(a) {
-        flex: 1 1 calc(50% - 0.45rem);
-      }
-    }
-  }
-
-  /* Featured Projects */
-
-  .featured-projects-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-    padding: 5vh 0;
-    width: var(--home-section-width);
-
-    @media screen and (orientation: portrait) and (max-width: 1024px) {
+    .introduction-content {
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      width: min(100%, 42rem);
+      gap: 1.75rem;
+      text-align: center;
+
+      h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.3rem;
+        text-wrap: nowrap;
+        padding-top: 1em;
+      }
+
+      p {
+        font-size: 0.9rem;
+        margin: 0;
+        color: var(--text-muted);
+        text-wrap: wrap;
+        max-width: 36rem;
+        padding: 0;
+
+        @media screen and (max-width: 940px) {
+          font-size: 1rem;
+          max-width: 24rem;
+        }
+
+        @media screen and (min-width: 1800px) {
+          font-size: 0.9rem;
+          max-width: 28rem;
+        }
+      }
+    }
+
+    .introduction-title {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      justify-content: center;
+      max-width: 42rem;
+      padding-top: 1rem;
+
+      @media screen and (max-width: 640px) {
+        width: 100%;
+
+        :global(a) {
+          flex: 1 1 calc(50% - 0.45rem);
+        }
+      }
+    }
+
+    /* Featured Projects */
+
+    .featured-projects-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      padding: 5vh 0;
+      width: var(--home-section-width);
+
+      @media screen and (orientation: portrait) and (max-width: 1024px) {
+        align-items: center;
+      }
     }
   }
 </style>

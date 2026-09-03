@@ -66,115 +66,114 @@ const activeItem = getActiveNavigationItem(currentPath);
       line-height: 6vh;
       padding: 0;
     }
-  }
 
-  .pageName {
-    display: none;
-    color: var(--nav-control-active);
+    .pageName {
+      display: none;
+      color: var(--nav-control-active);
 
-    @media screen and (max-width: 767px) {
-      display: block;
-      font-size: 1.2rem;
-    }
-  }
-
-  .nav {
-    width: var(--page-content-width);
-    max-width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-body);
-    padding: 0;
-
-    &[data-open="true"] .navlist {
-      max-height: 400px;
-    }
-
-    @media screen and (max-width: 767px) {
-      width: 100%;
-      padding: 1em;
-      text-align: center;
-      justify-content: inherit;
-    }
-  }
-
-  .navlink {
-    display: inline-block;
-    padding: 1em 0;
-    color: var(--nav-control-active);
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
-    font-size: 1rem;
-
-    @media screen and (max-width: 1800px) {
-      font-size: 1rem;
-    }
-
-    @media screen and (max-width: 767px) {
-      padding: 1em 2em;
-    }
-  }
-
-  .logo {
-    color: var(--nav-control-active);
-    font-weight: 600;
-    text-align: center;
-    padding-left: 0;
-
-    @media screen and (max-width: 767px) {
-      padding-inline: 1rem;
-    }
-  }
-
-  .navlist {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    margin: 0 0 0 auto;
-    gap: 4rem;
-
-    .navlink {
       @media screen and (max-width: 767px) {
         display: block;
-        width: 100%;
-        padding: 1.5em 0;
-        border-bottom: 1px solid var(--nav-menu-border);
-        line-height: 1vh;
+        font-size: 1.2rem;
+      }
+    }
+
+    .nav {
+      width: var(--page-content-width);
+      max-width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      padding: 0;
+
+      &[data-open="true"] .navlist {
+        max-height: 400px;
       }
 
-      &:hover {
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        padding: 1em;
+        text-align: center;
+        justify-content: inherit;
+      }
+    }
+
+    .navlink {
+      display: inline-block;
+      padding: 1em 0;
+      color: var(--nav-control-active);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease;
+      font-size: 1rem;
+
+      @media screen and (max-width: 1800px) {
+        font-size: 1rem;
+      }
+
+      @media screen and (max-width: 767px) {
+        padding: 1em 2em;
+      }
+    }
+
+    .logo {
+      color: var(--nav-control-active);
+      font-weight: 600;
+      text-align: center;
+      padding-left: 0;
+
+      @media screen and (max-width: 767px) {
+        padding-inline: 1rem;
+      }
+    }
+
+    .navlist {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin: 0 0 0 auto;
+      gap: 4rem;
+
+      .navlink {
+        @media screen and (max-width: 767px) {
+          display: block;
+          width: 100%;
+          padding: 1.5em 0;
+          border-bottom: 1px solid var(--nav-menu-border);
+          line-height: 1vh;
+        }
+      }
+
+      .navlink:hover {
         @media screen and (max-width: 767px) {
           background-color: var(--nav-menu-hover);
         }
       }
+
+      @media screen and (max-width: 1800px) {
+        gap: 3rem;
+      }
+
+      @media screen and (max-width: 767px) {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--surface);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        gap: 0;
+      }
     }
 
-    @media screen and (max-width: 1800px) {
-      gap: 3rem;
-    }
-
-    @media screen and (max-width: 767px) {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: var(--surface);
-      backdrop-filter: blur(10px);
-      flex-direction: column;
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      gap: 0;
+    .active {
+      border-color: var(--accent-bright);
     }
   }
-
-  .active {
-    border-color: var(--accent-bright);
-  }
-
 </style>
