@@ -315,6 +315,19 @@
     ></button>
   {/if}
 
+  <button
+    type="button"
+    class="mobile-filter-toggle"
+    aria-expanded={isFilterPanelOpen}
+    aria-controls="project-filter-panel"
+    aria-label={isFilterPanelOpen ? "Verberg filters" : "Toon filters"}
+    on:click={toggleFilterPanel}
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h16M7 12h10M10 18h4" />
+    </svg>
+  </button>
+
   <form
     id="project-filter-panel"
     class="filter-form"
@@ -386,19 +399,6 @@
   </form>
 
   <div class="filter-actions">
-    <button
-      type="button"
-      class="mobile-filter-toggle"
-      aria-expanded={isFilterPanelOpen}
-      aria-controls="project-filter-panel"
-      aria-label={isFilterPanelOpen ? "Verberg filters" : "Toon filters"}
-      on:click={toggleFilterPanel}
-    >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 6h16M7 12h10M10 18h4" />
-      </svg>
-    </button>
-
     {#if hasActiveFilters}
       <div class="active-filters" aria-label="Actieve filters">
         {#if selectedCategory}
@@ -436,6 +436,47 @@
       padding: 1rem 0 0.5rem;
     }
 
+    .mobile-filter-toggle {
+      display: none;
+      anchor-name: --mobile-filter-toggle;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 2.5rem;
+      border: none;
+      border-radius: 50%;
+      background: #0d9186;
+      color: var(--text-bright);
+      cursor: pointer;
+      padding: 0;
+
+      @media screen and (max-width: 767px) {
+        position: fixed;
+        z-index: 30;
+        top: calc(var(--nav-height) + 1rem);
+        right: 5%;
+        display: inline-flex;
+        box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.35);
+        width: 44px;
+        height: 44px;
+
+        svg {
+            width: 2rem;
+            height: 2rem;
+            stroke-width: 2;
+        }
+      }
+
+      &:active,
+      &[aria-expanded="true"] {
+        border-color: var(--border);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--border);
+        outline-offset: 2px;
+      }
+    }
+
     .filter-backdrop {
       display: none;
 
@@ -471,7 +512,8 @@
 
       @media screen and (max-width: 767px) {
         z-index: 25;
-        top: calc(var(--nav-height) + 4.25rem);
+        position-anchor: --mobile-filter-toggle;
+        top: calc(anchor(bottom) + 0.75rem);
         right: 5%;
         left: 5%;
         grid-template-columns: 1fr;
@@ -517,8 +559,11 @@
       }
     }
 
+
+
     .library-dropdown {
       position: relative;
+      anchor-name: library-anchor;
 
       summary {
         display: flex;
@@ -542,26 +587,13 @@
       }
     }
 
-    .library-popover {
-      position: absolute;
-      z-index: 20;
-      top: calc(100% + 0.4rem);
-      right: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      max-height: 22rem;
-      padding: 0.8rem;
-      border: 1px solid var(--border-bright);
-      border-radius: 0.65rem;
-      background: var(--card-bg);
-      box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
-
-      @media screen and (max-width: 767px) {
-        position: static;
-        margin-top: 0.4rem;
-      }
+    svg {
+      width: 1rem;
+      height: 1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 1.8;
     }
 
     .search-label {
@@ -627,49 +659,6 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0.55rem;
-    }
-
-    .mobile-filter-toggle {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      flex: 0 0 2.5rem;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-bright);
-      cursor: pointer;
-      padding: 0;
-
-      &:active,
-      &[aria-expanded="true"] {
-        border-color: var(--border);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--border);
-        outline-offset: 2px;
-      }
-
-      svg {
-        width: 1rem;
-        height: 1rem;
-        fill: none;
-        stroke: currentColor;
-        stroke-linecap: round;
-        stroke-width: 1.8;
-      }
-
-      @media screen and (max-width: 767px) {
-        position: fixed;
-        z-index: 30;
-        top: calc(var(--nav-height) + 1rem);
-        left: 5%;
-        display: inline-flex;
-        box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.35);
-      }
     }
 
     .filter-chip {

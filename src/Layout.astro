@@ -32,7 +32,10 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
       type="font/woff2"
       crossorigin
     />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
+    />
     <meta name="description" content={description} />
     <meta name="author" content="Jef (Jeffrey) van Zanten" />
     <title>{title}</title>
@@ -70,3 +73,9 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
     </main>
   </body>
 </html>
+
+<style>
+    .body {
+        height: 100dvh;
+    }
+</style>
