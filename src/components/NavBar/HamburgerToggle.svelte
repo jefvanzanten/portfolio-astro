@@ -78,7 +78,12 @@
     }
 
     @media (max-width: 767px) {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
       display: flex;
+      margin-right: 0;
+      transform: translateY(-50%);
     }
   }
 </style>

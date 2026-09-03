@@ -33,7 +33,7 @@
       popovertargetaction="hide"
       on:click={() => onSelect("")}
     >{allLabel}</button>
-    {#each options as option}
+    {#each options as option (option)}
       <button
         type="button"
         aria-pressed={selectedValue === option}

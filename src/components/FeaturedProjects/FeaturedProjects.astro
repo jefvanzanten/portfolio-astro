@@ -1,6 +1,7 @@
 ---
 import type { Project } from "../../types/project";
 import ProjectCard from "../ProjectCard/ProjectCard.astro";
+import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel.svelte";
 import ProjectImageModalWrapper from "../ProjectImageModal/ProjectImageModalWrapper.svelte";
 
 type Props = {
@@ -8,36 +9,229 @@ type Props = {
 };
 
 const { projects }: Props = Astro.props;
+const carouselId = "featured-projects-carousel";
 ---
 
 <div
-  class="featured-projects-list"
+  id={carouselId}
+  class="featured-projects-carousel"
   data-featured-projects-root
-  style={{ "--total-cards": projects.length }}
 >
-  {
-    projects.map((project, index) => (
-      <ProjectCard project={project} index={index} priority={index < 3} />
-    ))
-  }
+  <div
+    class="featured-projects-list"
+    role="region"
+    aria-label="Uitgelichte projecten"
+    tabindex="0"
+  >
+    {
+      projects.map((project, index) => (
+        <div
+          class="carousel-slide"
+          id={`featured-project-${index + 1}`}
+          style={{ "--card-index": index }}
+        >
+          <ProjectCard project={project} index={index} priority={index < 3} />
+        </div>
+      ))
+    }
+  </div>
+
+  <nav class="carousel-navigation" aria-label="Kies een uitgelicht project">
+    {
+      projects.map((project, index) => (
+        <a
+          class="carousel-dot"
+          href={`#featured-project-${index + 1}`}
+          aria-label={`Ga naar project ${index + 1}: ${project.name}`}
+        >
+          <span class="visually-hidden">{project.name}</span>
+        </a>
+      ))
+    }
+  </nav>
 </div>
 
+<FeaturedProjectsCarousel client:load rootId={carouselId} />
 <ProjectImageModalWrapper client:idle />
 
 <style>
-  .featured-projects-list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2em;
+  .featured-projects-carousel {
+    --carousel-card-width: clamp(240px, 48cqi, 544px);
+    --carousel-active-scale: 1;
+    --carousel-inactive-scale: calc(var(--carousel-active-scale) * 0.8);
+    --carousel-inactive-opacity: 0.68;
+    --carousel-gap: calc(2em + clamp(0.4rem, 0.8vw, 0.75rem));
+    container-type: inline-size;
     width: 100%;
-    margin: 0 auto;
 
-    @media screen and (max-width: 940px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media screen and (min-width: 1600px) {
+      --carousel-card-width: clamp(272px, 33.6cqi, 380.8px);
     }
 
     @media screen and (max-width: 640px) {
-      grid-template-columns: 1fr;
+      --carousel-card-width: 100%;
+    }
+
+    .featured-projects-list {
+      display: flex;
+      align-items: stretch;
+      gap: var(--carousel-gap);
+      width: 100%;
+      padding: 1.5rem calc((100% - var(--carousel-card-width)) / 2) 2rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent-bright);
+        outline-offset: 3px;
+      }
+    }
+
+    .carousel-slide {
+      flex: 0 0 var(--carousel-card-width);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+
+      :global([data-project-card]) {
+        scale: var(--carousel-inactive-scale);
+        opacity: var(--carousel-inactive-opacity);
+        transition:
+          scale 180ms ease-out,
+          translate 180ms ease-out,
+          opacity 180ms ease-out;
+      }
+
+      &:nth-child(2):not([data-position]) {
+        scroll-initial-target: nearest;
+
+        :global([data-project-card]) {
+          scale: var(--carousel-active-scale);
+          opacity: 1;
+        }
+      }
+
+      &:target {
+        :global([data-project-card]) {
+          scale: var(--carousel-active-scale);
+          opacity: 1;
+        }
+      }
+    }
+
+    &:has(.carousel-slide:target) {
+      .carousel-slide:nth-child(2):not(:target) {
+        :global([data-project-card]) {
+          scale: var(--carousel-inactive-scale);
+          opacity: var(--carousel-inactive-opacity);
+        }
+      }
+    }
+
+    .carousel-slide[data-position="before"] :global([data-project-card]) {
+      scale: var(--carousel-inactive-scale);
+      translate: 10% 0;
+      opacity: var(--carousel-inactive-opacity);
+    }
+
+    .carousel-slide[data-position="active"] :global([data-project-card]) {
+      scale: var(--carousel-active-scale);
+      translate: 0 0;
+      opacity: 1;
+    }
+
+    .carousel-slide[data-position="after"] :global([data-project-card]) {
+      scale: var(--carousel-inactive-scale);
+      translate: -10% 0;
+      opacity: var(--carousel-inactive-opacity);
+    }
+
+    .carousel-navigation {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      min-height: 2.75rem;
+    }
+
+    .carousel-dot {
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      text-decoration: none;
+
+      &::before {
+        content: "";
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: inherit;
+        background-color: color-mix(in oklch, var(--text), transparent 62%);
+        transition:
+          transform 160ms ease-out,
+          background-color 160ms ease-out;
+      }
+
+      &:hover::before,
+      &:focus-visible::before,
+      &:active::before {
+        background-color: var(--accent-bright);
+        transform: scale(1.45);
+      }
+
+      &[data-active="true"]::before {
+        background-color: var(--accent-bright);
+        transform: scale(1.45);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--accent-bright);
+        outline-offset: 1px;
+      }
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media screen and (max-width: 640px) {
+      .featured-projects-list {
+        padding: 0 1rem 1rem;
+        scroll-padding-inline: 1rem;
+      }
+
+      .carousel-slide:nth-child(2) {
+        scroll-initial-target: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .featured-projects-list {
+        scroll-behavior: auto;
+      }
+
+      .carousel-slide :global([data-project-card]) {
+        animation: none;
+        transition: none;
+      }
+
+      .carousel-dot::before {
+        transition: none;
+      }
     }
   }
 </style>

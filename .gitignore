@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # learnings
 .save-learnings
+
+# plans
+.plans

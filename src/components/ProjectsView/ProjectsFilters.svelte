@@ -356,7 +356,7 @@
           />
 
           <div class="library-options">
-            {#each visibleLibraries as library}
+            {#each visibleLibraries as library (library)}
               <label class="library-option">
                 <input
                   type="checkbox"
@@ -404,7 +404,7 @@
           </button>
         {/if}
 
-        {#each selectedLibraries as library}
+        {#each selectedLibraries as library (library)}
           <button type="button" class="filter-chip" on:click={() => removeLibrary(library)}>
             <span>{library}</span><span aria-hidden="true">×</span>
           </button>

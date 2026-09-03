@@ -90,7 +90,7 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      animation: fallIn 0.45s ease-out both;
+      animation: fallIn 0.45s ease-out backwards;
       animation-delay: calc(var(--card-index, 0) * 0.06s);
     }
 
