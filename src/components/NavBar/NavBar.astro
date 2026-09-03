@@ -57,6 +57,7 @@ const activeItem = getActiveNavigationItem(currentPath);
     margin: 0 auto;
     padding: 0 1.5rem;
     width: 100%;
+    min-height: var(--nav-height);
     z-index: 1000;
     background: var(--surface);
     backdrop-filter: blur(10px);
@@ -66,7 +67,6 @@ const activeItem = getActiveNavigationItem(currentPath);
 
     @media screen and (max-width: 767px) {
       width: 100%;
-      min-height: 3.5rem;
       padding: 0;
     }
 
@@ -102,7 +102,7 @@ const activeItem = getActiveNavigationItem(currentPath);
       @media screen and (max-width: 767px) {
         position: relative;
         width: 100%;
-        min-height: 3.5rem;
+        min-height: var(--nav-height);
         padding: 0.75rem 4rem;
         justify-content: center;
         text-align: center;

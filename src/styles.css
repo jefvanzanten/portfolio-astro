@@ -29,6 +29,7 @@
 }
 
 :root {
+  --nav-height: 3.5rem;
   --card-width: 285px;
   --container-max-width: 90%;
   --page-content-width: min(100%, calc(var(--card-width) * 3 + 240px));

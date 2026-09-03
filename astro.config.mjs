@@ -10,4 +10,9 @@ export default defineConfig({
   markdown: {
     processor: satteri(),
   },
+  server: {
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  },
 });

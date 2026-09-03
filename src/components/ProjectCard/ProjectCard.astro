@@ -23,7 +23,7 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
   data-project-filter-id={filterId}
 >
   <ProjectImageTrigger
-    client:idle
+    client:visible
     imageUrl={project.coverUrl}
     className="image-container"
     ariaLabel={`Open screenshot van ${project.name}`}
@@ -35,7 +35,7 @@ const { project, index = 0, priority = false, filterId } = Astro.props;
       formats={["avif", "webp"]}
       widths={[320, 640]}
       sizes="(max-width: 640px) 90vw, (max-width: 940px) 45vw, (max-width: 1400px) 31vw, 320px"
-      fetchpriority={priority ? "high" : undefined}
+      fetchpriority={priority ? "high" : "low"}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
     />

@@ -73,7 +73,9 @@
     >
       X
     </button>
-    <img src={imageUrl} alt="Project screenshot" class="project-image" />
+    {#if imageUrl}
+      <img src={imageUrl} alt="Project screenshot" class="project-image" />
+    {/if}
   </div>
 </dialog>
 

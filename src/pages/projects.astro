@@ -33,7 +33,6 @@ const filterableProjects = projects.map(
             <ProjectCard
               project={project}
               index={index}
-              priority={index < 3}
               filterId={String(index)}
             />
           ))
@@ -50,6 +49,17 @@ const filterableProjects = projects.map(
 </Layout>
 
 <style>
+  :global(html) {
+    --projects-filter-height: 8.5rem;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: calc(var(--nav-height) + var(--projects-filter-height));
+
+    @media screen and (max-width: 767px) {
+      scroll-padding-top: var(--nav-height);
+    }
+  }
+
   .projects-page {
     display: flex;
     flex-direction: column;
@@ -69,6 +79,10 @@ const filterableProjects = projects.map(
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 2em;
         width: 100%;
+
+        > :global([data-project-card]) {
+          scroll-snap-align: center;
+        }
 
         @media screen and (max-width: 940px) {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -90,5 +104,4 @@ const filterableProjects = projects.map(
       }
     }
   }
-
 </style>

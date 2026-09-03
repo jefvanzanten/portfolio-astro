@@ -306,6 +306,15 @@
 />
 
 <section class="filters">
+  {#if isFilterPanelOpen}
+    <button
+      type="button"
+      class="filter-backdrop"
+      aria-label="Sluit filters"
+      on:click={toggleFilterPanel}
+    ></button>
+  {/if}
+
   <form
     id="project-filter-panel"
     class="filter-form"
@@ -419,20 +428,62 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 2rem 0 1rem 0rem;
+    min-height: var(--projects-filter-height);
+    padding: var(--projects-filter-height) 0 0;
 
     @media screen and (max-width: 767px) {
+      min-height: 0;
       padding: 1rem 0 0.5rem;
     }
 
+    .filter-backdrop {
+      display: none;
+
+      @media screen and (max-width: 767px) {
+        position: fixed;
+        z-index: 24;
+        inset: var(--nav-height) 0 0;
+        display: block;
+        border: 0;
+        background: rgba(0, 0, 0, 0.58);
+        backdrop-filter: blur(3px);
+        cursor: pointer;
+      }
+    }
+
     .filter-form {
+      position: fixed;
+      z-index: 20;
+      top: var(--nav-height);
+      left: 50%;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
       align-items: start;
+      width: min(calc(100% - 3rem), var(--page-content-width));
+      padding: 2rem 0 1rem;
+      background: var(--bg);
+      transform: translateX(-50%);
+
+      @media screen and (max-width: 940px) and (min-width: 768px) {
+        width: 90%;
+      }
 
       @media screen and (max-width: 767px) {
+        z-index: 25;
+        top: calc(var(--nav-height) + 4.25rem);
+        right: 5%;
+        left: 5%;
         grid-template-columns: 1fr;
+        width: auto;
+        max-height: calc(100svh - var(--nav-height) - 5.25rem);
+        overflow-y: auto;
+        transform: none;
+        padding: 1rem;
+        border: 1px solid var(--border-bright);
+        border-radius: 0.75rem;
+        background: var(--card-bg);
+        box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
 
         &[data-open="false"] {
           display: none;
@@ -612,7 +663,12 @@
       }
 
       @media screen and (max-width: 767px) {
+        position: fixed;
+        z-index: 30;
+        top: calc(var(--nav-height) + 1rem);
+        left: 5%;
         display: inline-flex;
+        box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.35);
       }
     }
 
