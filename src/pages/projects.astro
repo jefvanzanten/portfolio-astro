@@ -98,13 +98,17 @@ const projectNavigationItems = projects.map((project, index) => ({
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding-bottom: 8vh;
+
+    @media screen and (max-width: 640px) {
+      min-height: calc(100svh - var(--nav-height));
+      justify-content: center;
+    }
 
     .content-container {
       width: min(calc(100% - 3rem), var(--page-content-width));
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
       margin: 0 auto;
 
       .projects-view {
@@ -164,7 +168,7 @@ const projectNavigationItems = projects.map((project, index) => ({
           }
 
           .project-item {
-            --project-card-image-ratio: 50%;
+            --project-card-image-ratio: 60%;
             display: block;
             flex: 0 0 100%;
             scroll-snap-align: start;

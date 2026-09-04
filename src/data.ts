@@ -7,7 +7,7 @@ type ProjectMarkdownModule = {
   compiledContent: () => Promise<string>;
 };
 
-const projectModules = import.meta.glob("./data/projects/*.md", {
+const projectModules = import.meta.glob("./data/project-cards/*.md", {
   eager: true,
 }) as Record<string, ProjectMarkdownModule>;
 
