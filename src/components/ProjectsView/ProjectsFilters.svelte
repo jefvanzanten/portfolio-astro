@@ -408,13 +408,13 @@
       <div class="active-filters" aria-label="Actieve filters">
         {#if selectedCategory}
           <button type="button" class="filter-chip" on:click={removeCategory}>
-            <span>Categorie: {selectedCategory}</span><span aria-hidden="true">×</span>
+            <span>{selectedCategory}</span><span aria-hidden="true">×</span>
           </button>
         {/if}
 
         {#if selectedLanguage}
           <button type="button" class="filter-chip" on:click={removeLanguage}>
-            <span>Taal: {selectedLanguage}</span><span aria-hidden="true">×</span>
+            <span>{selectedLanguage}</span><span aria-hidden="true">×</span>
           </button>
         {/if}
 
