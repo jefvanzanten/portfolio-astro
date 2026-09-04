@@ -45,9 +45,9 @@
     flex-direction: column;
     justify-content: space-between;
     cursor: pointer;
-    gap: 0.5em;
+    gap: 0.2em;
     width: 2.5em;
-    height: 1.5em;
+    height: 1.3em;
     background: transparent;
     border: none;
     z-index: 1001;
@@ -55,7 +55,7 @@
 
     .line {
       width: 100%;
-      height: 3px;
+      height: 1px;
       background-color: rgba(12, 217, 224, 1);
       transition: all 0.3s ease;
       transform-origin: center;
