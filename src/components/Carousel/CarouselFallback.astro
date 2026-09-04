@@ -1,0 +1,208 @@
+---
+import CarouselFallbackIsland from "./CarouselFallback.svelte";
+
+type CarouselItem = {
+  id: string;
+  label: string;
+};
+
+type Props = {
+  rootId: string;
+  items: CarouselItem[];
+  navigationLabel: string;
+  initialSlideIndex?: number;
+  mobileInitialSlideIndex?: number;
+  alignment?: "center" | "start";
+  mobileAlignment?: "center" | "start";
+  mobileOnly?: boolean;
+  navigationType?: "dots" | "counter";
+};
+
+const {
+  rootId,
+  items,
+  navigationLabel,
+  initialSlideIndex = 0,
+  mobileInitialSlideIndex = initialSlideIndex,
+  alignment = "center",
+  mobileAlignment = alignment,
+  mobileOnly = false,
+  navigationType = "dots",
+}: Props = Astro.props;
+---
+
+<!--
+  Temporary carousel navigation fallback. Replace this navigation and its
+  Svelte island with native CSS carousel controls once support is broad.
+-->
+<nav
+  class="carousel-fallback-navigation"
+  aria-label={navigationLabel}
+  data-mobile-only={mobileOnly || undefined}
+>
+  {
+    navigationType === "counter" ? (
+      <>
+        <button
+          class="carousel-fallback-arrow"
+          data-snap-previous
+          type="button"
+          aria-label="Vorig project"
+        >
+          &lt;
+        </button>
+        <span class="carousel-fallback-counter" aria-live="polite">
+          <span data-snap-current>1</span>/
+          <span data-snap-total>{items.length}</span>
+        </span>
+        <button
+          class="carousel-fallback-arrow"
+          data-snap-next
+          type="button"
+          aria-label="Volgend project"
+        >
+          &gt;
+        </button>
+      </>
+    ) : (
+      items.map((item, index) => (
+        <a
+          class="carousel-fallback-dot"
+          data-snap-marker
+          href={`#${item.id}`}
+          aria-label={`Ga naar project ${index + 1}: ${item.label}`}
+        >
+          <span class="visually-hidden">{item.label}</span>
+        </a>
+      ))
+    )
+  }
+</nav>
+
+{
+  mobileOnly ? (
+    <CarouselFallbackIsland
+      client:media="(max-width: 640px)"
+      {rootId}
+      {initialSlideIndex}
+      {mobileInitialSlideIndex}
+      {alignment}
+      {mobileAlignment}
+    />
+  ) : (
+    <CarouselFallbackIsland
+      client:load
+      {rootId}
+      {initialSlideIndex}
+      {mobileInitialSlideIndex}
+      {alignment}
+      {mobileAlignment}
+    />
+  )
+}
+
+<style>
+  .carousel-fallback-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.11rem;
+    min-height: 2.75rem;
+
+    &[data-mobile-only] {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .carousel-fallback-navigation[data-mobile-only] {
+      display: flex;
+    }
+  }
+
+  .carousel-fallback-arrow {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    color: var(--text);
+    background: transparent;
+    font: inherit;
+    font-size: 1.35rem;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--accent-bright);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-bright);
+      outline-offset: 1px;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  .carousel-fallback-counter {
+    min-width: 3.5rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .carousel-fallback-dot {
+    display: grid;
+    place-items: center;
+    flex: 0 0 1.1rem;
+    width: 1.1rem;
+    height: 2rem;
+    border-radius: 50%;
+    text-decoration: none;
+
+    &::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: inherit;
+      background-color: color-mix(in oklch, var(--text), transparent 62%);
+      transition:
+        transform 160ms ease-out,
+        background-color 160ms ease-out;
+    }
+
+    &:hover::before,
+    &:focus-visible::before,
+    &:active::before,
+    &[data-active="true"]::before {
+      background-color: var(--accent-bright);
+      transform: scale(1.45);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent-bright);
+      outline-offset: 1px;
+    }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-fallback-dot::before {
+      transition: none;
+    }
+  }
+</style>

@@ -27,6 +27,47 @@ async function chooseFilterOption(
   await page.getByRole("button", { name: option, exact: true }).click();
 }
 
+test("projects keep their desktop grid without carousel controls", async ({
+  page,
+}) => {
+  await page.goto("/projects");
+
+  await expect(page.locator(".project-container")).toHaveCSS("display", "grid");
+  await expect(page.locator(".carousel-fallback-navigation")).toBeHidden();
+});
+
+test("projects become a snap carousel with counter navigation on mobile", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
+  });
+  const page = await context.newPage();
+  await page.goto("http://localhost:4321/projects");
+
+  const track = page.locator(".project-container");
+  const items = page.locator("[data-snap-item]");
+  const current = page.locator("[data-snap-current]");
+  const total = page.locator("[data-snap-total]");
+  const previous = page.getByRole("button", { name: "Vorig project" });
+  const next = page.getByRole("button", { name: "Volgend project" });
+
+  await expect(track).toHaveCSS("display", "flex");
+  await expect(track).toHaveCSS("scroll-snap-type", "x mandatory");
+  await expect(page.locator("[data-snap-marker]")).toHaveCount(0);
+  await expect(current).toHaveText("1");
+  await expect(total).toHaveText(String(await items.count()));
+  await expect(previous).toBeDisabled();
+
+  await next.tap();
+  await expect(current).toHaveText("2");
+  await expect(previous).toBeEnabled();
+
+  await context.close();
+});
+
 test("project filter controls display as compact dropdowns", async ({
   page,
 }) => {

@@ -1,7 +1,7 @@
 ---
 import type { Project } from "../../types/project";
 import ProjectCard from "../ProjectCard/ProjectCard.astro";
-import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel.svelte";
+import CarouselFallback from "../Carousel/CarouselFallback.astro";
 import ProjectImageModalWrapper from "../ProjectImageModal/ProjectImageModalWrapper.svelte";
 
 type Props = {
@@ -10,6 +10,10 @@ type Props = {
 
 const { projects }: Props = Astro.props;
 const carouselId = "featured-projects-carousel";
+const carouselItems = projects.map((project, index) => ({
+  id: `featured-project-${index + 1}`,
+  label: project.name,
+}));
 ---
 
 <div
@@ -19,6 +23,7 @@ const carouselId = "featured-projects-carousel";
 >
   <div
     class="featured-projects-list"
+    data-snap-track
     role="region"
     aria-label="Uitgelichte projecten"
     tabindex="0"
@@ -28,6 +33,7 @@ const carouselId = "featured-projects-carousel";
         <div
           class="carousel-slide"
           id={`featured-project-${index + 1}`}
+          data-snap-item
           style={{ "--card-index": index }}
         >
           <ProjectCard project={project} index={index} priority={index < 3} />
@@ -36,22 +42,16 @@ const carouselId = "featured-projects-carousel";
     }
   </div>
 
-  <nav class="carousel-navigation" aria-label="Kies een uitgelicht project">
-    {
-      projects.map((project, index) => (
-        <a
-          class="carousel-dot"
-          href={`#featured-project-${index + 1}`}
-          aria-label={`Ga naar project ${index + 1}: ${project.name}`}
-        >
-          <span class="visually-hidden">{project.name}</span>
-        </a>
-      ))
-    }
-  </nav>
+  <CarouselFallback
+    rootId={carouselId}
+    items={carouselItems}
+    navigationLabel="Kies een uitgelicht project"
+    initialSlideIndex={1}
+    mobileInitialSlideIndex={0}
+    alignment="center"
+    mobileAlignment="start"
+  />
 </div>
-
-<FeaturedProjectsCarousel client:load rootId={carouselId} />
 <ProjectImageModalWrapper client:idle />
 
 <style>
@@ -109,8 +109,6 @@ const carouselId = "featured-projects-carousel";
       }
 
       &:nth-child(2):not([data-position]) {
-        scroll-initial-target: nearest;
-
         :global([data-project-card]) {
           scale: var(--carousel-active-scale);
           opacity: 1;
@@ -152,79 +150,30 @@ const carouselId = "featured-projects-carousel";
       opacity: var(--carousel-inactive-opacity);
     }
 
-    .carousel-navigation {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      min-height: 2.75rem;
-    }
-
-    .carousel-dot {
-      display: grid;
-      place-items: center;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      text-decoration: none;
-
-      &::before {
-        content: "";
-        width: 0.55rem;
-        height: 0.55rem;
-        border-radius: inherit;
-        background-color: color-mix(in oklch, var(--text), transparent 62%);
-        transition:
-          transform 160ms ease-out,
-          background-color 160ms ease-out;
-      }
-
-      &:hover::before,
-      &:focus-visible::before,
-      &:active::before {
-        background-color: var(--accent-bright);
-        transform: scale(1.45);
-      }
-
-      &[data-active="true"]::before {
-        background-color: var(--accent-bright);
-        transform: scale(1.45);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--accent-bright);
-        outline-offset: 1px;
-      }
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
     @media screen and (max-width: 640px) {
       .featured-projects-list {
         padding: 0 1rem 1rem;
         scroll-padding-inline: 1rem;
       }
 
-      .carousel-slide:nth-child(1) {
-        scroll-initial-target: nearest;
+      .carousel-slide {
+        --project-card-image-ratio: 50%;
       }
 
-      .carousel-slide:nth-child(2) {
-        scroll-initial-target: none;
+      .carousel-slide:nth-child(1):not([data-position]) {
+        :global([data-project-card]) {
+          scale: var(--carousel-active-scale);
+          opacity: 1;
+        }
       }
 
-      .carousel-slide :global(.image-container)::before {
-        padding-top: 50%;
+      .carousel-slide:nth-child(2):not([data-position]) {
+        :global([data-project-card]) {
+          scale: var(--carousel-inactive-scale);
+          opacity: var(--carousel-inactive-opacity);
+        }
       }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -234,10 +183,6 @@ const carouselId = "featured-projects-carousel";
 
       .carousel-slide :global([data-project-card]) {
         animation: none;
-        transition: none;
-      }
-
-      .carousel-dot::before {
         transition: none;
       }
     }

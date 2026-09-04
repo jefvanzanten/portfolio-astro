@@ -69,9 +69,14 @@
       }
 
       const isVisible = visibleFilterIds.has(element.dataset.projectFilterId ?? "");
-      element.hidden = !isVisible;
-      element.style.display = isVisible ? "" : "none";
+      const slide = element.closest<HTMLElement>("[data-snap-item]");
       element.setAttribute("aria-hidden", isVisible ? "false" : "true");
+
+      if (slide) {
+        slide.hidden = !isVisible;
+      } else {
+        element.hidden = !isVisible;
+      }
 
       if (isVisible) {
         visibleCount += 1;
