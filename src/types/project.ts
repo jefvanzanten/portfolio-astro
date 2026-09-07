@@ -1,21 +1,10 @@
-import type { ImageMetadata } from "astro";
+import type { ImageMetadata, MarkdownHeading } from "astro";
 
 export type Language =
-  | "TypeScript"
-  | "C#"
-  | "Python"
-  | "CSS"
-  | "HTML"
-  | "Rust"
-  | "Kotlin"
-  | "Java";
+  "TypeScript" | "C#" | "Python" | "CSS" | "HTML" | "Rust" | "Kotlin" | "Java";
 
 export type Category =
-  | "Frontend"
-  | "Backend"
-  | "Mobile"
-  | "Fullstack"
-  | "Desktop";
+  "Frontend" | "Backend" | "Mobile" | "Fullstack" | "Desktop";
 
 export type Library =
   | "React"
@@ -50,6 +39,7 @@ export type Project = {
   name: string;
   description: string;
   descriptionHtml: string;
+  headings: MarkdownHeading[];
   slug: string;
   url?: string;
   liveUrl?: string;
@@ -67,5 +57,5 @@ export type Project = {
 
 export type ProjectFrontmatter = Omit<
   Project,
-  "description" | "descriptionHtml" | "thumbImage"
+  "description" | "descriptionHtml" | "headings" | "thumbImage"
 >;

@@ -24,7 +24,9 @@ async function chooseFilterOption(
   option: string,
 ): Promise<void> {
   await page.getByLabel(filterLabel, { exact: true }).click();
-  await page.getByRole("button", { name: option, exact: true }).click();
+  await page
+    .getByRole("button", { name: new RegExp(`^${option} \\(\\d+\\)$`) })
+    .click();
 }
 
 test("projects keep their desktop grid without carousel controls", async ({
@@ -136,9 +138,9 @@ test("category and language dynamically limit downstream options", async ({
   await expect(page).toHaveURL(/category=Frontend/);
   await expect(page.locator("#project-language-menu button")).toHaveText([
     "Alle programmeertalen",
-    "CSS",
-    "HTML",
-    "TypeScript",
+    "TypeScript (6)",
+    "CSS (4)",
+    "HTML (4)",
   ]);
   await expect(
     page.getByRole("button", { name: /Categorie: Frontend/ }),
@@ -162,18 +164,18 @@ test("library dropdown searches, multi-selects, and applies AND filtering", asyn
 
   const search = page.getByLabel("Zoek framework of library");
   await search.fill("eact");
-  await expect(page.getByLabel("React", { exact: true })).toBeVisible();
-  await expect(page.getByLabel("React-Router", { exact: true })).toBeVisible();
-  await expect(page.getByLabel("Hono", { exact: true })).toHaveCount(0);
+  await expect(page.getByLabel(/^React \(\d+\)$/)).toBeVisible();
+  await expect(page.getByLabel(/^React-Router \(\d+\)$/)).toBeVisible();
+  await expect(page.getByLabel(/^Hono \(\d+\)$/)).toHaveCount(0);
 
-  await page.getByLabel("React", { exact: true }).check();
+  await page.getByLabel(/^React \(\d+\)$/).check();
   await expect(page).toHaveURL(/library=React/);
   await expect(
     page.getByRole("button", { name: "React", exact: true }),
   ).toBeVisible();
 
   await search.fill("Hono");
-  await page.getByLabel("Hono", { exact: true }).check();
+  await page.getByLabel(/^Hono \(\d+\)$/).check();
   await expect(page).toHaveURL(/library=React.*library=Hono/);
 
   const visibleCards = getVisibleProjectCards(page);

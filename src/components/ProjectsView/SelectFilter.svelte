@@ -3,6 +3,7 @@
   export let label: string;
   export let allLabel: string;
   export let options: readonly Option[];
+  export let optionCounts: Readonly<Partial<Record<Option, number>>>;
   export let selectedValue: Option | "";
   export let onSelect: (value: Option | "") => void;
   export let anchorName: string;
@@ -40,7 +41,7 @@
         popovertarget={`${id}-menu`}
         popovertargetaction="hide"
         on:click={() => onSelect(option)}
-      >{option}</button>
+      >{option} ({optionCounts[option]})</button>
     {/each}
   </div>
 </div>

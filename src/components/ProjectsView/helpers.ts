@@ -1,26 +1,94 @@
 import type { Category } from "../../types/project";
-import type { ProjectFilterState, ProjectFilterable } from "./types";
+import type {
+  ProjectFilterOption,
+  ProjectFilterState,
+  ProjectFilterable,
+} from "./types";
 
-const categoryOrder: Category[] = [
-  "Frontend",
-  "Backend",
-  "Fullstack",
-  "Mobile",
-  "Desktop",
-];
+/**
+ * Counts projects per filter value and orders the values by descending count.
+ *
+ * @param projects - Projects from which to derive options.
+ * @param getValues - Returns the filter values belonging to one project.
+ * @returns Filter options ordered by count and then alphabetically.
+ */
+function createFilterOptions<
+  T extends ProjectFilterable,
+  Value extends string,
+>(
+  projects: T[],
+  getValues: (project: T) => readonly Value[],
+): ProjectFilterOption<Value>[] {
+  const counts = new Map<Value, number>();
+
+  projects.forEach((project) => {
+    new Set(getValues(project)).forEach((value) => {
+      counts.set(value, (counts.get(value) ?? 0) + 1);
+    });
+  });
+
+  return [...counts]
+    .map(([value, count]) => ({ value, count }))
+    .sort(
+      (optionA, optionB) =>
+        optionB.count - optionA.count ||
+        optionA.value.localeCompare(optionB.value),
+    );
+}
+
+/**
+ * Extracts values from filter options.
+ *
+ * @param options - Filter options whose values should be extracted.
+ * @returns Filter option values in their current order.
+ */
+export function getOptionValues<Value extends string>(
+  options: ProjectFilterOption<Value>[],
+): Value[] {
+  return options.map((option) => option.value);
+}
+
+/**
+ * Converts filter options to a lookup containing their project counts.
+ *
+ * @param options - Filter options to convert.
+ * @returns Project count indexed by filter value.
+ */
+export function getOptionCounts<Value extends string>(
+  options: ProjectFilterOption<Value>[],
+): Partial<Record<Value, number>> {
+  return Object.fromEntries(
+    options.map((option) => [option.value, option.count]),
+  ) as Partial<Record<Value, number>>;
+}
+
+/**
+ * Searches filter options by their value.
+ *
+ * @param options - Filter options to search.
+ * @param search - Search phrase to match case-insensitively.
+ * @returns Filter options whose values contain the search phrase.
+ */
+export function searchOptions<Value extends string>(
+  options: ProjectFilterOption<Value>[],
+  search: string,
+): ProjectFilterOption<Value>[] {
+  const normalizedSearch = search.trim().toLocaleLowerCase();
+  return options.filter((option) =>
+    option.value.toLocaleLowerCase().includes(normalizedSearch),
+  );
+}
 
 /**
  * Returns the project categories that occur in the supplied projects.
  *
  * @param projects - Projects from which to derive categories.
- * @returns Available categories in the preferred display order.
+ * @returns Available categories with project counts, ordered by descending count.
  */
 export function getAvailableCategories<T extends ProjectFilterable>(
   projects: T[],
-): Category[] {
-  return categoryOrder.filter((category) =>
-    projects.some((project) => project.category === category),
-  );
+): ProjectFilterOption<Category>[] {
+  return createFilterOptions(projects, (project) => [project.category]);
 }
 
 /**
@@ -28,19 +96,17 @@ export function getAvailableCategories<T extends ProjectFilterable>(
  *
  * @param projects - Projects from which to derive languages.
  * @param category - Currently selected category, or null for every category.
- * @returns Sorted list of available languages.
+ * @returns Available languages with project counts, ordered by descending count.
  */
 export function getAvailableLanguages<T extends ProjectFilterable>(
   projects: T[],
   category: Category | null,
-): string[] {
+): ProjectFilterOption[] {
   const relevantProjects = category
     ? projects.filter((project) => project.category === category)
     : projects;
 
-  return [
-    ...new Set(relevantProjects.flatMap((project) => project.languages)),
-  ].sort();
+  return createFilterOptions(relevantProjects, (project) => project.languages);
 }
 
 /**
@@ -49,13 +115,13 @@ export function getAvailableLanguages<T extends ProjectFilterable>(
  * @param projects - Projects from which to derive libraries.
  * @param category - Currently selected category, or null for every category.
  * @param language - Currently selected language, or null for every language.
- * @returns Sorted list of available frameworks and libraries.
+ * @returns Available libraries with project counts, ordered by descending count.
  */
 export function getAvailableLibraries<T extends ProjectFilterable>(
   projects: T[],
   category: Category | null,
   language: string | null,
-): string[] {
+): ProjectFilterOption[] {
   const relevantProjects = projects.filter((project) => {
     const matchesCategory = !category || project.category === category;
     const matchesLanguage = !language || project.languages.includes(language);
@@ -63,9 +129,7 @@ export function getAvailableLibraries<T extends ProjectFilterable>(
     return matchesCategory && matchesLanguage;
   });
 
-  return [
-    ...new Set(relevantProjects.flatMap((project) => project.libraries)),
-  ].sort();
+  return createFilterOptions(relevantProjects, (project) => project.libraries);
 }
 
 /**

@@ -2,7 +2,7 @@
 name: "Datekanaal"
 slug: "datekanaal"
 liveUrl: "https://www.datekanaal.nl/"
-languages: ["TypeScript", "CSS"]
+languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["Nextjs", "React", "Convex", "TailwindCSS"]
 images: []
 coverUrl: "/covers/datekanaal_cover.png"

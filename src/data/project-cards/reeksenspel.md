@@ -3,7 +3,7 @@ name: "Reeksenspel"
 slug: "reeksenspel"
 liveUrl: "https://jefvanzanten.github.io/reeksenspel/"
 url: "https://github.com/jefvanzanten/reeksenspel/"
-languages: ["TypeScript", "CSS", "HTML"]
+languages: ["TypeScript"]
 libraries: ["React", "TailwindCSS"]
 images: [""]
 coverUrl: "/covers/reeksenspel_cover.png"

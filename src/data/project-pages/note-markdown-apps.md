@@ -2,13 +2,13 @@
 name: "Note Markdown Apps"
 slug: "note-markdown-apps"
 url: "https://github.com/jefvanzanten/note-markdown.git"
-languages: ["TypeScript", "CSS"]
+languages: ["TypeScript", "HTML", "CSS"]
 libraries: ["React", "Electron", "Nextjs", "CodeMirror"]
 images: [""]
 coverUrl: "/covers/note_markdown_apps.png"
 thumbUrl: "/thumbs/note_markdown_apps_thumb.png"
 category: "Desktop"
-lastUpdated: "2026-08-31"
+lastUpdated: "2026-06-06"
 highlighted: true
 ---
 

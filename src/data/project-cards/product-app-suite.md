@@ -2,7 +2,7 @@
 name: "Product App Suite"
 slug: "product-app-suite"
 url: "https://github.com/jefvanzanten/product-app-suite"
-languages: ["TypeScript", "CSS", "HTML"]
+languages: ["TypeScript", "CSS"]
 libraries:
   [
     "React",

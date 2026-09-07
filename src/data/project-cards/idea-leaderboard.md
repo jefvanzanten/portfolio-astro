@@ -2,7 +2,7 @@
 name: "Idea Leaderboard"
 slug: "idea-leaderboard"
 url: "https://github.com/jefvanzanten/idea-leaderboard.git"
-languages: ["TypeScript", "HTML", "CSS"]
+languages: ["TypeScript", "CSS"]
 libraries: ["React", "Electron", "Drizzle ORM"]
 images: [""]
 coverUrl: "/covers/leaderboard.png"

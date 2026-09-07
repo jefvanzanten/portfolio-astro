@@ -9,7 +9,7 @@ images: []
 coverUrl: "/covers/portfolio_astro_cover.png"
 thumbUrl: "/thumbs/portfolio_astro_thumb.png"
 category: "Frontend"
-lastUpdated: "2026-09-07"
+lastUpdated: "2026-06-30"
 highlighted: false
 ---
 

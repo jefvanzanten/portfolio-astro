@@ -6,6 +6,7 @@ const {
   variant = "secondary",
   target = url.startsWith("/") ? undefined : "_blank",
   rel = target === "_blank" ? "noreferrer" : undefined,
+  pageLink = false,
 } = Astro.props;
 ---
 
@@ -14,6 +15,7 @@ const {
     "linkAction",
     iconOnly && "iconOnly",
     variant === "primary" && "primary",
+    pageLink && "pageLink",
   ]}
   href={url}
   target={target}
@@ -26,6 +28,14 @@ const {
 </a>
 
 <style>
+  .pageLink {
+    visibility: hidden;
+
+    @media screen and (max-width: 767px) {
+      visibility: visible;
+    }
+  }
+
   .linkAction {
     display: inline-flex;
     align-items: center;

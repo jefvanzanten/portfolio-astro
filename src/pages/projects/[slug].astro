@@ -1,0 +1,173 @@
+---
+import type { Project } from "../../types/project";
+import { projectPages } from "../../data";
+import Layout from "../..//Layout.astro";
+
+/**
+ * Creates a static route for every project page.
+ *
+ * @returns The route parameters and project data for each page.
+ */
+export function getStaticPaths() {
+  return projectPages.map((project) => ({
+    params: {
+      slug: project.slug,
+    },
+    props: {
+      project,
+    },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const navigationHeadings = project.headings.filter(({ depth }) => depth === 1);
+---
+
+<Layout title="Projects - jefvanzanten.dev">
+  <div class="container">
+    <aside>
+      <nav>
+        <a href="/projects" class="goBack">Ga terug</a>
+        {
+          navigationHeadings.length > 0 && (
+            <ul>
+              {navigationHeadings.map(({ slug, text }) => (
+                <li>
+                  <a href={`#${slug}`}>{text}</a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </nav>
+    </aside>
+    <div class="content-container">
+      <h1>{project.name}</h1>
+      <div class="project-details-info" set:html={project.descriptionHtml} />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: right;
+
+    @media screen and (max-width: 770px) {
+      flex-direction: column;
+    }
+
+    .content-container {
+      padding: 2rem;
+      width: 60dvw;
+      flex: 2;
+
+      @media screen and (max-width: 770px) {
+        flex: none;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+        padding: 1rem 0;
+      }
+    }
+
+    aside {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+
+      @media screen and (max-width: 770px) {
+        display: none;
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+        padding-top: 3rem;
+      }
+
+      .goBack,
+      .goBack:visited {
+        text-decoration: none;
+        color: currentColor;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      li {
+        padding: 0.4rem 0;
+        font-size: 1.1rem;
+
+        @media screen and (max-width: 1024px) {
+          font-size: 0.9rem;
+        }
+      }
+
+      li > a,
+      li > a:visited {
+        text-decoration: none;
+        color: var(--accent-bright);
+      }
+
+      li > a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .project-details-info {
+    max-width: 38vw;
+
+    @media screen and (max-width: 1024px) {
+      max-width: 60vw;
+    }
+
+    @media screen and (max-width: 770px) {
+      max-width: 100%;
+    }
+
+    & :global(h1) {
+      color: var(--accent-bright);
+      font-size: 1.4rem;
+      padding: 0.8rem 0;
+    }
+
+    & :global(h2) {
+      color: var(--accent);
+      font-size: 1.2rem;
+      padding: 0.8rem 0;
+    }
+
+    & :global(p) {
+      line-height: 1.7;
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    & :global(ul) {
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+
+      & :global(li) {
+        font-size: 0.9rem;
+      }
+    }
+
+    & :global(pre) {
+      margin: 1rem 0;
+      padding: 1rem;
+    }
+  }
+</style>

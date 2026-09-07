@@ -152,7 +152,7 @@ p {
     text-wrap: nowrap;
 
     @media screen and (min-width: 1920px) {
-      font-size: 16px;
+      font-size: 1rem;
     }
   }
 }

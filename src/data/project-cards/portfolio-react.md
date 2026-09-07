@@ -1,6 +1,6 @@
 ---
 name: "Portfolio - React"
-slug: "portfolio"
+slug: "portfolio-react"
 url: "https://github.com/jefvanzanten/portfolio-react/"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["React", "React-Router"]

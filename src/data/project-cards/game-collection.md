@@ -3,7 +3,7 @@ name: "Game Collection"
 slug: "game-collection"
 liveUrl: "https://game-collection.jefvanzanten.dev/"
 url: "https://github.com/jefvanzanten/game-collection"
-languages: ["TypeScript", "CSS", "HTML"]
+languages: ["TypeScript", "CSS"]
 libraries: ["React"]
 images: [""]
 coverUrl: "/covers/game-collection.png"

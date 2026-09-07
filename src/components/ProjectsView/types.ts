@@ -10,6 +10,11 @@ export type ProjectFilterItem = ProjectFilterable & {
   filterId: string;
 };
 
+export type ProjectFilterOption<Value extends string = string> = {
+  value: Value;
+  count: number;
+};
+
 export type ProjectFilterState = {
   category: Category | null;
   language: string | null;

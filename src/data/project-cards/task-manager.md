@@ -2,7 +2,7 @@
 name: "Task Manager"
 slug: "task-manager"
 url: "https://github.com/jefvanzanten/task-manager-nextjs"
-languages: ["TypeScript", "HTML", "CSS"]
+languages: ["TypeScript", "CSS"]
 libraries: ["Nextjs", "React", "TailwindCSS", "Drizzle ORM", "Better-Auth"]
 images: [""]
 coverUrl: "/covers/task-manager-cover.png"

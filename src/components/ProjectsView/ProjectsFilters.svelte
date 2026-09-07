@@ -7,6 +7,9 @@
     getAvailableCategories,
     getAvailableLanguages,
     getAvailableLibraries,
+    getOptionCounts,
+    getOptionValues,
+    searchOptions,
   } from "./helpers";
   import SelectFilter from "./SelectFilter.svelte";
   import type { ProjectFilterItem, ProjectFilterState } from "./types";
@@ -21,16 +24,18 @@
   let isLibraryMenuOpen = false;
   let libraryDropdown: HTMLDetailsElement;
 
-  $: availableCategories = getAvailableCategories(projects);
-  $: availableLanguages = getAvailableLanguages(projects, selectedCategory || null);
-  $: availableLibraries = getAvailableLibraries(
+  $: categoryOptions = getAvailableCategories(projects);
+  $: availableCategories = getOptionValues(categoryOptions);
+  $: categoryCounts = getOptionCounts(categoryOptions);
+  $: languageOptions = getAvailableLanguages(projects, selectedCategory || null);
+  $: availableLanguages = getOptionValues(languageOptions);
+  $: languageCounts = getOptionCounts(languageOptions);
+  $: libraryOptions = getAvailableLibraries(
     projects,
     selectedCategory || null,
     selectedLanguage || null,
   );
-  $: visibleLibraries = availableLibraries.filter((library) =>
-    library.toLocaleLowerCase().includes(librarySearch.trim().toLocaleLowerCase()),
-  );
+  $: visibleLibraryOptions = searchOptions(libraryOptions, librarySearch);
   $: hasActiveFilters =
     Boolean(selectedCategory) || Boolean(selectedLanguage) || selectedLibraries.length > 0;
 
@@ -118,7 +123,9 @@
    * @returns Nothing.
    */
   function reconcileCategoryDependants(): void {
-    const languages = getAvailableLanguages(projects, selectedCategory || null);
+    const languages = getOptionValues(
+      getAvailableLanguages(projects, selectedCategory || null),
+    );
 
     if (selectedLanguage && !languages.includes(selectedLanguage)) {
       selectedLanguage = "";
@@ -133,12 +140,16 @@
    * @returns Nothing.
    */
   function reconcileLibrarySelections(): void {
-    const libraries = getAvailableLibraries(
-      projects,
-      selectedCategory || null,
-      selectedLanguage || null,
+    const libraries = getOptionValues(
+      getAvailableLibraries(
+        projects,
+        selectedCategory || null,
+        selectedLanguage || null,
+      ),
     );
-    selectedLibraries = selectedLibraries.filter((library) => libraries.includes(library));
+    selectedLibraries = selectedLibraries.filter((library) =>
+      libraries.includes(library),
+    );
   }
 
   /**
@@ -286,17 +297,25 @@
     selectedCategory =
       availableCategories.find((category) => category === categoryParam) ?? "";
 
-    const languages = getAvailableLanguages(projects, selectedCategory || null);
+    const languages = getOptionValues(
+      getAvailableLanguages(projects, selectedCategory || null),
+    );
     const languageParam = params.get("language");
     selectedLanguage = languages.find((language) => language === languageParam) ?? "";
 
-    const libraries = getAvailableLibraries(
-      projects,
-      selectedCategory || null,
-      selectedLanguage || null,
+    const libraries = getOptionValues(
+      getAvailableLibraries(
+        projects,
+        selectedCategory || null,
+        selectedLanguage || null,
+      ),
     );
     selectedLibraries = [
-      ...new Set(params.getAll("library").filter((library) => libraries.includes(library))),
+      ...new Set(
+        params
+          .getAll("library")
+          .filter((library) => libraries.includes(library)),
+      ),
     ];
     applyFilters();
     updateUrl();
@@ -345,6 +364,7 @@
       label="Categorie"
       allLabel="Alle categorieën"
       options={availableCategories}
+      optionCounts={categoryCounts}
       selectedValue={selectedCategory}
       onSelect={selectCategory}
       anchorName="--category-filter"
@@ -355,6 +375,7 @@
       label="Programmeertaal"
       allLabel="Alle programmeertalen"
       options={availableLanguages}
+      optionCounts={languageCounts}
       selectedValue={selectedLanguage}
       onSelect={selectLanguage}
       anchorName="--language-filter"
@@ -383,16 +404,16 @@
           />
 
           <div class="library-options">
-            {#each visibleLibraries as library (library)}
+            {#each visibleLibraryOptions as option (option.value)}
               <label class="library-option">
                 <input
                   type="checkbox"
                   name="library"
-                  value={library}
-                  checked={selectedLibraries.includes(library)}
+                  value={option.value}
+                  checked={selectedLibraries.includes(option.value)}
                   on:change={handleLibraryChange}
                 />
-                <span>{library}</span>
+                <span>{option.value} ({option.count})</span>
               </label>
             {:else}
               <p class="no-options">Geen frameworks of libraries gevonden.</p>
@@ -590,6 +611,31 @@
       &[open] summary::after {
         transform: rotate(180deg);
       }
+
+      .library-popover {
+        position: absolute;
+        z-index: 1;
+        top: calc(100% + 0.4rem);
+        right: 0;
+        left: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        max-height: min(20rem, 60vh);
+        padding: 0.6rem;
+        border: 1px solid var(--border-bright);
+        border-radius: 0.65rem;
+        overflow: hidden;
+        background: var(--card-bg);
+        color: var(--text-bright);
+        box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);
+
+        @media screen and (max-width: 767px) {
+          position: static;
+          margin-top: 0.4rem;
+        }
+      }
     }
 
     svg {
@@ -626,8 +672,10 @@
 
     .library-options {
       display: flex;
+      flex: 1;
       flex-direction: column;
       gap: 0.3rem;
+      min-height: 0;
       overflow-y: auto;
 
       .library-option {
