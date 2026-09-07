@@ -56,7 +56,7 @@ const carouselItems = projects.map((project, index) => ({
 
 <style>
   .featured-projects-carousel {
-    --carousel-card-width: clamp(240px, 48cqi, 544px);
+    --carousel-card-width: clamp(240px, 48cqi, 420px);
     --carousel-active-scale: 1;
     --carousel-inactive-scale: calc(var(--carousel-active-scale) * 0.8);
     --carousel-inactive-opacity: 0.68;
@@ -173,7 +173,6 @@ const carouselItems = projects.map((project, index) => ({
           opacity: var(--carousel-inactive-opacity);
         }
       }
-
     }
 
     @media (prefers-reduced-motion: reduce) {

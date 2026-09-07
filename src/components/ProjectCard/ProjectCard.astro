@@ -160,6 +160,11 @@ const projectPage = projectPages.find((p) => p.slug === project.slug);
           --project-card-image-ratio: 62%;
           padding-top: var(--project-card-image-ratio, 75%);
         }
+
+        @media screen and (max-width: 3080px) {
+          --project-card-image-ratio: 50%;
+          padding-top: var(--project-card-image-ratio, 75%);
+        }
       }
 
       &::after {
@@ -256,6 +261,7 @@ const projectPage = projectPages.find((p) => p.slug === project.slug);
       font-size: 0.82rem;
       white-space: normal;
       padding: 0.5rem 0 0;
+      color: #ddd;
 
       :global(p) {
         margin: 0 0 1em;
