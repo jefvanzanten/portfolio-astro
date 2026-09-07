@@ -28,14 +28,6 @@ const {
 </a>
 
 <style>
-  .pageLink {
-    visibility: hidden;
-
-    @media screen and (max-width: 767px) {
-      visibility: visible;
-    }
-  }
-
   .linkAction {
     display: inline-flex;
     align-items: center;
@@ -131,6 +123,14 @@ const {
       @media screen and (max-width: 640px) and (height: 667px) {
         font-size: 11px;
       }
+    }
+  }
+
+  .pageLink {
+    display: none;
+
+    @media screen and (max-width: 767px) {
+      display: inline-flex;
     }
   }
 </style>

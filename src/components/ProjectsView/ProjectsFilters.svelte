@@ -12,7 +12,13 @@
     searchOptions,
   } from "./helpers";
   import SelectFilter from "./SelectFilter.svelte";
-  import type { ProjectFilterItem, ProjectFilterState } from "./types";
+  import type {
+    ProjectFilterItem,
+    ProjectFilterOption,
+    ProjectFilterState,
+  } from "./types";
+
+  const excludedLanguages = new Set(["CSS", "HTML"]);
 
   export let projects: ProjectFilterItem[] = [];
 
@@ -27,7 +33,7 @@
   $: categoryOptions = getAvailableCategories(projects);
   $: availableCategories = getOptionValues(categoryOptions);
   $: categoryCounts = getOptionCounts(categoryOptions);
-  $: languageOptions = getAvailableLanguages(projects, selectedCategory || null);
+  $: languageOptions = getSelectableLanguages(selectedCategory || null);
   $: availableLanguages = getOptionValues(languageOptions);
   $: languageCounts = getOptionCounts(languageOptions);
   $: libraryOptions = getAvailableLibraries(
@@ -38,6 +44,20 @@
   $: visibleLibraryOptions = searchOptions(libraryOptions, librarySearch);
   $: hasActiveFilters =
     Boolean(selectedCategory) || Boolean(selectedLanguage) || selectedLibraries.length > 0;
+
+  /**
+   * Returns programming-language options, excluding markup and styling languages.
+   *
+   * @param category - Currently selected category, or null for every category.
+   * @returns Selectable programming languages with their project counts.
+   */
+  function getSelectableLanguages(
+    category: Category | null,
+  ): ProjectFilterOption[] {
+    return getAvailableLanguages(projects, category).filter(
+      (option) => !excludedLanguages.has(option.value),
+    );
+  }
 
   /**
    * Creates the current filter state from the component selections.
@@ -124,7 +144,7 @@
    */
   function reconcileCategoryDependants(): void {
     const languages = getOptionValues(
-      getAvailableLanguages(projects, selectedCategory || null),
+      getSelectableLanguages(selectedCategory || null),
     );
 
     if (selectedLanguage && !languages.includes(selectedLanguage)) {
@@ -298,7 +318,7 @@
       availableCategories.find((category) => category === categoryParam) ?? "";
 
     const languages = getOptionValues(
-      getAvailableLanguages(projects, selectedCategory || null),
+      getSelectableLanguages(selectedCategory || null),
     );
     const languageParam = params.get("language");
     selectedLanguage = languages.find((language) => language === languageParam) ?? "";

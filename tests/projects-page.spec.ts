@@ -139,8 +139,6 @@ test("category and language dynamically limit downstream options", async ({
   await expect(page.locator("#project-language-menu button")).toHaveText([
     "Alle programmeertalen",
     "TypeScript (6)",
-    "CSS (4)",
-    "HTML (4)",
   ]);
   await expect(
     page.getByRole("button", { name: /Categorie: Frontend/ }),
