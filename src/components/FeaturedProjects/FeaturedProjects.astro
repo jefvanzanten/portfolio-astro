@@ -68,7 +68,7 @@ const carouselItems = projects.map((project, index) => ({
       --carousel-card-width: clamp(272px, 33.6cqi, 380.8px);
     }
 
-    @media screen and (max-width: 640px) {
+    @media screen and (max-width: 770px) {
       --carousel-card-width: 100%;
     }
 
@@ -99,6 +99,11 @@ const carouselItems = projects.map((project, index) => ({
         #000 calc(100% - var(--carousel-edge-fade)),
         transparent 100%
       );
+
+      @media screen and (max-width: 770px) {
+        mask-image: none;
+        -webkit-mask-image: none;
+      }
 
       &::-webkit-scrollbar {
         display: none;

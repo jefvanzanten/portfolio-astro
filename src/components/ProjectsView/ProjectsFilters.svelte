@@ -490,9 +490,8 @@
       flex: 0 0 2.5rem;
       border: none;
       border-radius: 50%;
-      background: #0d9186;
-      color: var(--text-bright);
-      cursor: pointer;
+      color: var(--text-muted);
+      background: color-mix(in oklch, var(--accent-bright), black 14%);
       padding: 0;
 
       @media screen and (max-width: 767px) {
@@ -501,7 +500,8 @@
         top: calc(var(--nav-height) + 1rem);
         right: 5%;
         display: inline-flex;
-        box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.35);
+        box-shadow: 0 10px 24px
+          color-mix(in oklch, var(--accent-bright), transparent 86%);
         width: 44px;
         height: 44px;
 
@@ -568,7 +568,7 @@
         overflow-y: auto;
         transform: none;
         padding: 1rem;
-        border: 1px solid var(--border-bright);
+        border: 1px solid color-mix(in oklch, var(--text-muted), black 50%);
         border-radius: 0.75rem;
         background: var(--card-bg);
         box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.35);

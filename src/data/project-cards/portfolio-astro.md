@@ -1,7 +1,6 @@
 ---
 name: "Portfolio - Astro + Svelte"
 slug: "portfolio-astro"
-liveUrl: "https://jefvanzanten.dev/"
 url: "https://github.com/jefvanzanten/portfolio-astro/"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["Astro", "Svelte"]

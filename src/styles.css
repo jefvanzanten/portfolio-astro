@@ -91,7 +91,7 @@
   --card-bg: color-mix(in oklch, var(--bg), #fff 17%);
   --card-text-color: color-mix(in oklch, var(--text), #000 20%);
   --card-title-color: var(--text-bright);
-  --text-muted: oklch(from var(--text) l c h / 0.9);
+  --text-muted: oklch(from var(--text) l c h / 0.85);
   --text-bright: oklch(from var(--text) l c h / 0.9);
   --border: oklch(from var(--text) l c h / 0.2);
   --border-bright: oklch(from var(--text) l c h / 0.8);

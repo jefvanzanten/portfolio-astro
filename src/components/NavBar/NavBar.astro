@@ -68,6 +68,7 @@ const activeItem = getActiveNavigationItem(currentPath);
     position: sticky;
     top: 0;
     border-bottom: 1px solid var(--surface-border);
+    color: var(--text-muted);
 
     @media screen and (max-width: 767px) {
       width: 100%;
@@ -76,14 +77,14 @@ const activeItem = getActiveNavigationItem(currentPath);
 
     .pageName {
       display: none;
-      color: var(--nav-control-active);
+      color: var(--text-muted);
 
       @media screen and (max-width: 767px) {
         display: block;
         max-width: 34%;
         margin-left: auto;
         overflow: hidden;
-        font-size: 1rem;
+        font-size: 0.9rem;
         line-height: 1.25;
         text-decoration: none;
         text-overflow: ellipsis;
@@ -134,17 +135,16 @@ const activeItem = getActiveNavigationItem(currentPath);
     }
 
     .logo {
-      color: var(--nav-control-active);
       font-weight: 600;
       text-align: center;
       padding-left: 0;
       font-size: 1.2rem;
 
-      @media screen and (max-width: 767px) {
+      @media screen and (max-width: 777px) {
         position: absolute;
-        left: 3.6rem;
+        left: 4rem;
         padding: 0;
-        font-size: 0.88rem;
+        font-size: 1rem;
       }
     }
 
