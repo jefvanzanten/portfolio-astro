@@ -80,7 +80,9 @@ const activeItem = getActiveNavigationItem(currentPath);
       color: var(--text-muted);
 
       @media screen and (max-width: 767px) {
-        display: block;
+        display: flex;
+        align-items: center;
+        height: 2rem;
         max-width: 34%;
         margin-left: auto;
         overflow: hidden;
@@ -110,8 +112,8 @@ const activeItem = getActiveNavigationItem(currentPath);
         position: relative;
         width: 100%;
         min-height: var(--nav-height);
-        padding: 0.75rem 4rem;
-        justify-content: center;
+        padding: 0.75rem 1rem;
+        gap: 1.35rem;
         text-align: center;
       }
     }
@@ -140,9 +142,11 @@ const activeItem = getActiveNavigationItem(currentPath);
       padding-left: 0;
       font-size: 1.2rem;
 
-      @media screen and (max-width: 777px) {
-        position: absolute;
-        left: 4rem;
+      @media screen and (max-width: 767px) {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        height: 2rem;
         padding: 0;
         font-size: 1rem;
       }

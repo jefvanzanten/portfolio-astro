@@ -34,33 +34,43 @@
   aria-expanded={isOpen}
   on:click={toggleMenu}
 >
-  <span class="line"></span>
-  <span class="line"></span>
-  <span class="line"></span>
+  <span class="lines" aria-hidden="true">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </span>
 </button>
 
 <style>
   .hamburger {
     display: none;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    gap: 0.2em;
-    width: 2em;
-    height: 1.3em;
+    width: 2rem;
+    height: 2rem;
     background: transparent;
     border: none;
     z-index: 1001;
     margin-right: 1em;
 
-    .line {
-      width: 100%;
-      height: 2px;
-      background: var(--accent-bright);
-      transition: all 0.3s ease;
-      transform-origin: center;
-      display: block;
-      border-radius: 2px;
+    .lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.2em;
+      width: 2em;
+      height: 1.3em;
+
+      .line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-bright);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+      }
     }
 
     &.open .line {
@@ -78,12 +88,9 @@
     }
 
     @media (max-width: 767px) {
-      position: absolute;
-      top: 50%;
-      left: 1rem;
       display: flex;
+      flex: 0 0 auto;
       margin-right: 0;
-      transform: translateY(-50%);
     }
   }
 </style>
