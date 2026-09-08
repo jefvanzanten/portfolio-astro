@@ -46,7 +46,7 @@
     justify-content: space-between;
     cursor: pointer;
     gap: 0.2em;
-    width: 2.5em;
+    width: 2em;
     height: 1.3em;
     background: transparent;
     border: none;
@@ -55,8 +55,8 @@
 
     .line {
       width: 100%;
-      height: 1px;
-      background-color: rgba(12, 217, 224, 1);
+      height: 2px;
+      background: var(--accent-bright);
       transition: all 0.3s ease;
       transform-origin: center;
       display: block;

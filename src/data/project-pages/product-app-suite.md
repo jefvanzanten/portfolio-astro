@@ -1,129 +1,148 @@
 ---
 name: "Product App Suite"
 slug: "product-app-suite"
-url: "https://github.com/jefvanzanten/product-app-suite"
-languages: ["TypeScript", "CSS", "HTML"]
-libraries:
-  [
-    "React",
-    "React Router",
-    "Hono",
-    "Drizzle ORM",
-    "SQLite",
-    "Better Auth",
-    "Zod",
-    "TanStack Query",
-  ]
 images: []
 coverUrl: "/covers/portfolio_cover.png"
 thumbUrl: "/thumbs/portfolio_thumb.png"
-category: "Fullstack"
-lastUpdated: "2026-08-24"
-highlighted: true
+summary: "Dit project bestaat uit meerdere applicaties binnen één gedeelde codebase: een calorie-tracker, inventarisatie-app, recepten-app, adminpaneel en een backend die de applicaties van data voorziet. De applicaties zijn ontwikkeld op basis van specificatiebestanden waarin de kernfunctionaliteit per app is vastgelegd."
 ---
 
 # Beschrijving
 
-De Product App Suite is een fullstack monorepo met vier afzonderlijke webapplicaties en één gedeelde backend:
+De Product App Suite is een fullstack monorepo met vier aparte frontendapplicaties en één gedeelde backend.
+
+Het project bestaat uit:
 
 - een calorie-tracker;
 - een inventarisatie-app;
 - een recepten-app;
-- een beheeromgeving voor producten en opbergplaatsen;
-- een centrale API die de applicaties van data, authenticatie en domeinlogica voorziet.
+- een adminpaneel voor producten en opbergplaatsen;
+- een centrale API voor data, authenticatie en domeinlogica.
 
-De applicaties gebruiken dezelfde productcatalogus en gebruikersaccounts, maar hebben ieder een eigen verantwoordelijkheid en gebruikersinterface. Ze kunnen onafhankelijk worden gebouwd en uitgerold, terwijl gedeelde contracten, authenticatiecode en generieke frontendfunctionaliteit centraal worden beheerd.
+Alle applicaties gebruiken dezelfde productcatalogus en gebruikersaccounts, maar iedere applicatie heeft een eigen verantwoordelijkheid en interface. Een product kan bijvoorbeeld worden beheerd in het adminpaneel, als voorraad worden toegevoegd in Inventory, als ingrediënt worden gebruikt in een recept en daarna als consumptie worden gelogd in de Calorie Tracker.
+
+Ik heb er bewust voor gekozen om hier geen grote frontendapplicatie van te maken. Iedere frontend heeft een eigen routeboom, build en deployment. Onderdelen die echt hetzelfde zijn, zoals API-contracten en authenticatie, worden wel gedeeld via packages.
 
 # Probleem en doel
 
-De Product App Suite is ontstaan vanuit het idee om verschillende productgerelateerde applicaties binnen één samenhangend systeem te ontwikkelen. Producten spelen in iedere applicatie een andere rol: ze kunnen worden beheerd in de productcatalogus, als fysieke voorraad worden geregistreerd, als ingrediënt in een recept worden gebruikt of als consumptie in de calorie-tracker worden gelogd.
+Het idee voor dit project begon bij meerdere applicaties die allemaal iets met producten doen. Als ik deze applicaties volledig los van elkaar zou ontwikkelen, moest ik dezelfde productmodellen, validatie en API-calls op meerdere plekken opnieuw maken. Daarnaast zouden de gegevens van de applicaties niet vanzelf met elkaar verbonden zijn.
 
-Wanneer deze applicaties als volledig losse projecten zouden worden gebouwd, zouden productmodellen, validatieregels en API-integraties op meerdere plaatsen opnieuw moeten worden geïmplementeerd. Daarom koos ik voor een gedeelde codebase waarin de applicaties dezelfde domeinmodellen en databronnen gebruiken, zonder dat zij één grote frontendapplicatie worden.
+Daarom heb ik gekozen voor één gedeelde codebase met één backend. De applicaties blijven zelfstandig, maar gebruiken dezelfde productcatalogus, gebruikers en API-contracten.
 
-Een tweede doel was het verdiepen van mijn backendkennis. Mijn eerdere backendprojecten waren relatief klein. Met dit project wilde ik ervaring opdoen met een grotere domeinscope, relationele datamodellen, authenticatie, autorisatie, transacties en meerdere clients die van dezelfde API gebruikmaken.
+Een tweede doel van dit project is het verbeteren van mijn backendkennis. Mijn eerdere backends waren meestal een stuk kleiner. Bij dit project krijg ik te maken met meerdere domeinen, relationele data, authenticatie, autorisatie, transacties en meerdere clients die allemaal met dezelfde API communiceren.
 
-Voor de belangrijkste onderdelen heb ik functionele specificaties, UI-specificaties, domeinregels, ERD's en endpointcontracten opgesteld. Deze documenten worden gedurende de ontwikkeling bijgewerkt en functioneren als centrale referentie voor zowel implementatie als toekomstige wijzigingen.
+Voor de belangrijkste onderdelen maak ik vooraf functionele specificaties, UI-specificaties, domeinregels, ERD's en endpointdocumentatie. Hierdoor moet ik eerder nadenken over wat een feature precies moet doen en welke uitzonderingen er zijn, in plaats van tijdens het programmeren steeds nieuwe regels te bedenken.
 
 # Mijn rol
 
-Ik ben de enige ontwikkelaar van de Product App Suite. Daardoor ben ik verantwoordelijk voor het volledige ontwikkelproces:
+Ik ontwikkel de Product App Suite zelfstandig. Hierdoor ben ik verantwoordelijk voor het volledige proces:
 
-- het uitwerken van requirements en domeinregels;
+- het bepalen en uitschrijven van de requirements;
+- het vastleggen van domein- en validatieregels;
 - het ontwerpen van de frontend- en backendarchitectuur;
-- het modelleren van de database;
-- het ontwerpen en implementeren van API-contracten;
+- het ontwerpen en aanpassen van de database;
+- het maken van de API-contracten en endpoints;
 - het ontwikkelen van de vier frontendapplicaties;
-- authenticatie en autorisatie;
-- geautomatiseerde tests;
-- Docker-builds en deploymentconfiguratie;
-- het bewaken en verder ontwikkelen van de gedeelde codebase.
+- het implementeren van authenticatie en autorisatie;
+- het schrijven van tests;
+- het maken van Docker-builds en deploymentconfiguratie;
+- het onderhouden van de gedeelde packages.
+
+Omdat de scope vrij groot is wordt het project in stappen ontwikkeld. Ik probeer eerst de regels van een onderdeel vast te leggen en daarna de backend, contracten en frontend in kleinere stukken te implementeren.
 
 # Applicaties
 
 ## Calorie Tracker
 
-De Calorie Tracker laat een gebruiker consumpties registreren en calorie- en macrototalen bekijken. Gebruikers kunnen per datum hun logboek openen, producten of gerechten zoeken en bestaande logs bekijken en aanpassen.
+Met de Calorie Tracker kan een gebruiker bijhouden wat hij of zij heeft gegeten. Per dag kan de gebruiker consumpties toevoegen en de calorieën en macro's bekijken.
 
 De applicatie ondersteunt onder andere:
 
 - dagelijkse calorie- en macrostatistieken;
-- persoonlijke voedingsdoelen;
-- een consumptielogboek met datum- en typefilters;
-- het toevoegen en bewerken van consumpties;
-- het loggen van concrete producten in verschillende eenheden;
-- het loggen van recepten als gerecht;
-- historische logs waarvan de relevante receptversie behouden blijft.
+- persoonlijke doelen voor voeding;
+- een consumptielogboek per datum;
+- filters op verschillende soorten consumpties;
+- producten zoeken en als consumptie toevoegen;
+- hoeveelheden in verschillende eenheden invoeren;
+- recepten als gerecht loggen;
+- bestaande consumpties bekijken en aanpassen;
+- historische logs koppelen aan de juiste receptversie.
 
-Iedere gebruiker heeft uitsluitend toegang tot zijn eigen logs en voedingsdoelen.
+De persoonlijke doelen en consumpties horen bij één gebruiker. Een ingelogde gebruiker mag dus alleen zijn of haar eigen gegevens bekijken en aanpassen.
+
+Een los product en een gerecht worden niet op precies dezelfde manier gelogd. Bij een product wordt de gekozen hoeveelheid gebruikt om de voedingswaarden uit te rekenen. Bij een gerecht moet ook bekend blijven met welke versie van het recept de berekening is gemaakt.
 
 ## Inventory
 
-Inventory beheert fysieke voorraad op basis van producten uit de centrale productcatalogus. Iedere gekochte verpakking wordt opgeslagen als een afzonderlijk voorraaditem met een eigen locatie, houdbaarheidsdatum en resterende inhoud.
+Inventory gebruik ik voor het bijhouden van fysieke voorraad. De producten komen uit de centrale productcatalogus, maar ieder gekocht exemplaar wordt als een apart voorraaditem opgeslagen.
 
-De applicatie ondersteunt onder andere:
+Een voorraaditem heeft onder andere een eigen:
+
+- opbergplaats;
+- houdbaarheidsdatum;
+- resterende inhoud;
+- status als geopende of volledige verpakking.
+
+Hierdoor kunnen twee verpakkingen van hetzelfde product toch van elkaar verschillen. De ene verpakking kan bijvoorbeeld al open zijn en bijna leeg, terwijl de andere nog volledig is en een andere houdbaarheidsdatum heeft.
+
+De applicatie ondersteunt:
 
 - voorraad bekijken en filteren;
-- identieke volledige verpakkingen gegroepeerd presenteren;
 - nieuwe voorraad toevoegen;
-- resterende inhoud aanpassen;
+- dezelfde volledige verpakkingen gegroepeerd tonen;
+- de resterende inhoud aanpassen;
 - houdbaarheidsdatums beheren;
-- voorraad tussen opbergplaatsen verplaatsen;
-- lage voorraad en de inhoud van geopende verpakkingen inzichtelijk maken.
+- voorraad naar een andere opbergplaats verplaatsen;
+- geopende verpakkingen bekijken;
+- lage voorraad zichtbaar maken.
 
-Hierbij wordt onderscheid gemaakt tussen een catalogusproduct en een fysiek exemplaar daarvan. Hierdoor kunnen meerdere geopende verpakkingen van hetzelfde product onafhankelijk van elkaar worden beheerd.
+Het onderscheid tussen een product uit de catalogus en een echt voorraaditem is hierbij belangrijk. Het catalogusproduct beschrijft wat het product is. Het voorraaditem beschrijft de verpakking die op dat moment daadwerkelijk in huis ligt.
 
 ## Recepten
 
-De recepten-app is verantwoordelijk voor het aanmaken, bekijken en beheren van recepten. Recepten kunnen privé blijven of openbaar worden gedeeld.
+In de recepten-app kan een gebruiker recepten bekijken, aanmaken en beheren. Een recept kan privé blijven of openbaar worden gemaakt.
 
-De applicatie bevat onder andere:
+De huidige functionaliteit bestaat onder andere uit:
 
-- een publieke receptenlijst;
-- zoeken en filteren op recepten;
+- een lijst met openbare recepten;
+- zoeken en filteren;
 - persoonlijke en openbare recepten;
-- receptdetails met ingrediënten en bereidingsinstructies;
+- receptdetails met ingrediënten;
+- stappen voor de bereiding;
 - recepten aanmaken en bewerken;
 - recepten archiveren en herstellen;
 - versiebeheer voor ingrediënten, hoeveelheden en instructies.
 
-Receptinhoud wordt geversioneerd. Wanneer een recept wordt aangepast, blijven eerdere versies beschikbaar voor consumpties die al met die versie zijn gelogd. Hiermee blijven historische calorie- en macroberekeningen reproduceerbaar.
+Ik heb voor versiebeheer gekozen omdat een recept ook in de Calorie Tracker kan worden gebruikt. Stel dat een gebruiker vandaag een gerecht logt en het recept volgende week aanpast. Dan moet de oude consumptie nog steeds berekend kunnen worden met het recept zoals dit op dat moment was.
+
+Daarom verwijst een gerechtlog naar een specifieke receptversie. Nieuwe wijzigingen maken een nieuwe versie en veranderen niet stil de inhoud waarmee een oudere consumptie is berekend.
 
 ## Product Management Admin
 
-Product Management Admin is een afzonderlijke beheerapplicatie voor gebruikers met de beheerdersrol.
+Product Management Admin is een aparte beheerapplicatie voor gebruikers met een beheerdersrol.
 
-De beheeromgeving bestaat uit twee hoofdonderdelen:
+Het adminpaneel bestaat uit twee hoofdonderdelen:
 
-- de productcatalogus;
+- de centrale productcatalogus;
 - het beheer van opbergplaatsen.
 
-Binnen de productcatalogus kunnen beheerders producten zoeken, browsen, aanmaken en aanpassen. Een product bestaat uit gedeelde samenstellingsgegevens, zoals naam, merk en categorie, en een concrete uitvoering of verpakking die door de andere applicaties kan worden geselecteerd.
+Bij de productcatalogus kan een beheerder producten zoeken, bekijken, aanmaken en aanpassen. Een product bevat gedeelde gegevens zoals naam, merk en categorie. Daarnaast is er een concrete uitvoering of verpakking die door de andere applicaties geselecteerd kan worden.
 
-Opbergplaatsen worden als een hiërarchische boom beheerd. Beheerders kunnen hoofdlocaties en sublocaties aanmaken, hernoemen, verplaatsen, archiveren en herstellen. Inventory gebruikt deze boom vervolgens om voorraad aan een geldige fysieke locatie te koppelen.
+De opbergplaatsen worden als een boomstructuur beheerd. Een hoofdlocatie kan meerdere sublocaties hebben. Een voorbeeld hiervan is een keuken met daaronder een koelkast en verschillende keukenkastjes.
+
+Een beheerder kan locaties:
+
+- aanmaken;
+- hernoemen;
+- onder een andere locatie plaatsen;
+- archiveren;
+- herstellen.
+
+Inventory gebruikt deze boom daarna om een voorraaditem aan een geldige fysieke locatie te koppelen.
 
 # Architectuur
 
-De repository is opgezet als een pnpm-workspace met afzonderlijke applicaties en gedeelde packages:
+De repository is opgezet als een pnpm-workspace:
 
 ```text
 apps/
@@ -139,19 +158,21 @@ packages/
   shared/
 ```
 
-De vier frontends zijn server-side rendered React Router-applicaties. Iedere applicatie heeft een eigen routeboom, basename, Dockerfile en buildproces. Hierdoor kunnen de applicaties onafhankelijk worden gebouwd en gedeployed.
+De vier frontends zijn React Router-applicaties met server-side rendering. Iedere frontend heeft een eigen routeboom, basename, Dockerfile en buildproces. Hierdoor kan ik één applicatie bouwen of deployen zonder de andere frontends als één gezamenlijke applicatie mee te nemen.
 
-De backend is een modulaire Hono-applicatie met één SQLite-database. Hier is voor SQLite gekozen, omdat het maar enkele gebruikers gaat onderrsteunen en gelijktijdige operaties vrij weinig gaan voorkomen.De backend bevat afzonderlijke modules voor:
+De backend is gemaakt met Hono en gebruikt één SQLite-database. Ik heb voor SQLite gekozen omdat dit project maar door een klein aantal gebruikers gebruikt gaat worden en er waarschijnlijk weinig gelijktijdige databaseoperaties zijn. Voor deze situatie vind ik een losse databaseserver onnodig.
+
+De backend is verdeeld in modules voor:
 
 - authenticatie;
-- productcatalogus;
+- producten en categorieën;
 - calorie-tracking;
 - voorraad;
 - opbergplaatsen;
 - recepten;
 - healthchecks.
 
-Binnen de backend volgt de code in hoofdzaak deze dependencyrichting:
+Binnen een backendmodule loopt de dependencyrichting in de basis als volgt:
 
 ```text
 routes → services → repositories → database
@@ -159,133 +180,175 @@ routes → services → repositories → database
            domain
 ```
 
-Routes verwerken HTTP-verkeer, services coördineren use-cases, repositories verzorgen persistence en domeinmodules bevatten pure bedrijfsregels. De verschillende onderdelen worden in één composition root samengesteld door hun afhankelijkheden expliciet te injecteren.
+De route ontvangt het HTTP-request en valideert de invoer. De service voert de use-case uit en bepaalt welke stappen nodig zijn. De repository verzorgt de communicatie met de database. Domeinmodules bevatten regels die zo min mogelijk afhankelijk zijn van Hono, Drizzle of andere frameworks.
+
+De afhankelijkheden worden in één composition root samengesteld en expliciet meegegeven. Hierdoor kan een service in een test bijvoorbeeld een andere repository krijgen dan tijdens het uitvoeren van de echte backend.
 
 # Gedeelde packages
 
 ## Contracts
 
-`packages/contracts` bevat de gedeelde API-contracten voor onder andere producten, categorieën, voorraad, locaties, calorie-tracking en recepten.
+In `packages/contracts` staan de gedeelde API-contracten voor onder andere:
 
-De contracten zijn gebaseerd op Zod. Zowel de backend als de frontendclients gebruiken deze schema's om gegevens op systeemgrenzen te valideren. De frontends zetten transportdata daarna om naar modellen die eigendom zijn van de betreffende applicatie.
+- producten;
+- categorieën;
+- voorraad;
+- opbergplaatsen;
+- calorie-tracking;
+- recepten.
+
+De contracten zijn gemaakt met Zod. TypeScript controleert types tijdens het ontwikkelen, maar data uit een HTTP-request is tijdens runtime nog steeds onbetrouwbaar. Zod valideert deze data daarom op de grens van het systeem.
+
+Zowel de backend als de frontendclients gebruiken dezelfde schema's. In de frontend worden de transportgegevens daarna omgezet naar modellen van de applicatie zelf. Hierdoor worden de API-types niet door de volledige frontend heen gebruikt.
 
 ## Auth client
 
-`packages/auth-client` bevat gedeelde functionaliteit voor browserauthenticatie, sessies en gebruikersrollen. Alle applicaties gebruiken dezelfde Better Auth-backend en gebruikersidentiteit.
+`packages/auth-client` bevat de gedeelde code voor authenticatie, sessies en gebruikersrollen. Alle applicaties gebruiken dezelfde Better Auth-backend en dezelfde gebruikersidentiteit.
 
-Authenticatie wordt centraal gedeeld, terwijl iedere applicatie zelfstandig bepaalt welke routes en functionaliteit voor een gebruiker beschikbaar zijn. Het adminpaneel controleert bijvoorbeeld niet alleen of iemand is ingelogd, maar ook of die gebruiker de beheerdersrol heeft.
+Het package regelt het gedeelde gedeelte, maar iedere applicatie blijft zelf verantwoordelijk voor de toegang tot routes en functionaliteit. Het adminpaneel controleert bijvoorbeeld niet alleen of een gebruiker is ingelogd, maar ook of de gebruiker de beheerdersrol heeft.
+
+Doordat de applicaties dezelfde sessie gebruiken hoeft een gebruiker niet opnieuw in te loggen bij het wisselen tussen bijvoorbeeld Inventory en het adminpaneel.
 
 ## Shared
 
-`packages/shared` bevat alleen functionaliteit die werkelijk door meerdere applicaties wordt gebruikt, zoals generieke API-helpers, productpresentatie, navigatiecomponenten en herbruikbare browserhooks.
+In `packages/shared` staat alleen code die echt door meerdere applicaties op dezelfde manier wordt gebruikt. Voorbeelden hiervan zijn:
 
-Applicatiespecifieke componenten en domeinregels blijven bewust binnen de applicatie die daar eigenaar van is.
+- algemene API-helpers;
+- productpresentatie;
+- navigatiecomponenten;
+- herbruikbare browserhooks.
+
+Ik probeer hier niet ieder component in te zetten dat toevallig op elkaar lijkt. De Calorie Tracker, Inventory en recepten-app hebben verschillende gebruikersflows. De onderdelen die alleen bij zo'n flow horen blijven daarom binnen de betreffende applicatie.
 
 # Technische keuzes
 
 ## Waarom een monorepo?
 
-De applicaties werken met dezelfde producten, gebruikers, contracten en een deel van dezelfde presentatielogica. Een monorepo maakt het mogelijk om wijzigingen aan een contract, backendendpoint en bijbehorende clients in één wijziging door te voeren.
+De applicaties gebruiken dezelfde producten, gebruikers en API-contracten. Als deze in losse repositories zouden staan, moest een wijziging aan een contract op meerdere plaatsen los worden bijgehouden.
 
-Tegelijkertijd blijven de applicaties afzonderlijke workspacepackages. Hierdoor is de gedeelde repository geen reden om alles in één frontend of deployment onder te brengen.
+Met een monorepo kan ik een wijziging aan de backend, het contract en de bijbehorende frontendclients in dezelfde wijziging uitvoeren. Het voordeel hiervan is dat een brekende contractwijziging eerder zichtbaar wordt.
+
+Een monorepo betekent voor mij niet dat alles automatisch gedeeld moet worden. Iedere applicatie blijft een apart workspacepackage met een eigen build en deployment.
 
 ## Waarom een centrale API?
 
-Producten, voorraad, recepten en consumpties zijn inhoudelijk met elkaar verbonden. Een centrale API zorgt ervoor dat domeinregels en autorisatie niet door meerdere clients opnieuw hoeven te worden geïmplementeerd.
+Producten, voorraad, recepten en consumpties hebben veel relaties met elkaar. De backend is daarom de centrale plaats voor domeinregels, transacties, authenticatie en autorisatie.
 
-De frontendapplicaties consumeren gerichte endpoints, maar hebben geen directe toegang tot de database. Hierdoor blijft de backend de centrale plek voor bedrijfsregels, transacties en toegangscontrole.
+De frontends hebben geen directe toegang tot de database. Ze gebruiken gerichte endpoints voor hun use-cases. Hierdoor hoeft een regel, zoals controleren of een consumptie van de huidige gebruiker is, niet door iedere client zelf te worden uitgevoerd.
 
 ## Waar deel ik code wel en niet?
 
-Ik deel code wanneer meerdere applicaties exact hetzelfde concept of contract nodig hebben. Voorbeelden zijn authenticatie, API-schema's, productpresentatie en generieke navigatie.
+Ik deel code als meerdere applicaties precies hetzelfde contract of gedrag nodig hebben. Authenticatie en Zod-schema's zijn hier duidelijke voorbeelden van.
 
-Ik deel geen complete feature-implementaties alleen omdat de interfaces op elkaar lijken. De calorie-tracker, Inventory en recepten-app hebben ieder hun eigen gebruikersflows en domeintaal. Hun componenten, dataloaders en presentatielogica blijven daarom binnen de betreffende applicatie.
+Complete features deel ik niet alleen omdat de interfaces op elkaar lijken. Een product zoeken in de Calorie Tracker heeft bijvoorbeeld een ander doel dan een product beheren in het adminpaneel. Als ik deze volledige features samenvoeg ontstaat er al snel een gedeeld package dat van alle applicaties iets moet weten.
 
-Dit voorkomt dat gedeelde packages veranderen in een verzameling sterk gekoppelde applicatiecode.
+Daarom blijven applicatiespecifieke componenten, loaders en domeinregels bij de applicatie die daar verantwoordelijk voor is.
 
 ## Hoe zijn de domeinen gescheiden?
 
-Zowel de backend als de frontends zijn opgedeeld rond functionele domeinen. Frontendfeatures gebruiken waar relevant drie lagen:
+De backend en frontends zijn ingedeeld op functionele domeinen. Binnen frontendfeatures gebruik ik waar dit nuttig is drie lagen:
 
-- `domain` voor frameworkonafhankelijke modellen en regels;
-- `data` voor API-verkeer, validatie en mapping;
+- `domain` voor modellen en regels zonder frameworkcode;
+- `data` voor API-requests, validatie en mapping;
 - `presentation` voor React-componenten en gebruikersinteractie.
 
-Contracttypes mogen alleen aan de datagrens worden gebruikt. De rest van de frontend werkt met eigen domeinmodellen. Hierdoor lekken backend-DTO's niet rechtstreeks door naar de gebruikersinterface.
+De gedeelde contracttypes worden alleen gebruikt bij de datagrens. Daarna wordt de data omgezet naar een model van de frontend. Dit kost extra mappingcode, maar voorkomt dat een backend-DTO automatisch het model van iedere frontend wordt.
 
 ## Waarom React Router met SSR?
 
-Iedere frontend is een React Router-frameworkapp met server-side rendering. Routebestanden vormen de composition boundary voor authenticatie, loaders, actions en presentatie.
+Iedere frontend gebruikt React Router als framework met server-side rendering. De routes zijn de plaats waar authenticatie, loaders, actions en de presentatie bij elkaar komen.
 
-SSR maakt het mogelijk om sessies en toegangscontrole al tijdens het laden van een route af te handelen. Daarnaast hebben de applicaties hierdoor ieder een zelfstandige serverbuild die achter een eigen publiek basispad kan worden uitgerold.
+Met SSR kunnen een sessie en toegangsrechten al tijdens het laden van de route gecontroleerd worden. Daarnaast krijgt iedere applicatie een eigen serverbuild en kan deze achter een eigen publiek basispad worden uitgevoerd.
 
 # Uitdagingen
 
 ## Afzonderlijk deployen vanuit één repository
 
-Een belangrijke uitdaging was het combineren van gedeelde code met zelfstandige deployments. De frontends moeten gedeelde packages kunnen gebruiken, maar mogen niet afhankelijk worden van elkaars applicatiecode.
+De frontends moeten gedeelde packages kunnen gebruiken, maar mogen niet afhankelijk worden van de code van een andere frontend. Tegelijkertijd wil ik niet bij iedere deployment de volledige monorepo als één applicatie bouwen.
 
-Iedere applicatie heeft daarom een eigen workspacefilter, Dockerfile, build en runtime. Docker installeert alleen de betreffende applicatie en haar transitieve workspace-afhankelijkheden. De backend wordt als een afzonderlijke service gebouwd en uitgevoerd.
+Iedere applicatie heeft daarom een eigen Dockerfile, workspacefilter, build en runtime. Tijdens een Docker-build worden alleen de betreffende applicatie en de transitieve workspace-afhankelijkheden meegenomen. De backend wordt weer als een aparte service gebouwd.
 
 ## Navigeren tussen zelfstandige applicaties
 
-De calorie-tracker en Inventory verwijzen voor beheertaken naar dezelfde Product Management Admin-app. Daarbij moet het adminpaneel weten vanuit welke applicatie de gebruiker is gekomen, zodat de juiste terugkeerlink kan worden getoond.
+De Calorie Tracker en Inventory verwijzen voor beheertaken naar Product Management Admin. Het adminpaneel moet daarbij weten vanuit welke applicatie de gebruiker kwam, zodat er een goede teruglink kan worden getoond.
 
-Hiervoor gebruikt de adminapp een beperkte en gevalideerde `source`-parameter. Alleen bekende bronnen worden geaccepteerd. Er wordt bewust geen vrije retour-URL gebruikt, zodat deze navigatie geen open redirect kan veroorzaken.
+Hiervoor gebruik ik een `source`-parameter met een beperkte lijst van toegestane waardes. Ik gebruik bewust geen vrije return-URL. Een willekeurige return-URL kan namelijk gebruikt worden als open redirect naar een externe website.
 
-Omdat alle applicaties dezelfde authenticatiebackend en sessie gebruiken, hoeft een gebruiker bij het wisselen tussen applicaties niet opnieuw in te loggen.
+Omdat alle applicaties dezelfde authenticatie en sessie gebruiken blijft de gebruiker tijdens het wisselen ingelogd.
 
-## Historische juistheid combineren met actuele productgegevens
+## Historische gegevens correct houden
 
-Een consumptielog moet ook na een latere wijziging begrijpelijk en berekenbaar blijven. Tegelijkertijd moeten correcties aan productnamen en voedingswaarden waar mogelijk direct doorwerken.
+Een oudere consumptie moet later nog steeds te begrijpen en te berekenen zijn. Dit wordt lastig als een recept ondertussen andere ingrediënten of hoeveelheden heeft gekregen.
 
-Daarom maakt het datamodel onderscheid tussen actuele stamgegevens en geversioneerde receptinhoud. Een gerechtlog verwijst naar een specifieke, onveranderlijke receptversie, terwijl geschikte productgegevens en macroprofielen actueel kunnen blijven.
+Daarom wordt de inhoud van een recept geversioneerd. Een gerechtlog verwijst naar de versie waarmee deze consumptie is aangemaakt. Geschikte actuele stamgegevens, zoals een gecorrigeerde productnaam, kunnen wel actueel blijven waar dit de historische berekening niet verandert.
 
-## Een veranderend productmodel migreren
+## Het productmodel aanpassen
 
-Tijdens de ontwikkeling is het productmodel doorontwikkeld naar een model waarin iedere concrete uitvoering rechtstreeks als product selecteerbaar is. Deze wijziging raakt de productcatalogus, voorraad, recepten, calorie-tracking, API-contracten en database.
+Tijdens de ontwikkeling is het productmodel veranderd naar een model waarbij iedere concrete uitvoering direct als product gekozen kan worden. Deze wijziging bleef niet beperkt tot één tabel of component.
 
-Door de migratie op te delen in afzonderlijke plannen en contractslices konden de verschillende applicaties stapsgewijs worden aangepast zonder de domeingrenzen te verliezen.
+De verandering raakte:
+
+- de productcatalogus;
+- voorraad;
+- recepten;
+- calorie-tracking;
+- API-contracten;
+- de database.
+
+Ik heb deze migratie daarom opgedeeld in kleinere plannen en contractslices. Hierdoor konden de onderdelen stap voor stap worden aangepast en bleef beter zichtbaar welke applicatie of welk domein nog het oude model gebruikte.
 
 # Specificatiegedreven ontwikkeling
 
-Voor de features bestaan functionele specificaties en, waar nodig, afzonderlijke UI-specificaties.
+Voor de grotere features maak ik functionele specificaties en waar nodig een aparte UI-specificatie.
 
-De functionele specificaties beschrijven onder andere:
+In de functionele specificaties leg ik onder andere vast:
 
-- scope en gebruikersrollen;
-- domein- en validatieregels;
-- routegedrag;
-- autorisatie;
-- fouttoestanden;
-- acceptatiecriteria.
+- wat binnen en buiten de scope valt;
+- welke gebruikersrollen er zijn;
+- welke domein- en validatieregels gelden;
+- hoe routes en endpoints moeten reageren;
+- welke autorisatie nodig is;
+- welke fouttoestanden mogelijk zijn;
+- welke acceptatiecriteria gelden.
 
-De UI-specificaties beschrijven de schermopbouw, responsive presentatie, interacties en visuele toestanden. Daarnaast bevat de repository ERD's en endpointdocumentatie voor de belangrijkste backenddomeinen.
+De UI-specificaties beschrijven de schermen, responsive layouts, interacties en verschillende visuele statussen. Daarnaast bevat de repository ERD's en documentatie van de belangrijkste endpoints.
 
-Deze aanpak helpt om beslissingen expliciet vast te leggen en voorkomt dat implementatiecode de enige bron van waarheid wordt.
+Ik gebruik deze documenten als referentie tijdens het programmeren. Als een regel verandert probeer ik eerst de specificatie aan te passen. Hierdoor is de implementatiecode niet de enige plaats waar staat hoe een feature hoort te werken.
 
 # Kwaliteit en testen
 
-De repository bevat unit-, domein-, route- en componenttests. Voor de frontendtests gebruik ik Vitest en Testing Library. Voor kritieke Calorie Tracker-flows is daarnaast Playwright-configuratie aanwezig voor end-to-endtests.
+De repository bevat verschillende soorten tests:
 
-Architectuurgrenzen worden waar mogelijk via ESLint-regels afgedwongen. TypeScript en Zod bewaken respectievelijk interne types en onbetrouwbare data op systeemgrenzen.
+- unittests;
+- domeintests;
+- routetests;
+- componenttests;
+- end-to-endtests voor belangrijke Calorie Tracker-flows.
 
-Op repositoryniveau kunnen build, linting, typechecks en tests voor alle workspacepackages worden uitgevoerd.
+Voor de TypeScript-tests gebruik ik Vitest en voor React-componenten Testing Library. Voor de end-to-endtests is Playwright geconfigureerd.
+
+Architectuurgrenzen worden waar mogelijk gecontroleerd met ESLint-regels. TypeScript controleert de interne types en Zod controleert de data die via systeemgrenzen binnenkomt.
+
+Op het niveau van de volledige repository kan ik de builds, linting, typechecks en tests van alle workspacepackages uitvoeren. Dit is belangrijk omdat een wijziging aan een gedeeld contract meerdere applicaties tegelijk kan raken.
 
 # Resultaat
 
-Het resultaat is een groeiend productsysteem waarin vier zelfstandig inzetbare applicaties dezelfde backend, productcatalogus, authenticatie en API-contracten gebruiken.
+Het resultaat is een groeiend productsysteem waarin vier aparte frontendapplicaties dezelfde backend, authenticatie, productcatalogus en API-contracten gebruiken.
 
-De codebase bevat inmiddels:
+De codebase bevat op dit moment:
 
-- afzonderlijk bouwbare en deploybare frontendapplicaties;
-- een modulaire backend met gedeelde SQLite-database;
-- rolgebaseerde authenticatie en autorisatie;
+- vier afzonderlijk bouwbare en deploybare React Router-applicaties;
+- een modulaire Hono-backend;
+- één gedeelde SQLite-database;
+- authenticatie en autorisatie op basis van rollen;
 - een centrale productcatalogus;
-- voorraadbeheer met fysieke verpakkingen en hiërarchische locaties;
+- voorraadbeheer met losse fysieke verpakkingen;
+- een hiërarchie van opbergplaatsen;
 - persoonlijke consumptielogs en voedingsstatistieken;
-- publieke en privé-recepten met geversioneerde inhoud;
-- gedeelde, runtime-gevalideerde API-contracten;
-- uitgebreide functionele en technische documentatie.
+- openbare en privé-recepten;
+- versiebeheer voor receptinhoud;
+- gedeelde API-contracten met runtimevalidatie;
+- functionele en technische specificaties;
+- geautomatiseerde tests op meerdere niveaus.
 
-Het project is nog in actieve ontwikkeling. Nieuwe functionaliteit wordt toegevoegd vanuit de vastgelegde specificaties, terwijl bestaande domeinmodellen en architectuur stapsgewijs worden verfijnd.
+Het project is nog in ontwikkeling. De grote scope maakt het soms lastig, maar is ook precies waarom ik er veel van leer. Iedere nieuwe feature raakt niet alleen een scherm, maar vaak ook een contract, backendmodule, databasemodel en test. Hierdoor krijg ik meer ervaring met de gevolgen van technische keuzes binnen een groter fullstackproject.

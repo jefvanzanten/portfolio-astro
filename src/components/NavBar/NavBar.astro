@@ -22,7 +22,9 @@ const activeItem = getActiveNavigationItem(currentPath);
   >
     <HamburgerToggle client:media="(max-width: 767px)" />
 
-    <a href="/" class="navlink logo">JEFVANZANTEN.DEV</a>
+    <a href="/" class="navlink logo"
+      >jefvanzanten<i class="color-text">.dev</i></a
+    >
 
     {
       activeItem && (
@@ -37,9 +39,11 @@ const activeItem = getActiveNavigationItem(currentPath);
         navigationItems.map((item) => (
           <a
             href={item.to}
-            class={isNavigationItemActive(currentPath, item.to)
-              ? "navlink active"
-              : "navlink"}
+            class={
+              isNavigationItemActive(currentPath, item.to)
+                ? "navlink active"
+                : "navlink"
+            }
           >
             {item.name}
           </a>
@@ -113,7 +117,7 @@ const activeItem = getActiveNavigationItem(currentPath);
 
     .navlink {
       display: inline-block;
-      padding: 1em 0;
+      padding: 0.4rem 0;
       color: var(--nav-control-active);
       text-decoration: none;
       border-bottom: 2px solid transparent;
@@ -125,7 +129,7 @@ const activeItem = getActiveNavigationItem(currentPath);
       }
 
       @media screen and (max-width: 767px) {
-        padding: 1em 2em;
+        padding: 1rem 2rem;
       }
     }
 
@@ -134,15 +138,15 @@ const activeItem = getActiveNavigationItem(currentPath);
       font-weight: 600;
       text-align: center;
       padding-left: 0;
+      font-size: 1.2rem;
 
       @media screen and (max-width: 767px) {
         position: absolute;
-        left: 4.25rem;
+        left: 3.6rem;
         padding: 0;
-        font-size: 0.75rem;
+        font-size: 0.88rem;
       }
     }
-
 
     .navlist {
       display: flex;
@@ -155,7 +159,7 @@ const activeItem = getActiveNavigationItem(currentPath);
         @media screen and (max-width: 767px) {
           display: block;
           width: 100%;
-          padding: 1.5em 0;
+          padding: 1.5rem 0;
           border-bottom: 1px solid var(--nav-menu-border);
           line-height: 1vh;
         }
@@ -190,6 +194,10 @@ const activeItem = getActiveNavigationItem(currentPath);
 
     .active {
       border-color: var(--accent-bright);
+    }
+
+    .color-text {
+      color: var(--accent-bright);
     }
   }
 </style>

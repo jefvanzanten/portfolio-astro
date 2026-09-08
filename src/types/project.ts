@@ -39,7 +39,6 @@ export type Project = {
   name: string;
   description: string;
   descriptionHtml: string;
-  headings: MarkdownHeading[];
   slug: string;
   url?: string;
   liveUrl?: string;
@@ -53,6 +52,16 @@ export type Project = {
   coverUrl: string;
   thumbUrl: string;
   thumbImage: ImageMetadata;
+};
+
+export type ProjectPageData = {
+  name: string;
+  slug: string;
+  images: string[];
+  coverUrl: string;
+  thumbUrl: string;
+  thumbImage: ImageMetadata;
+  headings: MarkdownHeading[];
 };
 
 export type ProjectFrontmatter = Omit<

@@ -2,7 +2,7 @@
 import Layout from "../Layout.astro";
 import CommitWidget from "../components/CommitWidget/CommitWidget.astro";
 import FeaturedProjects from "../components/FeaturedProjects/FeaturedProjects.astro";
-import GithubLink from "../components/GithubLink/GithubLink.astro";
+import IconLink from "../components/IconLink/IconLink.astro";
 import { projects } from "../data.ts";
 
 type CtaLink = {
@@ -59,10 +59,10 @@ const ctaLinks = [
         <div class="cta-row">
           {
             ctaLinks.map((link) => (
-              <GithubLink
-                name={link.name}
+              <IconLink
+                href={link.url}
+                label={link.name}
                 iconUrl={link.iconUrl}
-                url={link.url}
                 variant={link.variant}
               />
             ))

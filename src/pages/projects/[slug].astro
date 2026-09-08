@@ -1,7 +1,8 @@
 ---
+import type { MarkdownHeading } from "astro";
 import type { Project } from "../../types/project";
 import { projectPages } from "../../data";
-import Layout from "../..//Layout.astro";
+import Layout from "../../Layout.astro";
 
 /**
  * Creates a static route for every project page.
@@ -23,151 +24,385 @@ interface Props {
   project: Project;
 }
 
+type NavigationItem = {
+  heading: MarkdownHeading;
+  children: MarkdownHeading[];
+};
+
+/**
+ * Groups the individual applications below the applications heading.
+ *
+ * @param headings - The headings extracted from the project Markdown.
+ * @returns The main headings and application headings as a navigation tree.
+ */
+function createNavigationItems(headings: MarkdownHeading[]): NavigationItem[] {
+  const items: NavigationItem[] = [];
+
+  for (const heading of headings) {
+    if (heading.depth === 1) {
+      items.push({ heading, children: [] });
+      continue;
+    }
+
+    const parentItem = items.at(-1);
+
+    if (heading.depth === 2 && parentItem?.heading.slug === "applicaties") {
+      parentItem.children.push(heading);
+    }
+  }
+
+  return items;
+}
+
 const { project } = Astro.props;
-const navigationHeadings = project.headings.filter(({ depth }) => depth === 1);
+const navigationItems = createNavigationItems(project.headings);
+const projectDescriptionHtml = project.descriptionHtml
+  .replaceAll("<h2", "<h3")
+  .replaceAll("</h2>", "</h3>")
+  .replaceAll("<h1", "<h2")
+  .replaceAll("</h1>", "</h2>");
 ---
 
-<Layout title="Projects - jefvanzanten.dev">
-  <div class="container">
-    <aside>
-      <nav>
-        <a href="/projects" class="goBack">Ga terug</a>
-        {
-          navigationHeadings.length > 0 && (
-            <ul>
-              {navigationHeadings.map(({ slug, text }) => (
+<Layout
+  title={`${project.name} - jefvanzanten.dev`}
+  description={project.description}
+>
+  <div class="project-layout">
+    <aside class="project-sidebar" data-project-sidebar>
+      <a href="/projects" class="back-link">
+        <span aria-hidden="true">←</span>
+        Terug naar projecten
+      </a>
+
+      {
+        navigationItems.length > 0 && (
+          <nav aria-label="Inhoudsopgave">
+            <ul class="navigation-list">
+              {navigationItems.map(({ heading, children }, index) => (
                 <li>
-                  <a href={`#${slug}`}>{text}</a>
+                  <a
+                    href={`#${heading.slug}`}
+                    data-nav-link
+                    class:list={{ active: index === 0 }}
+                    aria-current={index === 0 ? "location" : undefined}
+                  >
+                    {heading.text}
+                  </a>
+
+                  {children.length > 0 && (
+                    <ul class="subnav">
+                      {children.map((child) => (
+                        <li>
+                          <a href={`#${child.slug}`} data-nav-link>
+                            {child.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
-          )
-        }
-      </nav>
+          </nav>
+        )
+      }
+
+      <section class="contact-card" aria-labelledby="project-contact-title">
+        <h2 id="project-contact-title">Vragen over dit project?</h2>
+        <p>Neem gerust contact op, ik vertel er graag meer over.</p>
+        <a href="mailto:j.van.zanten@mail.com" class="mail-link">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M4 7.75A1.75 1.75 0 0 1 5.75 6h12.5A1.75 1.75 0 0 1 20 7.75v8.5A1.75 1.75 0 0 1 18.25 18H5.75A1.75 1.75 0 0 1 4 16.25z"
+            ></path>
+            <path d="m5 8 5.94 4.24a1.75 1.75 0 0 0 2.03 0L18.91 8"></path>
+          </svg>
+          Mail mij
+        </a>
+      </section>
     </aside>
-    <div class="content-container">
-      <h1>{project.name}</h1>
-      <div class="project-details-info" set:html={project.descriptionHtml} />
-    </div>
+
+    <article class="project-content" aria-labelledby="project-title">
+      <header>
+        <h1 id="project-title">{project.name}</h1>
+      </header>
+      <div class="project-details" set:html={projectDescriptionHtml} />
+    </article>
   </div>
 </Layout>
 
+<script>
+  const sidebar = document.querySelector("[data-project-sidebar]");
+
+  if (sidebar) {
+    const links = Array.from(
+      sidebar.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"),
+    );
+    const headings = links
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter((heading): heading is HTMLElement => heading !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const currentHeading = entries.find((entry) => entry.isIntersecting);
+
+        if (!currentHeading) return;
+
+        for (const link of links) {
+          const isActive = link.hash === `#${currentHeading.target.id}`;
+          link.classList.toggle("active", isActive);
+
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        }
+      },
+      { rootMargin: "-80px 0px -75% 0px" },
+    );
+
+    for (const heading of headings) observer.observe(heading);
+  }
+</script>
+
 <style>
-  .container {
-    display: flex;
-    justify-content: right;
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  .project-layout {
+    display: grid;
+    grid-template-columns: minmax(13rem, 18rem) minmax(0, 48rem);
+    justify-content: center;
+    gap: clamp(2rem, 2vw, 2rem);
+    width: var(--page-content-width);
+    max-width: 100%;
+    margin: 0 auto;
+    /*padding: 3rem 1.5rem 5rem;*/
 
     @media screen and (max-width: 770px) {
-      flex-direction: column;
+      display: block;
+      padding-top: 1.5rem;
+    }
+  }
+
+  .project-sidebar {
+    position: sticky;
+    top: calc(var(--nav-height) + 2rem);
+    align-self: start;
+    max-height: calc(100dvh - var(--nav-height) - 3rem);
+    overflow-y: auto;
+    padding: 0.25rem 0 0 2rem;
+
+    @media screen and (max-width: 770px) {
+      display: none;
     }
 
-    .content-container {
-      padding: 2rem;
-      width: 60dvw;
-      flex: 2;
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-decoration: none;
 
-      @media screen and (max-width: 770px) {
-        flex: none;
-        width: 100%;
-      }
-
-      h1 {
-        font-size: 1.6rem;
-        padding: 1rem 0;
+      &:hover,
+      &:focus-visible {
+        color: var(--text);
       }
     }
 
-    aside {
-      display: flex;
-      flex: 1;
-      justify-content: flex-end;
+    nav {
+      margin-top: 2rem;
+    }
 
-      @media screen and (max-width: 770px) {
-        display: none;
+    ul {
+      list-style: none;
+    }
+
+    .navigation-list,
+    .subnav {
+      margin-left: 0.35rem;
+      border-left: 1px solid var(--border-bright);
+    }
+
+    .navigation-list > li {
+      padding: 0 0 1.25rem 1.25rem;
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+
+    li {
+      position: relative;
+    }
+
+    li > a {
+      position: relative;
+      display: inline-block;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
+      text-decoration: none;
+      transition: color 160ms ease;
+
+      &::before {
+        position: absolute;
+        top: 0.3rem;
+        left: -1.58rem;
+        width: 0.65rem;
+        height: 0.65rem;
+        border: 1.5px solid var(--text-muted);
+        border-radius: 50%;
+        background: var(--bg);
+        content: "";
+        transition:
+          background-color 160ms ease,
+          border-color 160ms ease;
       }
 
-      nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2rem;
-        padding-top: 3rem;
+      &:hover,
+      &:focus-visible {
+        color: var(--text);
       }
 
-      .goBack,
-      .goBack:visited {
-        text-decoration: none;
-        color: currentColor;
-      }
+      &.active {
+        color: var(--accent-bright);
 
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+        &::before {
+          border-color: var(--accent-bright);
+          background: var(--accent-bright);
+        }
       }
+    }
+
+    .subnav {
+      margin-top: 1rem;
 
       li {
-        padding: 0.4rem 0;
-        font-size: 1.1rem;
+        padding: 0 0 1rem 1.25rem;
 
-        @media screen and (max-width: 1024px) {
-          font-size: 0.9rem;
+        &:last-child {
+          padding-bottom: 0;
         }
       }
 
-      li > a,
-      li > a:visited {
-        text-decoration: none;
-        color: var(--accent-bright);
-      }
-
-      li > a:hover {
-        text-decoration: underline;
+      a {
+        font-size: 0.9rem;
       }
     }
   }
 
-  .project-details-info {
-    max-width: 38vw;
+  .contact-card {
+    margin-top: 3.5rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: color-mix(in oklch, var(--surface), transparent 35%);
 
-    @media screen and (max-width: 1024px) {
-      max-width: 60vw;
+    h2 {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
 
-    @media screen and (max-width: 770px) {
-      max-width: 100%;
+    p {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
     }
 
-    & :global(h1) {
-      color: var(--accent-bright);
-      font-size: 1.4rem;
-      padding: 0.8rem 0;
+    .mail-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-top: 1rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--accent-bright);
+      border-radius: 0.55rem;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 160ms ease;
+
+      &:hover,
+      &:focus-visible {
+        background: color-mix(in oklch, var(--accent-bright), transparent 82%);
+      }
+
+      svg {
+        width: 1.1rem;
+        fill: none;
+        stroke: var(--accent-bright);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.7;
+      }
+    }
+  }
+
+  .project-content {
+    min-width: 0;
+    padding: 1rem 2rem;
+    padding-bottom: 20vh;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+
+    header h1 {
+      padding: 0.75rem 0 1.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      font-weight: 500;
+    }
+  }
+
+  .project-details {
+    & :global(h2),
+    & :global(h3) {
+      scroll-margin-top: calc(var(--nav-height) + 2rem);
     }
 
     & :global(h2) {
-      color: var(--accent);
+      padding: 1.25rem 0 0.8rem;
+      color: var(--accent-bright);
+      font-size: 1.4rem;
+    }
+
+    & :global(h3) {
+      padding: 1rem 0 0.8rem;
+      color: #006677;
       font-size: 1.2rem;
-      padding: 0.8rem 0;
     }
 
     & :global(p) {
-      line-height: 1.7;
-      font-size: 0.9rem;
       margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     & :global(ul) {
-      margin: 1.5rem 0;
+      margin: 1rem 0;
       padding-left: 1.5rem;
+    }
 
-      & :global(li) {
-        font-size: 0.9rem;
-      }
+    & :global(li) {
+      font-size: 0.95rem;
+      line-height: 1.4;
     }
 
     & :global(pre) {
+      max-width: 100%;
       margin: 1rem 0;
       padding: 1rem;
+      overflow-x: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
     }
   }
 </style>

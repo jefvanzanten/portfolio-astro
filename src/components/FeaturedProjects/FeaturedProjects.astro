@@ -83,6 +83,22 @@ const carouselItems = projects.map((project, index) => ({
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
+      --carousel-edge-fade: 6rem;
+
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 var(--carousel-edge-fade),
+        #000 calc(100% - var(--carousel-edge-fade)),
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 var(--carousel-edge-fade),
+        #000 calc(100% - var(--carousel-edge-fade)),
+        transparent 100%
+      );
 
       &::-webkit-scrollbar {
         display: none;

@@ -17,9 +17,41 @@
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-400.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("/fonts/jetbrains-mono-500.woff2") format("woff2");
+  src: url("/fonts/jetbrains-mono-500.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-600.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-700.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Regular.ttf") format("ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 * {
@@ -36,12 +68,12 @@
   --project-container-width: calc(var(--card-width) * 3 + 4em);
   --featured-projects-container-width: calc(var(--card-width) * 3 + 3 * 2em);
   --project-offset: calc((100vw - var(--project-area-width)) / 2);
-  --font-body: "Inter", sans-serif;
+  --font-body: "Geist", sans-serif;
   --font-display: "JetBrains Mono", monospace;
   --bg: #000000;
   --text: white;
   --accent: #0d9186;
-  --accent-bright: #0cd9e0;
+--accent-bright: #0aa8c2;
   --surface: rgb(20, 20, 20);
   --surface-raised: rgba(255, 255, 255, 0.06);
   --surface-border: rgba(255, 255, 255, 0.16);
@@ -91,7 +123,7 @@
   }
 
   &[data-theme="dark"] {
-    --accent: #0d9186;
+    --accent: #0077cc;
     --accent-bright: #0aa8c2;
   }
 

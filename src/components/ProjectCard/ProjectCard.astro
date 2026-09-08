@@ -1,9 +1,7 @@
 ---
 import { Picture } from "astro:assets";
 import type { Project } from "../../types/project";
-import GithubLink from "../GithubLink/GithubLink.astro";
-import LinkAction from "../LinkAction/LinkAction.astro";
-import ExternalLinkContent from "../ExternalLinkContent/ExternalLinkContent.astro";
+import IconLink from "../IconLink/IconLink.astro";
 import ProjectImageTrigger from "../ProjectImageModal/ProjectImageTrigger.svelte";
 import { projectPages } from "../../data.ts";
 
@@ -61,28 +59,29 @@ const projectPage = projectPages.find((p) => p.slug === project.slug);
     </section>
   </a>
   {
-    (project.url || project.liveUrl || project.downloadUrl || projectPage) && (
+    (project.url || project.liveUrl || projectPage) && (
       <div class="card-actions">
         {project.url && (
-          <GithubLink
-            name="GitHub"
+          <IconLink
+            href={project.url}
+            label="GitHub"
             iconUrl="/icons/github-mark-white.svg"
-            url={project.url}
           />
         )}
         {project.liveUrl && (
-          <LinkAction url={project.liveUrl} label="Bekijk live">
-            <ExternalLinkContent />
-          </LinkAction>
+          <IconLink
+            href={project.liveUrl}
+            label="Bekijk live"
+            iconUrl="/icons/external-link.svg"
+          />
         )}
         {projectPage && (
-          <LinkAction
-            url={`/projects/${projectPage.slug}`}
+          <IconLink
+            data-mobile-only
+            href={`/projects/${projectPage.slug}`}
             label="Bekijk pagina"
-            pageLink
-          >
-            <ExternalLinkContent />
-          </LinkAction>
+            iconUrl="/icons/external-link.svg"
+          />
         )}
       </div>
     )
@@ -298,10 +297,11 @@ const projectPage = projectPages.find((p) => p.slug === project.slug);
     }
 
     .tag {
+      font-family: var(--font-display);
       border-radius: 0.4em;
       color: color-mix(in oklch, var(--text), var(--accent-bright) 14%);
       background-color: color-mix(in oklch, var(--card-bg), #000 30%);
-      border: 1px solid color-mix(in oklch, var(--border), var(--accent) 28%);
+      border: 1px solid var(--border);
       font-size: 0.57rem;
       font-weight: 600;
       padding: 0.3rem 0.3rem;
@@ -321,6 +321,14 @@ const projectPage = projectPages.find((p) => p.slug === project.slug);
         position: relative;
         z-index: 2;
       }
+    }
+  }
+
+  :global(.project-card-container [data-mobile-only]) {
+    display: none;
+
+    @media screen and (max-width: 767px) {
+      display: inline-flex;
     }
   }
 
