@@ -4,7 +4,6 @@ slug: "picit-app-frontend"
 url: "https://github.com/jefvanzanten/ADSD-Fase1-Picit-app"
 languages: ["Java"]
 libraries: ["JavaFX"]
-images: [""]
 coverUrl: "/covers/hu_cover.png"
 thumbUrl: "/thumbs/hu_thumb.png"
 category: "Desktop"

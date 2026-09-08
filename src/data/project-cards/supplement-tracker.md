@@ -4,7 +4,6 @@ slug: "supplement-tracker"
 url: "https://github.com/jefvanzanten/Supplement-Tracker-Android-"
 languages: ["Kotlin"]
 libraries: ["Jetpack Compose", "RoomDB"]
-images: [""]
 coverUrl: "/covers/supplement_tracker_cover.png"
 thumbUrl: "/thumbs/supplement_tracker_thumb.png"
 category: "Mobile"

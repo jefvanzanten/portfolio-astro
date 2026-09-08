@@ -4,7 +4,6 @@ slug: "python-api"
 url: "https://github.com/jefvanzanten/PyAPI"
 languages: ["Python"]
 libraries: ["FastAPI", "Resend", "Pydantic", "Weasyprint"]
-images: []
 coverUrl: "/covers/fastapi_custom_cover.png"
 thumbUrl: "/thumbs/fastapi_custom_thumb.png"
 category: "Backend"

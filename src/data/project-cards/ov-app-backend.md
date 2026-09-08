@@ -4,7 +4,6 @@ slug: "ov-app-backend"
 url: "https://github.com/jefvanzanten/ADSD-Fase2-OV-app/tree/main/backend"
 languages: ["TypeScript"]
 libraries: ["Express", "Jest"]
-images: [""]
 coverUrl: "/covers/hu_cover.png"
 thumbUrl: "/thumbs/hu_thumb.png"
 category: "Backend"

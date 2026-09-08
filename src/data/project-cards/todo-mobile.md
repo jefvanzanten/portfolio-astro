@@ -4,7 +4,6 @@ slug: "todo-mobile"
 url: "https://github.com/jefvanzanten/TodoRN"
 languages: ["TypeScript"]
 libraries: ["React-Native", "Better-Auth", "TanStack Query"]
-images: [""]
 coverUrl: "/covers/todo_client_cover.png"
 thumbUrl: "/thumbs/todo_client_thumb.png"
 category: "Mobile"

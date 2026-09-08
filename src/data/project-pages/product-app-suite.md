@@ -1,10 +1,7 @@
 ---
 name: "Product App Suite"
 slug: "product-app-suite"
-images: []
-coverUrl: "/covers/portfolio_cover.png"
-thumbUrl: "/thumbs/portfolio_thumb.png"
-summary: "Dit project bestaat uit meerdere applicaties binnen één gedeelde codebase: een calorie-tracker, inventarisatie-app, recepten-app, adminpaneel en een backend die de applicaties van data voorziet. De applicaties zijn ontwikkeld op basis van specificatiebestanden waarin de kernfunctionaliteit per app is vastgelegd."
+summary: "Een fullstack monorepo met vier React-applicaties en een gedeelde Hono-backend voor calorieën, voorraad, recepten en productbeheer."
 ---
 
 # Beschrijving

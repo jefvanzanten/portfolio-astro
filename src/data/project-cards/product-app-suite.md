@@ -13,7 +13,6 @@ libraries:
     "Better-Auth",
     "Zod",
   ]
-images: []
 coverUrl: "/covers/portfolio_cover.png"
 thumbUrl: "/thumbs/portfolio_thumb.png"
 category: "Fullstack"

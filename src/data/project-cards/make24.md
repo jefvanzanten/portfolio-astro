@@ -5,7 +5,6 @@ liveUrl: "https://jefvanzanten.github.io/make24/"
 url: "https://github.com/jefvanzanten/make24"
 languages: ["TypeScript", "HTML"]
 libraries: ["React"]
-images: [""]
 coverUrl: "/covers/make24_cover.png"
 thumbUrl: "/thumbs/make24_thumb.png"
 category: "Frontend"

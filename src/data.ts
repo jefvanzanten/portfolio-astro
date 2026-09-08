@@ -1,20 +1,24 @@
 import type { ImageMetadata } from "astro";
-import type { Project, ProjectFrontmatter } from "./types/project";
+import type {
+  Project,
+  ProjectFrontmatter,
+  ProjectPageData,
+  ProjectPageFrontmatter,
+} from "./types/project";
 
-type ProjectMarkdownModule = {
-  frontmatter: ProjectFrontmatter;
-  rawContent: () => string;
+type ProjectMarkdownModule<Frontmatter> = {
+  frontmatter: Frontmatter;
   compiledContent: () => Promise<string>;
-  getHeadings: () => Project["headings"];
+  getHeadings: () => ProjectPageData["headings"];
 };
 
 const projectModules = import.meta.glob("./data/project-cards/*.md", {
   eager: true,
-}) as Record<string, ProjectMarkdownModule>;
+}) as Record<string, ProjectMarkdownModule<ProjectFrontmatter>>;
 
 const projectPageModules = import.meta.glob("./data/project-pages/*.md", {
   eager: true,
-}) as Record<string, ProjectMarkdownModule>;
+}) as Record<string, ProjectMarkdownModule<ProjectPageFrontmatter>>;
 
 const projectThumbModules = import.meta.glob<{ default: ImageMetadata }>(
   "./assets/thumbs/*.{png,jpg,jpeg,webp,avif}",
@@ -42,29 +46,53 @@ const resolveThumbImage = async (thumbUrl: string) => {
 
 export const projects: Project[] = await getProjectData(projectModules);
 
-export const projectPages: Project[] = await getProjectData(projectPageModules);
+export const projectPages: ProjectPageData[] = await getProjectPageData(
+  projectPageModules,
+);
 
 /**
- * Converts imported Markdown modules into project data.
+ * Converts imported project-card Markdown modules into project data.
  *
- * @param module - Markdown modules to convert.
+ * @param modules - Project-card Markdown modules to convert.
  * @returns Projects sorted by their most recent update date.
  */
 async function getProjectData(
-  module: Record<string, ProjectMarkdownModule>,
+  modules: Record<string, ProjectMarkdownModule<ProjectFrontmatter>>,
 ): Promise<Project[]> {
   return (
     await Promise.all(
-      Object.values(module).map(async (module) => ({
-        ...module.frontmatter,
-        description: module.rawContent().trim(),
-        descriptionHtml: await module.compiledContent(),
-        headings: module.getHeadings(),
-        thumbImage: await resolveThumbImage(module.frontmatter.thumbUrl),
-      })),
+      Object.values(modules).map(async ({ frontmatter, compiledContent }) => {
+        const { thumbUrl, ...projectFrontmatter } = frontmatter;
+
+        return {
+          ...projectFrontmatter,
+          descriptionHtml: await compiledContent(),
+          thumbImage: await resolveThumbImage(thumbUrl),
+        };
+      }),
     )
   ).sort(
     (projectA, projectB) =>
       Date.parse(projectB.lastUpdated) - Date.parse(projectA.lastUpdated),
+  );
+}
+
+/**
+ * Converts imported project-page Markdown modules into project-page data.
+ *
+ * @param modules - Project-page Markdown modules to convert.
+ * @returns Project pages with their compiled content and headings.
+ */
+async function getProjectPageData(
+  modules: Record<string, ProjectMarkdownModule<ProjectPageFrontmatter>>,
+): Promise<ProjectPageData[]> {
+  return Promise.all(
+    Object.values(modules).map(
+      async ({ frontmatter, compiledContent, getHeadings }) => ({
+        ...frontmatter,
+        descriptionHtml: await compiledContent(),
+        headings: getHeadings(),
+      }),
+    ),
   );
 }

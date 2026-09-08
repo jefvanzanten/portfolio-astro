@@ -4,7 +4,6 @@ slug: "datekanaal"
 liveUrl: "https://www.datekanaal.nl/"
 languages: ["TypeScript", "CSS"]
 libraries: ["Nextjs", "React", "Convex", "TailwindCSS"]
-images: []
 coverUrl: "/covers/datekanaal_cover.png"
 thumbUrl: "/thumbs/datekanaal_thumb.png"
 category: "Fullstack"

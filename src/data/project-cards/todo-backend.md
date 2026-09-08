@@ -4,7 +4,6 @@ slug: "todo-backend"
 url: "https://github.com/jefvanzanten/todobackend"
 languages: ["TypeScript"]
 libraries: ["Express", "Drizzle ORM", "Better-Auth"]
-images: [""]
 coverUrl: "/covers/express_custom_cover.png"
 thumbUrl: "/thumbs/express_custom_thumb.png"
 category: "Backend"

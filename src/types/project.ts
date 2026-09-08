@@ -37,34 +37,35 @@ export type Library =
 
 export type Project = {
   name: string;
-  description: string;
   descriptionHtml: string;
   slug: string;
   url?: string;
   liveUrl?: string;
-  downloadUrl?: string;
   languages: Language[];
   libraries: Library[];
-  images: string[];
   category: Category;
   lastUpdated: string;
   highlighted: boolean;
   coverUrl: string;
-  thumbUrl: string;
   thumbImage: ImageMetadata;
 };
 
 export type ProjectPageData = {
   name: string;
   slug: string;
-  images: string[];
-  coverUrl: string;
-  thumbUrl: string;
-  thumbImage: ImageMetadata;
+  summary: string;
+  descriptionHtml: string;
   headings: MarkdownHeading[];
 };
 
 export type ProjectFrontmatter = Omit<
   Project,
-  "description" | "descriptionHtml" | "headings" | "thumbImage"
+  "descriptionHtml" | "thumbImage"
+> & {
+  thumbUrl: string;
+};
+
+export type ProjectPageFrontmatter = Omit<
+  ProjectPageData,
+  "descriptionHtml" | "headings"
 >;

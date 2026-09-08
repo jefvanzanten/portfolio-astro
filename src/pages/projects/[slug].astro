@@ -1,6 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
-import type { Project } from "../../types/project";
+import type { ProjectPageData } from "../../types/project";
 import { projectPages } from "../../data";
 import Layout from "../../Layout.astro";
 
@@ -21,7 +21,7 @@ export function getStaticPaths() {
 }
 
 interface Props {
-  project: Project;
+  project: ProjectPageData;
 }
 
 type NavigationItem = {
@@ -65,7 +65,7 @@ const projectDescriptionHtml = project.descriptionHtml
 
 <Layout
   title={`${project.name} - jefvanzanten.dev`}
-  description={project.description}
+  description={project.summary}
 >
   <div class="project-layout">
     <aside class="project-sidebar" data-project-sidebar>

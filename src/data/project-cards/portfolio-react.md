@@ -4,11 +4,6 @@ slug: "portfolio-react"
 url: "https://github.com/jefvanzanten/portfolio-react/"
 languages: ["TypeScript", "CSS", "HTML"]
 libraries: ["React", "React-Router"]
-images:
-  - "/screenshots/portfolio/mobile landingpage.png"
-  - "/screenshots/portfolio/mobile projectpage.png"
-  - "/screenshots/portfolio/desktop landingpage.png"
-  - "/screenshots/portfolio/desktop projectpage.png"
 coverUrl: "/covers/portfolio_cover.png"
 thumbUrl: "/thumbs/portfolio_thumb.png"
 category: "Frontend"

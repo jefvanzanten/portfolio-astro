@@ -4,7 +4,6 @@ slug: "idea-leaderboard"
 url: "https://github.com/jefvanzanten/idea-leaderboard.git"
 languages: ["TypeScript", "CSS"]
 libraries: ["React", "Electron", "Drizzle ORM"]
-images: [""]
 coverUrl: "/covers/leaderboard.png"
 thumbUrl: "/thumbs/leaderboard_thumb.png"
 category: "Desktop"

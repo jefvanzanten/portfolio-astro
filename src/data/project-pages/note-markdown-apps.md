@@ -1,10 +1,7 @@
 ---
 name: "Note Markdown Apps"
 slug: "note-markdown-apps"
-images: [""]
-coverUrl: "/covers/note_markdown_apps.png"
-thumbUrl: "/thumbs/note_markdown_apps_thumb.png"
-summary: "Een `pnpm`-monorepo met drie apps: `desktop-app`, `web-tray-app` en `demo`. In plaats van een Tauri/Rust-core gebruikt deze versie Electron en gedeelde TypeScript-packages voor onder meer de editor, bestandsbrowser en serverlogica. De UI is React-gebaseerd en de editorcode zit centraal in `@note/editor`, zodat de apps dezelfde markdown- en note-ervaring kunnen hergebruiken."
+summary: "Een local-first Markdown-editor voor desktop en web, gebouwd met Electron, React en gedeelde TypeScript-packages voor bestanden, opslag en synchronisatie."
 ---
 
 # Beschrijving

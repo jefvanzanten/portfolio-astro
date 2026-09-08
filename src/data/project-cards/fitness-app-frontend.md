@@ -4,7 +4,6 @@ slug: "fitness-app-frontend"
 url: "https://github.com/jefvanzanten/ADSD-Fase1-Fitness-app"
 languages: ["Java"]
 libraries: []
-images: [""]
 coverUrl: "/covers/hu_cover.png"
 thumbUrl: "/thumbs/hu_thumb.png"
 category: "Desktop"

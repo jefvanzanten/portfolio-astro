@@ -5,7 +5,6 @@ liveUrl: "https://game-collection.jefvanzanten.dev/"
 url: "https://github.com/jefvanzanten/game-collection"
 languages: ["TypeScript", "CSS"]
 libraries: ["React"]
-images: [""]
 coverUrl: "/covers/game-collection.png"
 thumbUrl: "/thumbs/game-collection.png"
 category: "Frontend"

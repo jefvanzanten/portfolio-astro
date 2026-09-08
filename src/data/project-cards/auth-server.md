@@ -4,7 +4,6 @@ slug: "auth-server"
 url: "https://github.com/jefvanzanten/auth-server"
 languages: ["TypeScript"]
 libraries: ["Hono", "Better-Auth", "Drizzle ORM"]
-images: []
 coverUrl: "/covers/authserver_cover.png"
 thumbUrl: "/thumbs/authserver_thumb.png"
 category: "Backend"
