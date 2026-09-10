@@ -65,6 +65,9 @@
   }}
 >
   <div class="project-image-frame">
+    {#if imageUrl}
+      <img src={imageUrl} alt="Project screenshot" class="project-image" />
+    {/if}
     <button
       type="button"
       class="project-image-close"
@@ -73,9 +76,6 @@
     >
       X
     </button>
-    {#if imageUrl}
-      <img src={imageUrl} alt="Project screenshot" class="project-image" />
-    {/if}
   </div>
 </dialog>
 
@@ -132,9 +132,17 @@
         border-radius: 4px;
         padding: 0.4em 0.6em;
         cursor: pointer;
+
+        @supports (position-anchor: --project-image) {
+          position: fixed;
+          position-anchor: --project-image;
+          top: calc(anchor(top) + 0.75rem);
+          right: calc(anchor(right) + 0.75rem);
+        }
       }
 
       .project-image {
+        anchor-name: --project-image;
         display: block;
         width: auto;
         height: auto;
