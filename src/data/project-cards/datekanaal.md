@@ -11,6 +11,4 @@ lastUpdated: "2026-06-25"
 highlighted: true
 ---
 
-Datekanaal is een datingplatform voor studenten en starters in Nederland. De applicatie combineert een Next.js frontend met realtime matchmaking, profielbeheer en backend-logica via Convex.
-
-Ik ben stagiair bij The AI Club en heb het afgelopen halfjaar tot op heden aan Datekanaal gewerkt.
+Matchmakingplatform waaraan ik tijdens mijn stage bij The AI Club heb gewerkt. Ik ontwikkelde onder andere dashboards, campagnefunctionaliteit, mobiele gebruikersflows en onderdelen van het berichtensysteem.

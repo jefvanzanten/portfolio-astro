@@ -20,6 +20,6 @@ lastUpdated: "2026-08-24"
 highlighted: true
 ---
 
-Dit project bestaat uit meerdere applicaties binnen één gedeelde codebase: een calorie-tracker, inventarisatie-app, recepten-app, adminpaneel en een backend die de applicaties van data voorziet.
+Full-stack monorepo met vier afzonderlijke React-applicaties en één gedeelde backend. De applicaties delen onder andere authenticatie en API-contracten, maar behouden hun eigen verantwoordelijkheden, architectuur en interface.
 
-De applicaties zijn ontwikkeld op basis van specificatiebestanden waarin de kernfunctionaliteit per app is vastgelegd.
+Het project wordt specificatiegedreven ontwikkeld met aandacht voor herbruikbaarheid, domeinscheiding, validatie en geautomatiseerde tests.
